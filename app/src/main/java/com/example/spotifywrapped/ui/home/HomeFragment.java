@@ -6,7 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -51,6 +54,8 @@ public class HomeFragment extends Fragment {
 
     private TextView tokenTextView, codeTextView, profileTextView;
 
+    private ActivityResultLauncher<Intent> spotifyAuthLauncher;
+
     private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -78,6 +83,31 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Initialize the ActivityResultLauncher
+        spotifyAuthLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
+                        // Handle the response
+                        Intent data = result.getData();
+                        final AuthorizationResponse response = AuthorizationClient.getResponse(result.getResultCode(), data);
+
+                        if (response.getType() == AuthorizationResponse.Type.TOKEN) {
+                            mAccessToken = response.getAccessToken();
+                            setTextAsync(mAccessToken, tokenTextView);
+                        } else if (response.getType() == AuthorizationResponse.Type.CODE) {
+                            mAccessCode = response.getCode();
+                            setTextAsync(mAccessCode, codeTextView);
+                        }
+                    }
+                });
+    }
+
+
     /**
      * Get token from Spotify
      * This method will open the Spotify login activity and get the token
@@ -86,8 +116,8 @@ public class HomeFragment extends Fragment {
      */
     public void getToken() {
         final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.TOKEN);
-        // Use getActivity() to get the context from within a fragment
-        AuthorizationClient.openLoginActivity(getActivity(), AUTH_TOKEN_REQUEST_CODE, request);
+        Intent intent = AuthorizationClient.createLoginActivityIntent(getActivity(), request);
+        spotifyAuthLauncher.launch(intent);
     }
 
     /**
@@ -98,7 +128,8 @@ public class HomeFragment extends Fragment {
      */
     public void getCode() {
         final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.CODE);
-        AuthorizationClient.openLoginActivity(getActivity(), AUTH_CODE_REQUEST_CODE, request);
+        Intent intent = AuthorizationClient.createLoginActivityIntent(getActivity(), request);
+        spotifyAuthLauncher.launch(intent);
     }
 
 
@@ -206,8 +237,8 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public void onDestroy() {
+        cancelCall();
+        super.onDestroy();
     }
 }
