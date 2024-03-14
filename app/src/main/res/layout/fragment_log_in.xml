@@ -11,47 +11,64 @@
     <LinearLayout
         android:layout_width="318dp"
         android:layout_height="491dp"
-        android:background="@color/spotify_green"
+        android:background="@drawable/rounded_layout"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        
-        >
+
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/loginTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Get Started!"
+            android:layout_marginVertical="30dp"
+            android:fontFamily="@font/spotify_font"
+            android:text="Log In!"
             android:textColor="@color/spotify_white"
             android:textSize="24sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/passwordInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/spotify_black"
-            android:ems="10"
-            android:inputType="textPassword" />
-
-        <EditText
             android:id="@+id/emailInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/spotify_black"
+            android:layout_marginBottom="7.5dp"
+            android:background="@drawable/rounded_edittext"
             android:ems="10"
-            android:inputType="textEmailAddress" />
+            android:fontFamily="@font/spotify_font"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/spotify_black" />
 
-        <Button
+        <EditText
+            android:id="@+id/passwordInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/rounded_edittext"
+            android:ems="10"
+            android:fontFamily="@font/spotify_font"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColor="@color/spotify_black" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
             android:backgroundTint="@color/spotify_white"
             android:text="Log In"
             android:textColor="@color/spotify_black" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
