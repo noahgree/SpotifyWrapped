@@ -24,7 +24,10 @@
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:src="@tools:sample/avatars" />
+            android:maxWidth="100sp"
+            android:maxHeight="100sp"
+            tools:src="@drawable/logo"
+            />
 
         <TextView
             android:id="@+id/loginTitleText"
