@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:312509464317:android:b796c7fc83ba82c5524894",
+        "android_client_info": {
+          "package_name": "com.company.spotifywrapped"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk5oIEFOExcRGEkX52O_q6xYYepOijU4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:312509464317:android:c8c784621c1b6937524894",
         "android_client_info": {
           "package_name": "com.example.spotifywrapped"

@@ -19,6 +19,7 @@ import com.example.spotifywrapped.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
