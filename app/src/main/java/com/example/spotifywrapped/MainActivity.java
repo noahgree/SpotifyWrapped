@@ -1,5 +1,6 @@
 package com.example.spotifywrapped;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.spotifywrapped.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        currentUser = loadUser();
 
         if (currentUser == null) {
             // User not logged in, show login fragment without the top bar
@@ -43,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
             // User is logged in, proceed as normal
             setupNavigationAndToolbar();
         }
+    }
+
+    private User loadUser() {
+        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String userJson = sharedPreferences.getString("CurrentUser", null);
+        return gson.fromJson(userJson, User.class);
     }
 
     private void navigateToLoginFragment() {
@@ -93,5 +103,20 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setCurrentUser(User currentUser) {
         MainActivity.currentUser = currentUser;
+    }
+    //SharedPreferences
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveUser(currentUser);
+    }
+
+    private void saveUser(User user) {
+        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String userJson = gson.toJson(user);
+        editor.putString("CurrentUser", userJson);
+        editor.apply();
     }
 }

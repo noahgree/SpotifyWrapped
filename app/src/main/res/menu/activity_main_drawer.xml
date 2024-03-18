@@ -16,11 +16,5 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_slideshow" />
-        <item
-            android:id="@+id/nav_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@android:drawable/ic_lock_power_off"
-            android:title="Log In Page (Will be deleted)" />
     </group>
 </menu>
