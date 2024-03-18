@@ -3,15 +3,19 @@ package com.example.spotifywrapped.ui.login;
 import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -95,16 +99,26 @@ public class LogInFragment extends Fragment {
 
     }
 
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     public void updateUI(FirebaseUser account){
         View root = binding.getRoot();
-        if(account != null){
-            Toast.makeText(root.getContext(),"You Signed In successfully",Toast.LENGTH_LONG).show();
-            //startActivity(new Intent(this, LogInFragment.class));
-
-        }else {
-            Toast.makeText(root.getContext(),"You Didnt signed in",Toast.LENGTH_LONG).show();
+        if (account != null) {
+            Toast.makeText(getContext(), "You Signed In successfully", Toast.LENGTH_LONG).show();
+            MainActivity mainActivity = (MainActivity) getActivity();
+            hideKeyboard(root);
+            if (mainActivity != null) {
+                // Setup main interface and navigate to the gallery fragment
+                mainActivity.setupNavigationAndToolbar();
+                NavController navController = Navigation.findNavController(mainActivity, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_gallery);
+            }
+        } else {
+            Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override

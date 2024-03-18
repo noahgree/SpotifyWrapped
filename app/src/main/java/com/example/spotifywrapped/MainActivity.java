@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.example.spotifywrapped.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,32 +26,50 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private static User currentUser;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        if (currentUser == null) {
+            // User not logged in, show login fragment without the top bar
+            navigateToLoginFragment();
+        } else {
+            // User is logged in, proceed as normal
+            setupNavigationAndToolbar();
+        }
+    }
+
+    private void navigateToLoginFragment() {
+        // Ensure the AppBar (Toolbar) is not shown for the Login Fragment
+        binding.appBarMain.toolbar.setVisibility(View.GONE);
+        // Navigate to the Login Fragment immediately
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        navController.navigate(R.id.nav_login); // Adjust this ID based on your navigation graph
+    }
+
+    public void setupNavigationAndToolbar() {
+        // Set up Toolbar
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_login)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow) // Add or remove IDs as needed
                 .setOpenableLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        // Show the AppBar (Toolbar) if it was previously hidden
+        binding.appBarMain.toolbar.setVisibility(View.VISIBLE);
     }
 
     @Override
