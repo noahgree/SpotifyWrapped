@@ -30,6 +30,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class LogInFragment extends Fragment {
@@ -94,22 +96,52 @@ public class LogInFragment extends Fragment {
     }
 
     private void solidifyNewUser(FirebaseUser user, String password) {
-        User currentUser = new User(user.getEmail(), password, null);
-        MainActivity.setCurrentUser(currentUser);
+        //this looks for userdata on firebase, this will only happen if the user exists
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        String userId = user.getUid(); // The user ID to search for, which matches the document ID
+        final User[] currentUser = new User[1];
+        db.collection("Accounts").document(userId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null && document.exists()) {
+                            String name = document.getString("name");
+                            String email = document.getString("email");
+                            String passwordf = document.getString("password");
+
+                            Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                            // You can use the retrieved data here (name, email, password)
+                            currentUser[0] = new User(email, passwordf, userId, name);
+                            //Use this method in MainActivity to update any values with the name and email
+                            MainActivity.onLoginSuccess(name, email);
+                        } else {
+                            // The document does not exist, do nothing
+                            Log.d("TAG", "No such document");
+                        }
+                    } else {
+                        Log.d("TAG", "get failed with ", task.getException());
+                    }
+                });
+        MainActivity.setCurrentUser(currentUser[0]);
 
     }
 
+    //When the user logs in the keyboard will auto close.
     private void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    //Changes to the homescreen of the app when logging in
     public void updateUI(FirebaseUser account){
         View root = binding.getRoot();
         if (account != null) {
             Toast.makeText(getContext(), "You Signed In successfully", Toast.LENGTH_LONG).show();
             MainActivity mainActivity = (MainActivity) getActivity();
             hideKeyboard(root);
+
             if (mainActivity != null) {
                 // Setup main interface and navigate to the gallery fragment
                 mainActivity.setupNavigationAndToolbar();

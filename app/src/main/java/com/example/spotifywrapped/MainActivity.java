@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.example.spotifywrapped.user.User;
 import com.google.android.material.snackbar.Snackbar;
@@ -25,16 +26,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
+    private static ActivityMainBinding binding;
     private static User currentUser;
-
+    private static NavigationView navigationView;
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-
+        navigationView = findViewById(R.id.nav_view);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         currentUser = loadUser();
@@ -95,7 +96,15 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
+    //Updates new values with the current user.
+    public static void onLoginSuccess(String name, String email) {
+        //Side Navigation
+        TextView navName = binding.getRoot().findViewById(R.id.navName);
+        TextView navEmail = binding.getRoot().findViewById(R.id.navEmail);
+        navName.setText(name);
+        navEmail.setText(email);
+        //Wrapped Fragment
+    }
 
     public static User getCurrentUser() {
         return currentUser;
