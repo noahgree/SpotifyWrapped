@@ -3,7 +3,9 @@ package com.example.spotifywrapped.ui.login;
 import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,12 +36,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class LogInFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
 
     private FragmentLogInBinding binding;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
     @Override
     public void onStart() {
         super.onStart();
@@ -55,6 +62,7 @@ public class LogInFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -63,33 +71,94 @@ public class LogInFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentLogInBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        //Login Button
         Button myButton = root.findViewById(R.id.loginButton);
         myButton.setBackgroundResource(R.drawable.rounded_button);
+        //Signup Button
+        Button signupButton = root.findViewById(R.id.signupButton);
+        signupButton.setBackgroundResource(R.drawable.rounded_button);
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
                 String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener((Activity) root.getContext(), new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d(TAG, "signInWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    solidifyNewUser(user, password);
-                                    updateUI(user);
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(root.getContext(), "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                    updateUI(null);
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(root.getContext(), "Authentication failed.",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener((Activity) root.getContext(), new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d(TAG, "signInWithEmail:success");
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        solidifyNewUser(user, password);
+                                        updateUI(user);
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                        Toast.makeText(root.getContext(), "Authentication failed.",
+                                                Toast.LENGTH_SHORT).show();
+                                        updateUI(null);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
+            }
+        });
+        //Sign Up Button
+        signupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an AlertDialog.Builder to get the user's name
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Please enter your full name");
+
+                // Set up the input fields
+                final EditText input = new EditText(getActivity());
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+                input.setHint("First and Last Name");
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String fullName = input.getText().toString();
+                        // Splitting the fullName into first and last name parts if needed
+                        // Proceed with the rest of the sign-up process...
+                        String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
+                        String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
+
+                        mAuth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener((Activity) root.getContext(), task -> {
+                                    if (task.isSuccessful()) {
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        if (user != null) {
+                                            Map<String, Object> userAccount = new HashMap<>();
+                                            userAccount.put("name", fullName);
+                                            userAccount.put("email", email);
+                                            // Avoid storing plain passwords
+                                            db.collection("Accounts").document(user.getUid())
+                                                    .set(userAccount)
+                                                    .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                                                    .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+                                        }
+                                        solidifyNewUser(user, password);
+                                        updateUI(user);
+                                    } else {
+                                        Toast.makeText(root.getContext(), "Authentication failed.",
+                                                Toast.LENGTH_SHORT).show();
+                                        updateUI(null);
+                                    }
+                                });
+                    }
+                });
+                builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+                builder.show();
             }
         });
         return root;
