@@ -21,6 +21,10 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <data android:host="auth" android:scheme="SpotifyWrapped"/>
 
             </intent-filter>
         </activity>
