@@ -12,4 +12,12 @@
     <string name="menu_slideshow">Slideshow</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="backbutton">Back</string>
+
+
+    <string name="mins_listened_intro">You listened to XXX total artists, for a total of:</string>
+    <string name="mins_listened_placeholder">XXX</string>
+    <string name="top_artist_placeholder">ARTIST NAME</string>
+    <string name="top_genre_placeholder">GENRE NAME</string>
 </resources>
