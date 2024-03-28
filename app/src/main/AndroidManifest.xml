@@ -24,7 +24,7 @@
             </intent-filter>
 
             <intent-filter>
-                <data android:host="auth" android:scheme="SpotifyWrapped"/>
+                <data android:host="auth" android:scheme="com.example.spotifywrapped"/>
 
             </intent-filter>
         </activity>

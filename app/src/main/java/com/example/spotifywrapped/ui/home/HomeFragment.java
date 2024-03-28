@@ -43,7 +43,7 @@ import com.example.spotifywrapped.databinding.FragmentHomeBinding;
 public class HomeFragment extends Fragment {
 
     public static final String CLIENT_ID = "b063d7ec2077456d898909d249da6e49";
-    public static final String REDIRECT_URI = "SpotifyWrapped://auth";
+    public static final String REDIRECT_URI = "com.example.spotifywrapped://auth";
 
     public static final int AUTH_TOKEN_REQUEST_CODE = 0;
     public static final int AUTH_CODE_REQUEST_CODE = 1;
