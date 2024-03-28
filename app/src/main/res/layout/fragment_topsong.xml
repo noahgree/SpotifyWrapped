@@ -1,59 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0DECA9">
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/topgenreexit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:outlineAmbientShadowColor="#00FFFFFF"
-        android:outlineSpotShadowColor="#00FFFFFF"
-        app:backgroundTint="#00FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_delete" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/topgenreback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:outlineAmbientShadowColor="#00FFFFFF"
-        android:outlineSpotShadowColor="#00FFFFFF"
-        app:backgroundTint="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/topgenrenext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:outlineAmbientShadowColor="#00FFFFFF"
-        android:outlineSpotShadowColor="#00FFFFFF"
-        android:rotationY="180"
-        app:backgroundTint="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
+    android:background="#f11a81">
 
     <TextView
-        android:id="@+id/topgenre"
+        android:id="@+id/topsong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/spotify_font"
-        android:text="@string/top_genre_placeholder"
+        android:text="@string/top_song_placeholder"
         android:textColor="@color/spotify_black"
         android:textSize="40sp"
         android:textStyle="bold"
@@ -65,13 +23,13 @@
         app:layout_constraintVertical_bias="0.688" />
 
     <TextView
-        android:id="@+id/topgenreintro"
+        android:id="@+id/topsongintro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"
         android:layout_marginTop="436dp"
         android:fontFamily="@font/spotify_font"
-        android:text="Your Top Genre"
+        android:text="Your Top Song"
         android:textColor="@color/spotify_black"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -79,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/genreminsintro"
+        android:id="@+id/songminsintro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
@@ -93,7 +51,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/genreimage"
+        android:id="@+id/topsongimage"
         android:layout_width="355dp"
         android:layout_height="326dp"
         android:layout_marginStart="28dp"
@@ -103,7 +61,7 @@
         app:srcCompat="@drawable/logo" />
 
     <TextView
-        android:id="@+id/genremins"
+        android:id="@+id/songmins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/spotify_font"
@@ -118,4 +76,46 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.921" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/topsongnext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:outlineAmbientShadowColor="#00FFFFFF"
+        android:outlineSpotShadowColor="#00FFFFFF"
+        android:rotationY="180"
+        app:backgroundTint="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/topsongback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:outlineAmbientShadowColor="#00FFFFFF"
+        android:outlineSpotShadowColor="#00FFFFFF"
+        app:backgroundTint="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/topsongexit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:outlineAmbientShadowColor="#00FFFFFF"
+        android:outlineSpotShadowColor="#00FFFFFF"
+        app:backgroundTint="#00FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_delete" />
 </androidx.constraintlayout.widget.ConstraintLayout>

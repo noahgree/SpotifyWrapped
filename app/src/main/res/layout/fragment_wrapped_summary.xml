@@ -26,6 +26,8 @@
                 android:layout_margin="5sp"
                 android:layout_weight="1"
                 android:clickable="true"
+                android:outlineAmbientShadowColor="#00FFFFFF"
+                android:outlineSpotShadowColor="#00FFFFFF"
                 android:src="@android:drawable/ic_delete"
                 app:backgroundTint="#00191414" />
 
@@ -89,6 +91,8 @@
         android:layout_gravity="bottom"
         android:layout_margin="5sp"
         android:clickable="true"
+        android:outlineAmbientShadowColor="#00FFFFFF"
+        android:outlineSpotShadowColor="#00FFFFFF"
         android:src="?attr/actionModeCloseDrawable"
         app:backgroundTint="#E91E63" />
 
@@ -109,6 +113,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="5sp"
         android:clickable="true"
+        android:outlineAmbientShadowColor="#00FFFFFF"
+        android:outlineSpotShadowColor="#00FFFFFF"
         android:rotationY="180"
         android:src="?attr/actionModeCloseDrawable"
         app:backgroundTint="#E91E63" />
