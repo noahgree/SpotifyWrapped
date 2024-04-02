@@ -1,22 +1,30 @@
 package com.example.spotifywrapped;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.databinding.FragmentLogInBinding;
 import com.example.spotifywrapped.user.User;
 import com.google.android.material.snackbar.Snackbar;
@@ -36,7 +44,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
+
+import java.io.IOException;
 
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -44,7 +56,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private static final OkHttpClient mOkHttpClient = new OkHttpClient();
     private AppBarConfiguration mAppBarConfiguration;
     private static ActivityMainBinding binding;
     private static User currentUser;
@@ -52,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private static MainActivity instance;
+
+    public static Context context;
 
     private FirebaseFirestore db;
 
@@ -65,9 +79,11 @@ public class MainActivity extends AppCompatActivity {
         //currentUser = loadUser();
         instance = this;
         currentUser = loadUser();
+        context = MainActivity.this;
         if (mAuth.getCurrentUser() != null && currentUser != null) {
             // User is still logged in with Firebase, load the user profile
             onLoginSuccess(currentUser.getName(), currentUser.getEmail());
+            updateUserProfilePhoto();
             if (currentUser.getmAccessToken() == null) {
                 navigateToSpotifyLoginFragment();
             } else {
@@ -134,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow) // Add or remove IDs as needed
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_sample) // Add or remove IDs as needed
                 .setOpenableLayout(drawer)
                 .build();
 
@@ -167,9 +183,64 @@ public class MainActivity extends AppCompatActivity {
         TextView navEmail = navView.findViewById(R.id.navEmail);
         navName.setText(name);
         navEmail.setText(email);
-
         //Wrapped Fragment
     }
+
+    public static void updateUserProfilePhoto() {
+        onGetUserProfileClicked(context, binding.navView, currentUser, mOkHttpClient);
+    }
+
+    //Loading profile image
+    public static void onGetUserProfileClicked(Context context, NavigationView navigationView, User user, OkHttpClient okHttpClient) {
+        View navView = navigationView.getHeaderView(0);
+
+        if (user.getmAccessToken() == null) {
+            Toast.makeText(context, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        final Request request = new Request.Builder()
+                .url("https://api.spotify.com/v1/me")
+                .addHeader("Authorization", "Bearer " + user.getmAccessToken())
+                .build();
+
+        Call mCall = okHttpClient.newCall(request);
+
+        mCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("HTTP", "Failed to fetch data: " + e);
+                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to fetch data, watch Logcat for more details", Toast.LENGTH_SHORT).show());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseData = response.body().string();
+                try {
+                    final JSONObject jsonObject = new JSONObject(responseData);
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        try {
+                            if (jsonObject.getJSONArray("images").length() > 0) {
+                                String imageUrl = jsonObject.getJSONArray("images").getJSONObject(0).getString("url");
+                                // Use Glide to load the image into the ImageView
+                                ImageView profilePhoto = (ImageView) navView.findViewById(R.id.profilePhoto);
+                                if (profilePhoto != null) {
+                                    Log.d("ImageURL", imageUrl);
+                                    Glide.with(context).load(imageUrl).into(profilePhoto);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                } catch (JSONException e) {
+                    Log.d("JSON", "Failed to parse data: " + e);
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to parse data, watch Logcat for more details", Toast.LENGTH_SHORT).show());
+                }
+            }
+        });
+    }
+
 
     public static User getCurrentUser() {
         return currentUser;

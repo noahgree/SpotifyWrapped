@@ -30,6 +30,11 @@
     <fragment
         android:id="@+id/spotifyLoginFragment"
         android:name="com.example.spotifywrapped.ui.spotifylogin.SpotifyLoginFragment"
-        android:label="fragment_spotify_login"
+        android:label="Log into Spotify"
         tools:layout="@layout/fragment_spotify_login" />
+    <fragment
+        android:id="@+id/nav_sample"
+        android:name="com.example.spotifywrapped.ui.SampleMusicFragment"
+        android:label="Sample Music"
+        tools:layout="@layout/fragment_sample_music" />
 </navigation>

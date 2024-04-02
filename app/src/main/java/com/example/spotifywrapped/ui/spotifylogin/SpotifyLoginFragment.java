@@ -1,5 +1,8 @@
 package com.example.spotifywrapped.ui.spotifylogin;
 
+import static com.example.spotifywrapped.MainActivity.context;
+import static com.example.spotifywrapped.MainActivity.updateUserProfilePhoto;
+
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -86,6 +89,7 @@ public class SpotifyLoginFragment extends Fragment {
                         if (response.getType() == AuthorizationResponse.Type.TOKEN) {
                             MainActivity.saveSpotifyToken(response.getAccessToken());
                             mainActivity.setupNavigationAndToolbar();
+                            updateUserProfilePhoto();
                             NavController navController = Navigation.findNavController(mainActivity, R.id.nav_host_fragment_content_main);
                             navController.navigate(R.id.nav_gallery);
                         }
