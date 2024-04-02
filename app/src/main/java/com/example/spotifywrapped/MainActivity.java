@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         //currentUser = loadUser();
         instance = this;
-        if (mAuth.getCurrentUser() != null) {
+        currentUser = loadUser();
+        if (mAuth.getCurrentUser() != null && currentUser != null) {
             // User is still logged in with Firebase, load the user profile
-            currentUser = loadUser();
             onLoginSuccess(currentUser.getName(), currentUser.getEmail());
             if (currentUser.getmAccessToken() == null) {
                 navigateToSpotifyLoginFragment();
