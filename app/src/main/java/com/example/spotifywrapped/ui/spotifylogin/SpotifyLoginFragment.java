@@ -85,6 +85,7 @@ public class SpotifyLoginFragment extends Fragment {
                         final AuthorizationResponse response = AuthorizationClient.getResponse(result.getResultCode(), result.getData());
                         if (response.getType() == AuthorizationResponse.Type.TOKEN) {
                             MainActivity.saveSpotifyToken(response.getAccessToken());
+                            mainActivity.setupNavigationAndToolbar();
                             NavController navController = Navigation.findNavController(mainActivity, R.id.nav_host_fragment_content_main);
                             navController.navigate(R.id.nav_gallery);
                         }
