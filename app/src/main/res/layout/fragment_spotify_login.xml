@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.spotifylogin.SpotifyLoginFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/spotify_green"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/titleSLF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="30dp"
+            android:layout_weight="0"
+            android:fontFamily="@font/spotify_font"
+            android:gravity="center"
+            android:text="Link your\nSpotify acoount!"
+            android:textColor="@color/spotify_white"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/spotifySignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:layout_weight="0"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/spotify_white"
+            android:fontFamily="@font/spotify_font"
+            android:text="Sign In"
+            android:textColor="@color/spotify_black" />
+    </LinearLayout>
+</FrameLayout>

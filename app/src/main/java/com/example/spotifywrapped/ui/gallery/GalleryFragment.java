@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.databinding.FragmentGalleryBinding;
 
 public class GalleryFragment extends Fragment {

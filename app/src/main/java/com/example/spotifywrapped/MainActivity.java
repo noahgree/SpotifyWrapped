@@ -1,15 +1,28 @@
 package com.example.spotifywrapped;
 
+import android.content.ClipData;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import com.example.spotifywrapped.databinding.FragmentLogInBinding;
 import com.example.spotifywrapped.user.User;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -20,7 +33,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.spotifywrapped.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
+
+import org.w3c.dom.Text;
+
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
     private static NavigationView navigationView;
     private FirebaseAuth mAuth;
 
+    private static MainActivity instance;
+
+    private FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,21 +62,52 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        currentUser = loadUser();
-
-        if (currentUser == null) {
-            // User not logged in, show login fragment without the top bar
-            navigateToLoginFragment();
+        //currentUser = loadUser();
+        instance = this;
+        if (mAuth.getCurrentUser() != null) {
+            // User is still logged in with Firebase, load the user profile
+            currentUser = loadUser();
+            onLoginSuccess(currentUser.getName(), currentUser.getEmail());
+            if (currentUser.getmAccessToken() == null) {
+                navigateToSpotifyLoginFragment();
+            } else {
+                setupNavigationAndToolbar();
+                //onLoginSuccess(currentUser.getName(), currentUser.getEmail());
+            }
         } else {
-            // User is logged in, proceed as normal
-            setupNavigationAndToolbar();
+            // No Firebase session, user needs to log in again
+            navigateToLoginFragment();
         }
+        //TODO: NEED TO IMPLEMENT THE LOG OUT BUTTON
     }
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
+
+    public static void saveSpotifyToken(String token) {
+        SharedPreferences sharedPreferences = getInstance().getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("SpotifyToken", token);
+        editor.apply();
+        currentUser.setmAccessToken(token);
+    }
+
+    public static String getSpotifyToken() {
+        SharedPreferences sharedPreferences = getInstance().getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        return sharedPreferences.getString("SpotifyToken", null);
+    }
+
+    public static boolean isSpotifyLoggedIn() {
+        return getSpotifyToken() != null;
+    }
+
 
     private User loadUser() {
         SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
         Gson gson = new Gson();
         String userJson = sharedPreferences.getString("CurrentUser", null);
+
         return gson.fromJson(userJson, User.class);
     }
 
@@ -62,6 +117,14 @@ public class MainActivity extends AppCompatActivity {
         // Navigate to the Login Fragment immediately
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         navController.navigate(R.id.nav_login); // Adjust this ID based on your navigation graph
+    }
+
+    private void navigateToSpotifyLoginFragment() {
+        // Ensure the AppBar (Toolbar) is not shown for the Login Fragment
+        binding.appBarMain.toolbar.setVisibility(View.GONE);
+        // Navigate to the Login Fragment immediately
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        navController.navigate(R.id.spotifyLoginFragment); // Adjust this ID based on your navigation graph
     }
 
     public void setupNavigationAndToolbar() {
@@ -78,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
         // Show the AppBar (Toolbar) if it was previously hidden
         binding.appBarMain.toolbar.setVisibility(View.VISIBLE);
     }
@@ -98,11 +160,14 @@ public class MainActivity extends AppCompatActivity {
     }
     //Updates new values with the current user.
     public static void onLoginSuccess(String name, String email) {
+        NavigationView navigationView = (NavigationView) binding.navView;
+        View navView = navigationView.getHeaderView(0);
         //Side Navigation
-        TextView navName = binding.getRoot().findViewById(R.id.navName);
-        TextView navEmail = binding.getRoot().findViewById(R.id.navEmail);
+        TextView navName = navView.findViewById(R.id.navName);
+        TextView navEmail = navView.findViewById(R.id.navEmail);
         navName.setText(name);
         navEmail.setText(email);
+
         //Wrapped Fragment
     }
 
