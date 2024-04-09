@@ -23,4 +23,9 @@
     <string name="top_song_placeholder">SONG NAME</string>
 
     <string name="matching_game_home">Matching: Your Top Albums</string>
+    <string-array name="time_frame_options">
+        <item>Short Term</item>
+        <item>Medium Term</item>
+        <item>Long Term</item>
+    </string-array>
 </resources>

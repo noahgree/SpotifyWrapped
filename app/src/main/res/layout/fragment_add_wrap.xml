@@ -44,7 +44,8 @@
             android:ems="10"
             android:fontFamily="@font/spotify_font"
             android:inputType="text"
-            android:text="Name"
+            android:hint="Enter name here"
+            android:textColorHint="@color/spotify_white"
             android:textColor="@color/spotify_green"
             android:textSize="20sp" />
 
@@ -54,21 +55,35 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20sp"
             android:fontFamily="@font/spotify_font"
-            android:text="TimeFrame: "
+            android:text="Time Frame: "
             android:textColor="@color/spotify_green"
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/spinner"
+        <TextView
+            android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20sp"
-            android:layout_marginVertical="10sp"
-            android:background="@color/spotify_dark_grey"
-            android:backgroundTint="@color/spotify_green"
-            android:dropDownWidth="match_parent"
+            android:fontFamily="@font/spotify_font"
+            android:text="Tap on the view below to select a time frame."
+            android:textColor="@color/spotify_white" />
+
+        <Spinner
+            android:id="@+id/timeFrameSpinner"
+            style="@android:style/Widget.Spinner.DropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20sp"
+            android:layout_marginTop="10sp"
+            android:background="@color/spotify_green"
+            android:dropDownWidth="wrap_content"
+            android:dropDownSelector="@android:drawable/arrow_down_float"
+            android:entries="@array/time_frame_options"
+            android:minHeight="50dp"
+            android:popupBackground="@color/spotify_green"
             android:spinnerMode="dropdown" />
+
 
         <TextView
             android:id="@+id/textView8"
