@@ -121,6 +121,7 @@ public class SpotifyLoginFragment extends Fragment {
      * What is token?
      * https://developer.spotify.com/documentation/general/guides/authorization-guide/
      */
+
     public void getToken() {
         final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.TOKEN);
         Intent intent = AuthorizationClient.createLoginActivityIntent(getActivity(), request);

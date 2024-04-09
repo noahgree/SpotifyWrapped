@@ -1,36 +1,27 @@
 package com.example.spotifywrapped;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import com.bumptech.glide.Glide;
-import com.example.spotifywrapped.databinding.FragmentLogInBinding;
 import com.example.spotifywrapped.user.User;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -46,13 +37,8 @@ import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
-
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
 
+    interface CallbackTwo {
+        void onComplete(boolean isValid);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,12 +74,27 @@ public class MainActivity extends AppCompatActivity {
             // User is still logged in with Firebase, load the user profile
             onLoginSuccess(currentUser.getName(), currentUser.getEmail());
             updateUserProfilePhoto();
+
             if (currentUser.getmAccessToken() == null) {
                 navigateToSpotifyLoginFragment();
             } else {
-                setupNavigationAndToolbar();
+                //setupNavigationAndToolbar();
+                isSpotifyTokenValid(new CallbackTwo() {
+                    @Override
+                    public void onComplete(boolean isValid) {
+                        if (!isValid) {
+                            navigateToSpotifyLoginFragment();
+                            return;
+                        } else {
+                            setupNavigationAndToolbar();
+                        }
+
+                        // Proceed with the API call here, knowing the token is valid
+                    }
+                });
                 //onLoginSuccess(currentUser.getName(), currentUser.getEmail());
             }
+
         } else {
             // No Firebase session, user needs to log in again
             navigateToLoginFragment();
@@ -100,6 +105,33 @@ public class MainActivity extends AppCompatActivity {
     public static MainActivity getInstance() {
         return instance;
     }
+
+    private void isSpotifyTokenValid(final CallbackTwo callback) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Request request = new Request.Builder()
+                        .url("https://api.spotify.com/v1/me")
+                        .addHeader("Authorization", "Bearer " + currentUser.getmAccessToken())
+                        .build();
+
+                try {
+                    Response response = mOkHttpClient.newCall(request).execute();
+                    // If the response is successful, the token is valid
+                    boolean isValid = response.isSuccessful();
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        callback.onComplete(isValid);
+                    });
+                } catch (IOException e) {
+                    Log.d("SpotifyTokenCheck", "Failed to validate token: " + e);
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        callback.onComplete(false);
+                    });
+                }
+            }
+        }).start();
+    }
+
 
     public static void saveSpotifyToken(String token) {
         SharedPreferences sharedPreferences = getInstance().getSharedPreferences("AppPrefs", MODE_PRIVATE);
