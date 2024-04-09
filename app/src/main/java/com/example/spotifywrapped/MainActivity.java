@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         instance = this;
         currentUser = loadUser();
         context = MainActivity.this;
+        //Deals with if user needs to log in or refresh the spotify token.
         if (mAuth.getCurrentUser() != null && currentUser != null) {
             // User is still logged in with Firebase, load the user profile
             onLoginSuccess(currentUser.getName(), currentUser.getEmail());
@@ -78,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             if (currentUser.getmAccessToken() == null) {
                 navigateToSpotifyLoginFragment();
             } else {
-                //setupNavigationAndToolbar();
                 isSpotifyTokenValid(new CallbackTwo() {
                     @Override
                     public void onComplete(boolean isValid) {
@@ -88,15 +88,11 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             setupNavigationAndToolbar();
                         }
-
-                        // Proceed with the API call here, knowing the token is valid
                     }
                 });
-                //onLoginSuccess(currentUser.getName(), currentUser.getEmail());
             }
 
         } else {
-            // No Firebase session, user needs to log in again
             navigateToLoginFragment();
         }
         //TODO: NEED TO IMPLEMENT THE LOG OUT BUTTON
@@ -165,6 +161,14 @@ public class MainActivity extends AppCompatActivity {
         // Navigate to the Login Fragment immediately
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         navController.navigate(R.id.nav_login); // Adjust this ID based on your navigation graph
+    }
+
+    private void navigateToNewWrapFragment() {
+        // Ensure the AppBar (Toolbar) is not shown for the Login Fragment
+        binding.appBarMain.toolbar.setVisibility(View.GONE);
+        // Navigate to the Login Fragment immediately
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        navController.navigate(R.id.nav_addWrap); // Adjust this ID based on your navigation graph
     }
 
     private void navigateToSpotifyLoginFragment() {
