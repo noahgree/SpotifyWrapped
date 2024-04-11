@@ -1,6 +1,5 @@
 package com.example.spotifywrapped.ui.gallery.pages;
 
-import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
@@ -27,10 +26,6 @@ import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentTopArtistBinding;
 import com.example.spotifywrapped.databinding.FragmentTopSongBinding;
 import com.example.spotifywrapped.user.User;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -43,53 +38,17 @@ import java.util.Map;
 public class TopArtist extends Fragment {
 
     private FragmentTopArtistBinding binding;
+    public static Context context;
 
-    public void loadWrap(View root) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        // Assuming 'users' is your collection and 'userId' is the specific user's ID who has the wraps
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid(); // Get current logged-in user ID
-        DocumentReference docRef = db.collection("users").document(userId);
+    private static User currentUser;
 
-        docRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    // Assuming wraps is a field which is a list of maps
-                    ArrayList<Map<String, Object>> wraps = (ArrayList<Map<String, Object>>) document.get("wraps");
-                    if (wraps != null && !wraps.isEmpty()) {
-                        Map<String, Object> latestWrap = wraps.get(wraps.size() - 1); // Get the last wrap
-                        handleWrap(latestWrap, root); // Process or display your wrap
-                    } else {
-                        Log.d(TAG, "No wraps found");
-                    }
-                } else {
-                    Log.d(TAG, "No such document");
-                }
-            } else {
-                Log.d(TAG, "get failed with ", task.getException());
-            }
-        });
+    private User loadUser() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String userJson = sharedPreferences.getString("CurrentUser", null);
+        Log.d("SharedPreferences", "Loaded token: " + userJson);
+        return gson.fromJson(userJson, User.class);
     }
-
-    private void handleWrap(Map<String, Object> wrap, View root) {
-        TextView artistName = root.findViewById(R.id.topartist);
-        ImageView topartistimage = root.findViewById(R.id.artistimage);
-
-        List<String> artists = (ArrayList<String>) wrap.get("artists");
-        Log.d("artistssssss", artists.toString());
-        List<String> images = (ArrayList<String>) wrap.get("artistsimage");
-
-        if (artists != null && !artists.isEmpty() && images != null && !images.isEmpty()) {
-            artistName.setText(artists.get(0));
-            Glide.with(getActivity()) // Use getActivity() for safer context usage.
-                    .load(images.get(0))
-                    .into(topartistimage);
-        } else {
-            artistName.setText("No track info available");
-        }
-
-    }
-
 
 
     @Override
@@ -97,8 +56,17 @@ public class TopArtist extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentTopArtistBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        loadWrap(root);
+        context = MainActivity.getInstance();
+        currentUser = loadUser();
 
+        ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
+        Map<String, Object> wrap = wraps.get(0);
+        TextView artistName = (TextView) root.findViewById(R.id.topartist);
+        artistName.setText((String) ((ArrayList<String>) wrap.get("artists")).get(0));
+        ImageView topartistimage = (ImageView) root.findViewById(R.id.artistimage);
+        Glide.with(context)
+                .load((String) ((ArrayList<String>) wrap.get("artistsimage")).get(0))
+                .into(topartistimage);
         // Set the click listener for the button
         binding.topartistnext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +85,6 @@ public class TopArtist extends Fragment {
 
         return root;
     }
-
 
     @Override
     public void onDestroyView() {
