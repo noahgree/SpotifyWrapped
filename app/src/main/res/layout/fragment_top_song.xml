@@ -77,20 +77,6 @@
         app:srcCompat="?attr/actionModeCloseDrawable" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/topsongback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:outlineAmbientShadowColor="#00FFFFFF"
-        android:outlineSpotShadowColor="#00FFFFFF"
-        app:backgroundTint="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/topsongexit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

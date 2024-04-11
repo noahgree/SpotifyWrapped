@@ -245,6 +245,10 @@ public class AddWrapFragment extends Fragment {
         binding.generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("bug", "here");
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.nav_topSong);
+
                 String term = spinner.getSelectedItem().toString().split(" ")[0].toLowerCase();
                 EditText name = (EditText) root.findViewById(R.id.editTextName);
                 Map<String, Object> wrap = new HashMap<>();

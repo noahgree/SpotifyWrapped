@@ -53,22 +53,22 @@
         android:label="TopArtist"
         tools:layout="@layout/fragment_top_artist" />
     <fragment
-        android:id="@+id/top5Songs"
+        android:id="@+id/nav_top5Songs"
         android:name="com.example.spotifywrapped.ui.gallery.pages.Top5Songs"
         android:label="Top5Songs"
         tools:layout="@layout/fragment_top_5_songs" />
     <fragment
-        android:id="@+id/top5Artists"
+        android:id="@+id/nav_top5Artists"
         android:name="com.example.spotifywrapped.ui.gallery.pages.Top5Artists"
         android:label="Top5Artists"
         tools:layout="@layout/fragment_top_5_artists" />
     <fragment
-        android:id="@+id/topGenre"
+        android:id="@+id/nav_topGenre"
         android:name="com.example.spotifywrapped.ui.gallery.pages.TopGenre"
         android:label="TopGenre"
         tools:layout="@layout/fragment_top_genre" />
     <fragment
-        android:id="@+id/wrappedSummary"
+        android:id="@+id/nav_wrappedSummary"
         android:name="com.example.spotifywrapped.ui.gallery.pages.WrappedSummary"
         android:label="WrappedSummary"
         tools:layout="@layout/fragment_wrapped_summary" />

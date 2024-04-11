@@ -33,7 +33,7 @@ public class TopSong extends Fragment {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_topArtist);
+                navController.navigate(R.id.nav_top5Songs);
             }
         });
 
