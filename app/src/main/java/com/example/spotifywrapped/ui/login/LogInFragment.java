@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -36,6 +37,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -146,6 +148,7 @@ public class LogInFragment extends Fragment {
                                                 Map<String, Object> userAccount = new HashMap<>();
                                                 userAccount.put("name", fullName);
                                                 userAccount.put("email", email);
+                                                userAccount.put("wraps", new ArrayList<Map<String, Object>>());
                                                 // Avoid storing plain passwords
                                                 db.collection("Accounts").document(user.getUid())
                                                         .set(userAccount)
@@ -185,11 +188,12 @@ public class LogInFragment extends Fragment {
                         if (document != null && document.exists()) {
                             String name = document.getString("name");
                             String email = document.getString("email");
+                            ArrayList<Map<String, Object>> wraps = (ArrayList<Map<String, Object>>) document.get("wraps");
                             String passwordf = document.getString("password");
 
                             Log.d("TAG", "DocumentSnapshot data: " + document.getData());
                             // You can use the retrieved data here (name, email, password)
-                            currentUser[0] = new User(email, passwordf, userId, name);
+                            currentUser[0] = new User(email, passwordf, userId, name, wraps);
                             MainActivity.setCurrentUser(currentUser[0]);
                             //Use this method in MainActivity to update any values with the name and email
                             MainActivity.onLoginSuccess(name, email);
@@ -222,11 +226,21 @@ public class LogInFragment extends Fragment {
             if (mainActivity != null) {
                 // Setup main interface and navigate to the gallery fragment
                 mainActivity.setupNavigationAndToolbar();
+                hideActionBar();
                 NavController navController = Navigation.findNavController(mainActivity, R.id.nav_host_fragment_content_main);
                 navController.navigate(R.id.spotifyLoginFragment);
             }
         } else {
             Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void hideActionBar() {
+        if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+            if (appCompatActivity.getSupportActionBar() != null) {
+                appCompatActivity.getSupportActionBar().hide();
+            }
         }
     }
 

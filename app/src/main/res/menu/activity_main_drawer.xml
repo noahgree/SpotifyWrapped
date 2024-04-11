@@ -17,10 +17,10 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_slideshow" />
         <item
-            android:id="@+id/nav_sample"
+            android:id="@+id/nav_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="?android:attr/fingerprintAuthDrawable"
-            android:title="Sample Music" />
+            android:icon="@android:drawable/ic_menu_preferences"
+            android:title="Settings" />
     </group>
 </menu>

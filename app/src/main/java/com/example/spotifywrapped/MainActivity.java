@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -171,12 +172,20 @@ public class MainActivity extends AppCompatActivity {
         navController.navigate(R.id.nav_addWrap); // Adjust this ID based on your navigation graph
     }
 
+    private void updateToolbarForLoggedOutUser() {
+        setSupportActionBar(binding.appBarMain.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false); // Remove the back/up button
+    }
+
     private void navigateToSpotifyLoginFragment() {
         // Ensure the AppBar (Toolbar) is not shown for the Login Fragment
-        binding.appBarMain.toolbar.setVisibility(View.GONE);
-        // Navigate to the Login Fragment immediately
+//        binding.appBarMain.toolbar.setVisibility(View.GONE);
+//        // Navigate to the Login Fragment immediately
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+//        navController.navigate(R.id.spotifyLoginFragment); // Adjust this ID based on your navigation graph
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        navController.navigate(R.id.spotifyLoginFragment); // Adjust this ID based on your navigation graph
+        navController.popBackStack(R.id.nav_home, true); // Clear back stack up to home
+        navController.navigate(R.id.nav_login);
     }
 
     public void setupNavigationAndToolbar() {
@@ -186,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_sample) // Add or remove IDs as needed
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_settings) // Add or remove IDs as needed
                 .setOpenableLayout(drawer)
                 .build();
 
@@ -220,6 +229,32 @@ public class MainActivity extends AppCompatActivity {
         navName.setText(name);
         navEmail.setText(email);
         //Wrapped Fragment
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_logout) {
+            logoutUser();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logoutUser() {
+        // Sign out from Firebase
+        FirebaseAuth.getInstance().signOut();
+
+        // Optional: Clear any stored data (e.g., SharedPreferences)
+        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        // Optional: Navigate the user to the login screen
+        navigateToLoginFragment();
+        updateToolbarForLoggedOutUser();
+        // Show a message to the user
+        Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
     }
 
     public static void updateUserProfilePhoto() {
