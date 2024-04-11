@@ -20,6 +20,7 @@
     <string name="mins_listened_placeholder">XXX</string>
     <string name="top_genre_placeholder">GENRE NAME</string>
     <string name="top_song_placeholder">SONG NAME</string>
+    <string name="top_artist_placeholder">ARTIST NAME</string>
 
     <string name="matching_game_home">Matching: Your Top Albums</string>
     <string-array name="time_frame_options">
