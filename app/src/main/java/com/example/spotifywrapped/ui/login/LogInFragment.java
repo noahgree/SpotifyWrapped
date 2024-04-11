@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -225,11 +226,21 @@ public class LogInFragment extends Fragment {
             if (mainActivity != null) {
                 // Setup main interface and navigate to the gallery fragment
                 mainActivity.setupNavigationAndToolbar();
+                hideActionBar();
                 NavController navController = Navigation.findNavController(mainActivity, R.id.nav_host_fragment_content_main);
                 navController.navigate(R.id.spotifyLoginFragment);
             }
         } else {
             Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void hideActionBar() {
+        if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+            if (appCompatActivity.getSupportActionBar() != null) {
+                appCompatActivity.getSupportActionBar().hide();
+            }
         }
     }
 

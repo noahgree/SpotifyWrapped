@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_sample) // Add or remove IDs as needed
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_settings) // Add or remove IDs as needed
                 .setOpenableLayout(drawer)
                 .build();
 
