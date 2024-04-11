@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/spotify_font"
-        android:text="@string/top_song_placeholder"
+        android:text="Song"
         android:textColor="@color/spotify_black"
         android:textSize="40sp"
         android:textStyle="bold"

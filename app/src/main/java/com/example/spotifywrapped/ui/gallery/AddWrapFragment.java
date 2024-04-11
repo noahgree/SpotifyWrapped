@@ -265,7 +265,7 @@ public class AddWrapFragment extends Fragment {
                 String term = spinner.getSelectedItem().toString().split(" ")[0].toLowerCase();
                 EditText name = (EditText) root.findViewById(R.id.editTextName);
                 Map<String, Object> wrap = new HashMap<>();
-                wrap.put("Name", name.getText().toString());
+                wrap.put("Name", name.toString());
 
                 DataCompletionHandler handler = updatedWrap -> {
                     // This block will be called once data fetching is complete.
@@ -277,8 +277,8 @@ public class AddWrapFragment extends Fragment {
                         dataToUpdate.put("email", user.getEmail());
                         dataToUpdate.put("wraps", FieldValue.arrayUnion(updatedWrap));
                         List<Map<String, Object>> wraps = currentUser.getwraps();
-                        Log.d("Firestore CHECK____________", wraps.toString());
                         wraps.add(updatedWrap);
+                        Log.d("Firestore CHECK____________", wraps.toString());
                         dataToUpdate.put("name", user.getDisplayName());
                         dataToUpdate.put("email", user.getEmail());
                         dataToUpdate.put("wraps", wraps);
@@ -287,7 +287,7 @@ public class AddWrapFragment extends Fragment {
                                 .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
                                 .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
                         Log.d("Firestore CHECK", user.getUid());
-                        //currentUser.addWrap(updatedWrap);
+                        currentUser.addWrap(updatedWrap);
                         RadioButton pub = (RadioButton) root.findViewById(R.id.radioButton2);
                         if (pub.isActivated()) {
                             dataToUpdate.put("name", "public");
