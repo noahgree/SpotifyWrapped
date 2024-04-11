@@ -260,7 +260,6 @@ public class AddWrapFragment extends Fragment {
         binding.generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("bug", "here");
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topSong);
 
