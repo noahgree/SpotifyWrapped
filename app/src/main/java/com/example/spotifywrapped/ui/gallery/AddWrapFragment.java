@@ -290,7 +290,7 @@ public class AddWrapFragment extends Fragment {
                         Log.d("Firestore CHECK", user.getUid());
                         currentUser.addWrap(updatedWrap);
                         RadioButton pub = (RadioButton) root.findViewById(R.id.radioButton2);
-                        if (pub.isActivated()) {
+                        if (pub.isChecked()) {
                             dataToUpdate.put("name", "public");
                             dataToUpdate.put("email", "public@gmail.com");
                             dataToUpdate.put("wraps", FieldValue.arrayUnion(updatedWrap));
