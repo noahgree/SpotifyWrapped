@@ -75,8 +75,8 @@ public class AddWrapFragment extends Fragment {
     private static User currentUser;
     private static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
+    //private FirebaseAuth mAuth;
+    //private FirebaseFirestore db;
 
 
 
@@ -107,8 +107,8 @@ public class AddWrapFragment extends Fragment {
         super.onCreate(savedInstanceState);
         context = MainActivity.getInstance();
         currentUser = loadUser();
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        //mAuth = FirebaseAuth.getInstance();
+        //db = FirebaseFirestore.getInstance();
     }
 
     private User loadUser() {
@@ -226,13 +226,13 @@ public class AddWrapFragment extends Fragment {
         binding = FragmentAddWrapBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         Spinner spinner = (Spinner) root.findViewById(R.id.timeFrameSpinner);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
-        FirebaseUser user = mAuth.getCurrentUser();
+        //FirebaseUser user = mAuth.getCurrentUser();
 
         // Reference to the user's document in Firestore
-        DocumentReference userRef = db.collection("users").document(user.getUid());
+        //DocumentReference userRef = db.collection("users").document(user.getUid());
 
         binding.generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
