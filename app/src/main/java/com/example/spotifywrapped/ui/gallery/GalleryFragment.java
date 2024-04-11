@@ -43,7 +43,7 @@ public class GalleryFragment extends Fragment {
 
     private FragmentGalleryBinding binding;
     private RecyclerView recyclerView;
-    private static ArrayList<WrapObject> WrapArrayList;
+    private static ArrayList<WrapObject> WrapArrayList = new ArrayList<>();
     private static WrapListAdapter myAdapter;
     public static Context context;
 
@@ -58,21 +58,21 @@ public class GalleryFragment extends Fragment {
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         context = MainActivity.getInstance();
-        /*if (MainActivity.getInstance() != null) {
+        if (MainActivity.getInstance() != null) {
             currentUser = loadUser();
             ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
             for (int i = 0; i < wraps.size(); i++) {
                 Map<String, Object> wrap = wraps.get(i);
                 WrapArrayList.add(new WrapObject(i, (String) wrap.get("name"), ((ArrayList<String>) wrap.get("artistsimage")).get(0), ((ArrayList<String>) wrap.get("tracksimage")).get(0), ((ArrayList<String>) wrap.get("artists")).get(0), ((ArrayList<String>) wrap.get("tracks")).get(0)));
             }
-        }*/
+        }
 
 
         recyclerView = root.findViewById(R.id.wrapRecycler); // make sure recyclerView is in your FragmentGalleryBinding
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         myAdapter = new WrapListAdapter(getContext(), WrapArrayList);
         //recyclerView.setAdapter(myAdapter);
-        //myAdapter.notifyDataSetChanged();
+        myAdapter.notifyDataSetChanged();
 
 
         // Set the click listener for the button
