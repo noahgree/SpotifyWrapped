@@ -54,6 +54,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -167,61 +168,73 @@ public class AddWrapFragment extends Fragment {
         Log.d("SharedPreferences", "Loaded token: " + string);
         return sharedPreferences.getString("SpotifyToken", null);
     }
-    public static void onWrapMade(Context context, View view, OkHttpClient okHttpClient, String term, String thing, Map<String, Object> wrap, DataCompletionHandler handler) {
+    public static void onWrapMade(Context context, View view, OkHttpClient okHttpClient, String term, Map<String, Object> wrap, DataCompletionHandler handler) {
 
         if (getSpotifyToken() == null) {
             Toast.makeText(context, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        final Request request = new Request.Builder()
-                .url("https://api.spotify.com/v1/me/top/" + thing + "?time_range=" + term +"_term&limit=5")
-                .addHeader("Authorization", "Bearer " + getSpotifyToken())
-                .build();
+        final AtomicInteger completionCounter = new AtomicInteger(0); // Synchronization counter
+        List<String> endpoints = Arrays.asList("artists", "tracks"); // Assuming these are your two categories
+        for (String thing : endpoints) {
 
-        Call mCall = okHttpClient.newCall(request);
+            final Request request = new Request.Builder()
+                    .url("https://api.spotify.com/v1/me/top/" + thing + "?time_range=" + term + "_term&limit=5")
+                    .addHeader("Authorization", "Bearer " + getSpotifyToken())
+                    .build();
 
-        mCall.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d("HTTP", "Failed to fetch data: " + e);
-                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to fetch data, watch Logcat for more details", Toast.LENGTH_SHORT).show());
-            }
+            Call mCall = okHttpClient.newCall(request);
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String responseData = response.body().string();
-                try {
-                    final JSONObject jsonObject = new JSONObject(responseData);
-                    new Handler(Looper.getMainLooper()).post(() -> {
-                        try {
-                            if (jsonObject.getJSONArray("items").length() > 0) {
-                                List<String> name = new ArrayList<>();
-                                List<String> url = new ArrayList<>();
-                                List<String> genre = new ArrayList<>();
-                                for (int i = 0; i < 5; i++) {
-                                    name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
-                                    url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("images").getJSONObject(2).getString("url"));
-                                    genre.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").getString(0));
-                                }
-                                wrap.put(thing, name);
-                                wrap.put(thing + "image", url);
-                                wrap.put(thing + "genre", genre);
-                                if (handler != null) {
-                                    handler.onDataCompleted(wrap);
-                                }
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                } catch (JSONException e) {
-                    Log.d("JSON", "Failed to parse data: " + e);
-                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to parse data, watch Logcat for more details", Toast.LENGTH_SHORT).show());
+            mCall.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("HTTP", "Failed to fetch data: " + e);
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to fetch data, watch Logcat for more details", Toast.LENGTH_SHORT).show());
                 }
-            }
-        });
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String responseData = response.body().string();
+                    try {
+                        final JSONObject jsonObject = new JSONObject(responseData);
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            try {
+                                if (jsonObject.getJSONArray("items").length() > 0) {
+                                    List<String> name = new ArrayList<>();
+                                    List<String> url = new ArrayList<>();
+                                    List<String> genre = new ArrayList<>();
+                                    for (int i = 0; i < 5; i++) {
+                                        if (thing.equals("artists")) {
+                                            name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
+                                            url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("images").getJSONObject(2).getString("url"));
+                                            genre.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").getString(0));
+                                        } else {
+                                            name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
+                                            url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONObject("album").getJSONArray("images").getJSONObject(2).getString("url"));
+                                        }
+                                    }
+                                    wrap.put(thing, name);
+                                    wrap.put(thing + "image", url);
+                                    if (thing.equals("artists")) {
+                                        wrap.put(thing + "genre", genre);
+                                    }
+                                    if (handler != null && completionCounter.incrementAndGet() == 2) {
+                                        handler.onDataCompleted(wrap);
+                                    }
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    } catch (JSONException e) {
+                        Log.d("JSON", "Failed to parse data: " + e);
+                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to parse data, watch Logcat for more details", Toast.LENGTH_SHORT).show());
+                    }
+                }
+            });
+        }
     }
 
 
@@ -292,8 +305,7 @@ public class AddWrapFragment extends Fragment {
                 };
 
 
-                onWrapMade(context, root, mOkHttpClient, term, "artists", wrap, handler);
-                onWrapMade(context, root, mOkHttpClient, term, "tracks", wrap, handler);
+                onWrapMade(context, root, mOkHttpClient, term, wrap, handler);
             }
         });
 
