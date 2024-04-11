@@ -254,7 +254,7 @@ public class AddWrapFragment extends Fragment {
                 onWrapMade(context, root, mOkHttpClient, term, "artists", wrap, handler);
                 onWrapMade(context, root, mOkHttpClient, term, "tracks", wrap, handler);
 
-                userRef.update("wraps", FieldValue.arrayUnion(wrap))
+                /*userRef.update("wraps", FieldValue.arrayUnion(wrap))
                         .addOnSuccessListener(aVoid -> {
                             Log.d("Firestore", "Wrap successfully added to user");
                             // Handle success, e.g., by notifying the user
@@ -262,7 +262,7 @@ public class AddWrapFragment extends Fragment {
                         .addOnFailureListener(e -> {
                             Log.w("Firestore", "Error adding wrap to user", e);
                             // Handle failure, e.g., by notifying the user
-                        });
+                        });*/
 
             }
         });
