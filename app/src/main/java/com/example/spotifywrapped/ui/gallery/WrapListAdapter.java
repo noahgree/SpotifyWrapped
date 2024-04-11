@@ -10,16 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.ui.gallery.pages.TopSong;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -71,12 +67,12 @@ public class WrapListAdapter extends RecyclerView.Adapter<WrapListAdapter.MyView
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            accountName = itemView.findViewById(R.id.accountName);
+            accountName = itemView.findViewById(R.id.wrapName);
             //type = itemView.findViewById(R.id.timeFrame);
-            artistName = itemView.findViewById(R.id.textView6);
-            songName = itemView.findViewById(R.id.textView7);
-            songImage = itemView.findViewById(R.id.imageView2);
-            artistImage = itemView.findViewById(R.id.imageView3);
+            artistName = itemView.findViewById(R.id.albumName1);
+            songName = itemView.findViewById(R.id.albumName2);
+            songImage = itemView.findViewById(R.id.album1);
+            artistImage = itemView.findViewById(R.id.album2);
             WrapView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

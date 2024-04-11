@@ -3,7 +3,10 @@ package com.example.spotifywrapped.ui.spotifylogin;
 import static com.example.spotifywrapped.MainActivity.context;
 import static com.example.spotifywrapped.MainActivity.updateUserProfilePhoto;
 
+import android.app.Activity;
 import android.os.Bundle;
+
+import static android.content.ContentValues.TAG;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -33,6 +36,10 @@ import android.widget.Toast;
 
 import com.example.spotifywrapped.databinding.FragmentHomeBinding;
 import com.example.spotifywrapped.databinding.FragmentLogInBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
@@ -41,6 +48,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -59,6 +69,9 @@ public class SpotifyLoginFragment extends Fragment {
     private final OkHttpClient mOkHttpClient = new OkHttpClient();
     private String mAccessToken, mAccessCode;
     private Call mCall;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+
     private ActivityResultLauncher<Intent> spotifyAuthLauncher;
 
     private AppCompatButton loginButton;
@@ -90,6 +103,18 @@ public class SpotifyLoginFragment extends Fragment {
                             MainActivity.saveSpotifyToken(response.getAccessToken());
                             mainActivity.setupNavigationAndToolbar();
                             updateUserProfilePhoto();
+                            mAuth = FirebaseAuth.getInstance();
+                            db = FirebaseFirestore.getInstance();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null) {
+                                Map<String, Object> userAccount = new HashMap<>();
+                                userAccount.put("token", response.getAccessToken());
+
+                                db.collection("Accounts").document(user.getUid())
+                                        .set(userAccount, SetOptions.merge())
+                                        .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                                        .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+                            }
                             NavController navController = Navigation.findNavController(mainActivity, R.id.nav_host_fragment_content_main);
                             navController.navigate(R.id.nav_gallery);
                         }
@@ -98,6 +123,7 @@ public class SpotifyLoginFragment extends Fragment {
 
         if (MainActivity.isSpotifyLoggedIn()) {
             // User is already logged in with Spotify, navigate away or load data
+
         }
 
         binding.spotifySignIn.setOnClickListener(v -> getToken());
@@ -220,7 +246,7 @@ public class SpotifyLoginFragment extends Fragment {
     private AuthorizationRequest getAuthenticationRequest(AuthorizationResponse.Type type) {
         return new AuthorizationRequest.Builder(CLIENT_ID, type, getRedirectUri().toString())
                 .setShowDialog(false)
-                .setScopes(new String[] { "user-read-email", "user-top-read" }) // <--- Change the scope of your requested token here
+                .setScopes(new String[] { "user-read-email", "user-top-read" })
                 .setCampaign("your-campaign-token")
                 .build();
     }

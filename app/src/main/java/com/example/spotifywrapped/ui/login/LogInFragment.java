@@ -190,7 +190,7 @@ public class LogInFragment extends Fragment {
                             String email = document.getString("email");
                             ArrayList<Map<String, Object>> wraps = (ArrayList<Map<String, Object>>) document.get("wraps");
                             String passwordf = document.getString("password");
-
+                            String token = document.getString("token");
                             Log.d("TAG", "DocumentSnapshot data: " + document.getData());
                             // You can use the retrieved data here (name, email, password)
                             currentUser[0] = new User(email, passwordf, userId, name, wraps);

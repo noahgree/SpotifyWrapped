@@ -6,6 +6,23 @@ import java.util.UUID;
 public class WrapObject{
     private String name;
     private String artistImage;
+
+    public String getArtistImage() {
+        return artistImage;
+    }
+
+    public String getSongImage() {
+        return songImage;
+    }
+
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public String getSongName() {
+        return songName;
+    }
+
     private String songImage;
     private String artistName;
     private String songName;

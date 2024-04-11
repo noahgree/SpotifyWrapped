@@ -6,20 +6,164 @@
     android:layout_height="match_parent"
     android:background="#0062ff">
 
-    <TextView
-        android:id="@+id/top5artistsintro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/spotify_font"
-        android:text="Your Top Artists"
-        android:textAlignment="textStart"
-        android:textColor="@color/spotify_black"
-        android:textSize="59sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/top5artistsexit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:outlineAmbientShadowColor="#00FFFFFF"
+            android:outlineSpotShadowColor="#00FFFFFF"
+            app:backgroundTint="#00FFFFFF"
+            app:srcCompat="@android:drawable/ic_delete" />
+
+        <TextView
+            android:id="@+id/top5artistsintro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/spotify_font"
+            android:text="Your Top Artists"
+            android:textAlignment="textStart"
+            android:textColor="@color/spotify_black"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ranking1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/spotify_font"
+                android:text="#1"
+                android:textColor="@color/spotify_black"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/topartistimage1"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                app:srcCompat="@drawable/logo"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:id="@+id/topartisttext1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:fontFamily="@font/spotify_font"
+                android:text="@string/top_artist_placeholder"
+                android:textAlignment="textStart"
+                android:textColor="@color/spotify_black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ranking2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/spotify_font"
+                android:text="#2"
+                android:textColor="@color/spotify_black"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/topartistimage2"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                app:srcCompat="@drawable/logo"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:id="@+id/topartisttext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:fontFamily="@font/spotify_font"
+                android:text="@string/top_artist_placeholder"
+                android:textAlignment="textStart"
+                android:textColor="@color/spotify_black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ranking3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/spotify_font"
+                android:text="#3"
+                android:textColor="@color/spotify_black"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/topartistimage3"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                app:srcCompat="@drawable/logo"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:id="@+id/topartisttext3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:fontFamily="@font/spotify_font"
+                android:text="@string/top_artist_placeholder"
+                android:textAlignment="textStart"
+                android:textColor="@color/spotify_black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/top5artistsback"
@@ -50,48 +194,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="?attr/actionModeCloseDrawable" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/top5artistsexit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:outlineAmbientShadowColor="#00FFFFFF"
-        android:outlineSpotShadowColor="#00FFFFFF"
-        app:backgroundTint="#00FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_delete" />
-
-    <ImageView
-        android:id="@+id/topartistimage1"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="164dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
-
-    <ImageView
-        android:id="@+id/topartistimage2"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="264dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
-
-    <ImageView
-        android:id="@+id/topartistimage3"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="364dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
-
     <ImageView
         android:id="@+id/topartistimage4"
         android:layout_width="88dp"
@@ -100,7 +202,9 @@
         android:layout_marginTop="468dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo"
+        android:scaleType="centerCrop"
+        />
 
     <ImageView
         android:id="@+id/topartistimage5"
@@ -110,52 +214,9 @@
         android:layout_marginTop="572dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
-
-    <TextView
-        android:id="@+id/topartisttext1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="180dp"
-        android:fontFamily="@font/spotify_font"
-        android:text="@string/top_artist_placeholder"
-        android:textAlignment="textStart"
-        android:textColor="@color/spotify_black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/topartisttext2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="276dp"
-        android:fontFamily="@font/spotify_font"
-        android:text="@string/top_artist_placeholder"
-        android:textAlignment="textStart"
-        android:textColor="@color/spotify_black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/topartisttext3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="380dp"
-        android:fontFamily="@font/spotify_font"
-        android:text="@string/top_artist_placeholder"
-        android:textAlignment="textStart"
-        android:textColor="@color/spotify_black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@drawable/logo"
+        android:scaleType="centerCrop"
+        />
 
     <TextView
         android:id="@+id/topartisttext4"
@@ -184,50 +245,6 @@
         android:textColor="@color/spotify_black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/ranking1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
-        android:fontFamily="@font/spotify_font"
-        android:text="#1"
-        android:textColor="@color/spotify_black"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/topsongimage1"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/ranking2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="284dp"
-        android:fontFamily="@font/spotify_font"
-        android:text="#2"
-        android:textColor="@color/spotify_black"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/topsongimage2"
-        app:layout_constraintHorizontal_bias="0.526"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/ranking3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="384dp"
-        android:fontFamily="@font/spotify_font"
-        android:text="#3"
-        android:textColor="@color/spotify_black"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/topsongimage3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

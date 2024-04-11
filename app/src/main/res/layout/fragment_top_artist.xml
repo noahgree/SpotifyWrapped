@@ -97,7 +97,7 @@
     <ImageView
         android:id="@+id/artistimage"
         android:layout_width="355dp"
-        android:layout_height="326dp"
+        android:layout_height="355dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"

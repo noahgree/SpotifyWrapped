@@ -274,13 +274,13 @@ public class AddWrapFragment extends Fragment {
                         TextView testText = (TextView) root.findViewById(R.id.testText);
                         testText.setText(updatedWrap.toString());
                         Map<String, Object> dataToUpdate = new HashMap<>();
-                        dataToUpdate.put("name", user.getDisplayName());
+                        dataToUpdate.put("name", MainActivity.getCurrentUser().getName());
                         dataToUpdate.put("email", user.getEmail());
                         dataToUpdate.put("wraps", FieldValue.arrayUnion(updatedWrap));
                         List<Map<String, Object>> wraps = currentUser.getwraps();
                         wraps.add(updatedWrap);
                         Log.d("Firestore CHECK____________", wraps.toString());
-                        dataToUpdate.put("name", user.getDisplayName());
+                        dataToUpdate.put("name", MainActivity.getCurrentUser().getName());
                         dataToUpdate.put("email", user.getEmail());
                         dataToUpdate.put("wraps", wraps);
                         db.collection("Accounts").document(user.getUid())
