@@ -36,7 +36,7 @@ import java.util.Map;
 public class GalleryFragment extends Fragment {
     private FragmentGalleryBinding binding;
     private RecyclerView recyclerView;
-    private WrapAdapter wrapAdapter;
+    public static WrapAdapter wrapAdapter;
     private User currentUser; // Assume this is obtained correctly
 
     private Context context;
@@ -61,7 +61,6 @@ public class GalleryFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         wrapAdapter = new WrapAdapter(getContext(), wraps);
         recyclerView.setAdapter(wrapAdapter);
-
         // Set the click listener for the button
         binding.addButtonTask.setOnClickListener(new View.OnClickListener() {
             @Override

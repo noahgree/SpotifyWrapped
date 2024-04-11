@@ -300,12 +300,13 @@ public class AddWrapFragment extends Fragment {
                                     .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
                                     .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
                             Log.d("Firestore CHECK", user.getUid());
-
+                            //GalleryFragment.wrapAdapter.notifyDataSetChanged();//TODO DO THIS
                         }
                     });
                 };
 
                 onWrapMade(context, root, mOkHttpClient, term, wrap, handler);
+
             }
         });
 
