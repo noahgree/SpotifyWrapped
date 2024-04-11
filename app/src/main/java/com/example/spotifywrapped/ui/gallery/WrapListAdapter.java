@@ -63,7 +63,6 @@ public class WrapListAdapter extends RecyclerView.Adapter<WrapListAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView accountName;
-        TextView type;
         TextView artistName;
         TextView songName;
         ImageView songImage;
@@ -77,7 +76,7 @@ public class WrapListAdapter extends RecyclerView.Adapter<WrapListAdapter.MyView
             artistName = itemView.findViewById(R.id.textView6);
             songName = itemView.findViewById(R.id.textView7);
             songImage = itemView.findViewById(R.id.imageView2);
-            songImage = itemView.findViewById(R.id.imageView3);
+            artistImage = itemView.findViewById(R.id.imageView3);
             WrapView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -85,7 +84,7 @@ public class WrapListAdapter extends RecyclerView.Adapter<WrapListAdapter.MyView
                     if (position != RecyclerView.NO_POSITION) {
                         WrapObject selectedEvent = WrapObjectArrayList.get(position);
                             // Switching Views
-                            //TopSong newFragment = TopSong.newInstance(selectedEvent);
+                            TopSong newFragment = TopSong.newInstance(selectedEvent);
                         NavController navController = Navigation.findNavController(v);
                         navController.navigate(R.id.nav_topSong);
                     }

@@ -52,10 +52,10 @@ public class TopSong extends Fragment {
 
     private static WrapObject wrap;
 
-    /*public static TopSong newInstance(WrapObject selectedEvent) {
+    public static TopSong newInstance(WrapObject selectedEvent) {
         TopSong.wrap = selectedEvent;
         return new TopSong();
-    }*/
+    }
 
 
     private FragmentTopSongBinding binding;
