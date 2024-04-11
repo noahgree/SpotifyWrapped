@@ -66,7 +66,7 @@ public class TopSong extends Fragment {
         currentUser = loadUser();
 
         ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
-        if (!wraps.isEmpty()) {
+        if (wraps != null && !wraps.isEmpty()) {
             Map<String, Object> wrap = wraps.get(0);
             String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
             String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);

@@ -175,6 +175,8 @@ public class AddWrapFragment extends Fragment {
             return;
         }
 
+
+
         final AtomicInteger completionCounter = new AtomicInteger(0); // Synchronization counter
         List<String> endpoints = Arrays.asList("artists", "tracks"); // Assuming these are your two categories
         for (String thing : endpoints) {
@@ -303,7 +305,6 @@ public class AddWrapFragment extends Fragment {
                         }
                     });
                 };
-
 
                 onWrapMade(context, root, mOkHttpClient, term, wrap, handler);
             }
