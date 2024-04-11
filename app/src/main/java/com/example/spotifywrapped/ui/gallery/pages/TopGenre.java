@@ -75,7 +75,7 @@ public class TopGenre extends Fragment {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_wrappedSummary);
+                navController.navigate(R.id.nav_gallery);
             }
         });
         binding.topgenreback.setOnClickListener(new View.OnClickListener() {

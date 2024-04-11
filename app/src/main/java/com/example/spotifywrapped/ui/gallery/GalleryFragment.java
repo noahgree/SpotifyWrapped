@@ -1,7 +1,12 @@
 package com.example.spotifywrapped.ui.gallery;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentGalleryBinding;
+import com.example.spotifywrapped.user.User;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +33,22 @@ import java.util.Map;
 
 public class GalleryFragment extends Fragment {
 
+    private User loadUser() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String userJson = sharedPreferences.getString("CurrentUser", null);
+        Log.d("SharedPreferences", "Loaded token: " + userJson);
+        return gson.fromJson(userJson, User.class);
+    }
+
     private FragmentGalleryBinding binding;
     private RecyclerView recyclerView;
-    //private WrapAdapter adapter;
+    private static ArrayList<WrapObject> WrapArrayList;
+    private static WrapListAdapter myAdapter;
+    public static Context context;
+
+    private static User currentUser;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,13 +57,23 @@ public class GalleryFragment extends Fragment {
 
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        MainActivity mainActivity = MainActivity.getInstance();
+        context = MainActivity.getInstance();
+        /*if (MainActivity.getInstance() != null) {
+            currentUser = loadUser();
+            ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
+            for (int i = 0; i < wraps.size(); i++) {
+                Map<String, Object> wrap = wraps.get(i);
+                WrapArrayList.add(new WrapObject(i, (String) wrap.get("name"), ((ArrayList<String>) wrap.get("artistsimage")).get(0), ((ArrayList<String>) wrap.get("tracksimage")).get(0), ((ArrayList<String>) wrap.get("artists")).get(0), ((ArrayList<String>) wrap.get("tracks")).get(0)));
+            }
+        }*/
+
 
         recyclerView = root.findViewById(R.id.wrapRecycler); // make sure recyclerView is in your FragmentGalleryBinding
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        //adapter = new WrapAdapter(new ArrayList<>()); // Assuming you have a method to get your data
-        //recyclerView.setAdapter(adapter);
-        //for ()
+        myAdapter = new WrapListAdapter(getContext(), WrapArrayList);
+        //recyclerView.setAdapter(myAdapter);
+        //myAdapter.notifyDataSetChanged();
+
 
         // Set the click listener for the button
         binding.addButtonTask.setOnClickListener(new View.OnClickListener() {
