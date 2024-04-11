@@ -18,7 +18,6 @@
 
     <string name="mins_listened_intro">You listened to XXX total artists, for a total of:</string>
     <string name="mins_listened_placeholder">XXX</string>
-    <string name="top_artist_placeholder">ARTIST NAME</string>
     <string name="top_genre_placeholder">GENRE NAME</string>
     <string name="top_song_placeholder">SONG NAME</string>
 

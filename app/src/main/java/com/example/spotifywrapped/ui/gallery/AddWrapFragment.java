@@ -1,5 +1,6 @@
 package com.example.spotifywrapped.ui.gallery;
 
+import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,22 +31,26 @@ import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentAddWrapBinding;
 import com.example.spotifywrapped.user.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,8 +81,8 @@ public class AddWrapFragment extends Fragment {
     private static User currentUser;
     private static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
-    //private FirebaseAuth mAuth;
-    //private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
 
 
@@ -107,8 +113,8 @@ public class AddWrapFragment extends Fragment {
         super.onCreate(savedInstanceState);
         context = MainActivity.getInstance();
         currentUser = loadUser();
-        //mAuth = FirebaseAuth.getInstance();
-        //db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
     }
 
     private User loadUser() {
@@ -226,13 +232,15 @@ public class AddWrapFragment extends Fragment {
         binding = FragmentAddWrapBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         Spinner spinner = (Spinner) root.findViewById(R.id.timeFrameSpinner);
-        //FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
-        //FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
+
 
         // Reference to the user's document in Firestore
-        //DocumentReference userRef = db.collection("users").document(user.getUid());
+        DocumentReference userRef = db.collection("users").document(user.getUid());
+        DocumentReference publicRef = db.collection("users").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
 
         binding.generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,30 +248,48 @@ public class AddWrapFragment extends Fragment {
                 String term = spinner.getSelectedItem().toString().split(" ")[0].toLowerCase();
                 EditText name = (EditText) root.findViewById(R.id.editTextName);
                 Map<String, Object> wrap = new HashMap<>();
-                wrap.put("Name", name.toString());
+                wrap.put("Name", name.getText().toString());
 
                 DataCompletionHandler handler = updatedWrap -> {
                     // This block will be called once data fetching is complete.
                     getActivity().runOnUiThread(() -> {
                         TextView testText = (TextView) root.findViewById(R.id.testText);
                         testText.setText(updatedWrap.toString());
+                        Map<String, Object> dataToUpdate = new HashMap<>();
+                        dataToUpdate.put("name", user.getDisplayName());
+                        dataToUpdate.put("email", user.getEmail());
+                        dataToUpdate.put("wraps", FieldValue.arrayUnion(updatedWrap));
+                        List<Map<String, Object>> wraps = currentUser.getwraps();
+                        Log.d("Firestore CHECK____________", wraps.toString());
+                        wraps.add(updatedWrap);
+                        dataToUpdate.put("name", user.getDisplayName());
+                        dataToUpdate.put("email", user.getEmail());
+                        dataToUpdate.put("wraps", wraps);
+                        db.collection("Accounts").document(user.getUid())
+                                .set(dataToUpdate)
+                                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                                .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+                        Log.d("Firestore CHECK", user.getUid());
+                        //currentUser.addWrap(updatedWrap);
+                        RadioButton pub = (RadioButton) root.findViewById(R.id.radioButton2);
+                        if (pub.isActivated()) {
+                            dataToUpdate.put("name", "public");
+                            dataToUpdate.put("email", "public@gmail.com");
+                            dataToUpdate.put("wraps", FieldValue.arrayUnion(updatedWrap));
+
+                            db.collection("Accounts").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62")
+                                    .set(dataToUpdate)
+                                    .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                                    .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+                            Log.d("Firestore CHECK", user.getUid());
+
+                        }
                     });
                 };
 
 
                 onWrapMade(context, root, mOkHttpClient, term, "artists", wrap, handler);
                 onWrapMade(context, root, mOkHttpClient, term, "tracks", wrap, handler);
-
-                /*userRef.update("wraps", FieldValue.arrayUnion(wrap))
-                        .addOnSuccessListener(aVoid -> {
-                            Log.d("Firestore", "Wrap successfully added to user");
-                            // Handle success, e.g., by notifying the user
-                        })
-                        .addOnFailureListener(e -> {
-                            Log.w("Firestore", "Error adding wrap to user", e);
-                            // Handle failure, e.g., by notifying the user
-                        });*/
-
             }
         });
 
