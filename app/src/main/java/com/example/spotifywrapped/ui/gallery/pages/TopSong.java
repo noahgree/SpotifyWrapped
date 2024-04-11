@@ -26,6 +26,7 @@ import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentTopArtistBinding;
 import com.example.spotifywrapped.databinding.FragmentTopSongBinding;
+import com.example.spotifywrapped.ui.gallery.WrapObject;
 import com.example.spotifywrapped.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -48,6 +49,13 @@ public class TopSong extends Fragment {
         Log.d("SharedPreferences", "Loaded token: " + userJson);
         return gson.fromJson(userJson, User.class);
     }
+
+    private static WrapObject wrap;
+
+    /*public static TopSong newInstance(WrapObject selectedEvent) {
+        TopSong.wrap = selectedEvent;
+        return new TopSong();
+    }*/
 
 
     private FragmentTopSongBinding binding;
