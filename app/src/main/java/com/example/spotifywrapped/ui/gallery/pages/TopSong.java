@@ -66,14 +66,17 @@ public class TopSong extends Fragment {
         currentUser = loadUser();
 
         ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
-        Map<String, Object> wrap = wraps.get(0);
-        TextView songName = (TextView) root.findViewById(R.id.topsong);
-        songName.setText((String) ((ArrayList<String>) wrap.get("tracks")).get(0));
-        ImageView topartistimage = (ImageView) root.findViewById(R.id.topsongimage);
-        Glide.with(context)
-                .load((String) ((ArrayList<String>) wrap.get("tracksimage")).get(0))
-                .into(topartistimage);
-
+        if (!wraps.isEmpty()) {
+            Map<String, Object> wrap = wraps.get(0);
+            String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
+            String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
+            TextView songName = (TextView) root.findViewById(R.id.topsong);
+            songName.setText(name);
+            ImageView topartistimage = (ImageView) root.findViewById(R.id.topsongimage);
+            Glide.with(context)
+                    .load(image)
+                    .into(topartistimage);
+        }
         // Set the click listener for the button
         binding.topsongnext.setOnClickListener(new View.OnClickListener() {
             @Override

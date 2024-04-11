@@ -60,13 +60,17 @@ public class TopArtist extends Fragment {
         currentUser = loadUser();
 
         ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
-        Map<String, Object> wrap = wraps.get(0);
-        TextView artistName = (TextView) root.findViewById(R.id.topartist);
-        artistName.setText((String) ((ArrayList<String>) wrap.get("artists")).get(0));
-        ImageView topartistimage = (ImageView) root.findViewById(R.id.artistimage);
-        Glide.with(context)
-                .load((String) ((ArrayList<String>) wrap.get("artistsimage")).get(0))
-                .into(topartistimage);
+        if (!wraps.isEmpty()) {
+            Map<String, Object> wrap = wraps.get(0);
+            String name = (String) ((ArrayList<String>) wrap.get("artists")).get(0);
+            String image = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(0);
+            TextView artistName = (TextView) root.findViewById(R.id.topartist);
+            artistName.setText(name);
+            ImageView topartistimage = (ImageView) root.findViewById(R.id.artistimage);
+            Glide.with(context)
+                    .load(image)
+                    .into(topartistimage);
+        }
         // Set the click listener for the button
         binding.topartistnext.setOnClickListener(new View.OnClickListener() {
             @Override
