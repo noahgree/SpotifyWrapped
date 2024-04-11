@@ -265,7 +265,7 @@ public class AddWrapFragment extends Fragment {
                 String term = spinner.getSelectedItem().toString().split(" ")[0].toLowerCase();
                 EditText name = (EditText) root.findViewById(R.id.editTextName);
                 Map<String, Object> wrap = new HashMap<>();
-                wrap.put("Name", name.toString());
+                wrap.put("Name", name.getText().toString());
 
                 DataCompletionHandler handler = updatedWrap -> {
                     // This block will be called once data fetching is complete.
