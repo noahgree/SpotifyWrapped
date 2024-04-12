@@ -66,38 +66,42 @@ public class GalleryFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
-        FirebaseUser user = mAuth.getCurrentUser();
+        //FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Reference to the user's document in Firestore
+            DocumentReference userRef = db.collection("Accounts").document(user.getUid());
 
+            ArrayList<WrapObject> wraps = new ArrayList<>();
+            recyclerView = root.findViewById(R.id.wrapRecycler);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            wrapAdapterP = new WrapAdapter(getContext(), wraps);
+            recyclerView.setAdapter(wrapAdapterP);
+            wrapAdapterP.notifyDataSetChanged();
 
-        // Reference to the user's document in Firestore
-        DocumentReference userRef = db.collection("Accounts").document(user.getUid());
-
-        ArrayList<WrapObject> wraps = new ArrayList<>();
-        recyclerView = root.findViewById(R.id.wrapRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        wrapAdapterP = new WrapAdapter(getContext(), wraps);
-        recyclerView.setAdapter(wrapAdapterP);
-        wrapAdapterP.notifyDataSetChanged();
-
-        userRef.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
-                if (wrapList != null) {
-                    for (int i = 0; i < wrapList.size(); i++) {
-                        Map<String, Object> wrapData = wrapList.get(i);
-                        WrapObject wrap = new WrapObject(i, (String)wrapData.get("Name"),
-                                ((ArrayList<String>) wrapData.get("artistsimage")).get(0),
-                                ((ArrayList<String>) wrapData.get("tracksimage")).get(0),
-                                ((ArrayList<String>) wrapData.get("artists")).get(0),
-                                ((ArrayList<String>) wrapData.get("tracks")).get(0));
-                        wraps.add(wrap);
+            userRef.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
+                    if (wrapList != null) {
+                        for (int i = 0; i < wrapList.size(); i++) {
+                            Map<String, Object> wrapData = wrapList.get(i);
+                            WrapObject wrap = new WrapObject(i, (String)wrapData.get("Name"),
+                                    ((ArrayList<String>) wrapData.get("artistsimage")).get(0),
+                                    ((ArrayList<String>) wrapData.get("tracksimage")).get(0),
+                                    ((ArrayList<String>) wrapData.get("artists")).get(0),
+                                    ((ArrayList<String>) wrapData.get("tracks")).get(0));
+                            wraps.add(wrap);
+                        }
+                        wrapAdapterP.notifyDataSetChanged();
                     }
-                    wrapAdapterP.notifyDataSetChanged();
+                } else {
+                    Log.d("FIRESTORE", "No such document");
                 }
-            } else {
-                Log.d("FIRESTORE", "No such document");
-            }
-        }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
+            }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
+        } else {
+            // Handle the case where the user is not logged in
+        }
+
         // Set the click listener for the button
         binding.addButtonTask.setOnClickListener(new View.OnClickListener() {
             @Override

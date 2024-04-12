@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -70,10 +71,13 @@ public class TopGenre extends Fragment {
                     .into(topartistimage);
         }
 
+
+
         // Set the click listener for the button
         binding.topgenrenext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showActionBar();
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_gallery);
             }
@@ -87,6 +91,15 @@ public class TopGenre extends Fragment {
         });
 
         return root;
+    }
+
+    private void showActionBar() {
+        if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+            if (appCompatActivity.getSupportActionBar() != null) {
+                appCompatActivity.getSupportActionBar().show();
+            }
+        }
     }
 
     @Override
