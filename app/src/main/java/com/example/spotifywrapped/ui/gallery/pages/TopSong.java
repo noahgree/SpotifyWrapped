@@ -75,7 +75,7 @@ public class TopSong extends Fragment {
 
         ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
         if (wraps != null && !wraps.isEmpty()) {
-            Map<String, Object> wrap = wraps.get(0);
+            Map<String, Object> wrap = wraps.get(wraps.size() - 1);
             String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
             String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
             TextView songName = (TextView) root.findViewById(R.id.topsong);

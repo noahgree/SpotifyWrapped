@@ -58,7 +58,7 @@ public class Top5Songs extends Fragment {
 
         ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
         if (!wraps.isEmpty()) {
-            Map<String, Object> wrap = wraps.get(0);
+            Map<String, Object> wrap = wraps.get(wraps.size() - 1);
             String name1 = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
             String image1 = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
             String name2 = (String) ((ArrayList<String>) wrap.get("tracks")).get(1);

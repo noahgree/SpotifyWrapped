@@ -57,7 +57,7 @@ public class Top5Artists extends Fragment {
 
         ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
         if (!wraps.isEmpty()) {
-            Map<String, Object> wrap = wraps.get(0);
+            Map<String, Object> wrap = wraps.get(wraps.size() - 1);
             String name1 = (String) ((ArrayList<String>) wrap.get("artists")).get(0);
             String image1 = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(0);
             String name2 = (String) ((ArrayList<String>) wrap.get("artists")).get(1);
