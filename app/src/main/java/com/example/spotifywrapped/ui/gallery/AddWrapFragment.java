@@ -30,6 +30,7 @@ import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentAddWrapBinding;
+import com.example.spotifywrapped.ui.publicwrap.PublicFragment;
 import com.example.spotifywrapped.user.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -280,6 +281,8 @@ public class AddWrapFragment extends Fragment {
                                 .addOnFailureListener(e -> Log.e(TAG, "Error adding public wrap to array", e));
 
                         Log.d("Firestore CHECK", user.getUid());
+                        //int count = GalleryFragment.wrapAdapterP.getItemCount();
+                        //GalleryFragment.wrapAdapterP.addWrap(new WrapObject(count, "Wrap #" + (count + 1), ((List<String>) updatedWrap.get("artistsimage")).get(0), ((List<String>) updatedWrap.get("tracksimage")).get(0), ((List<String>) updatedWrap.get("artists")).get(0), ((List<String>) updatedWrap.get("tracks")).get(0)));
                         currentUser.addWrap(updatedWrap);
                         RadioButton pub = (RadioButton) root.findViewById(R.id.radioButton2);
                         if (pub.isChecked()) {
@@ -289,7 +292,8 @@ public class AddWrapFragment extends Fragment {
                                     .addOnFailureListener(e -> Log.e(TAG, "Error adding public wrap to array", e));
 
                             Log.d("Firestore CHECK", user.getUid());
-                            //GalleryFragment.wrapAdapterP.notifyDataSetChanged();//TODO DO THIS
+                            //count = PublicFragment.wrapAdapter.getItemCount();
+                            //PublicFragment.wrapAdapter.addWrap(new WrapObject(count, "Wrap #" + (count + 1), ((List<String>) updatedWrap.get("artistsimage")).get(0), ((List<String>) updatedWrap.get("tracksimage")).get(0), ((List<String>) updatedWrap.get("artists")).get(0), ((List<String>) updatedWrap.get("tracks")).get(0)));
                         }
                     });
                 };

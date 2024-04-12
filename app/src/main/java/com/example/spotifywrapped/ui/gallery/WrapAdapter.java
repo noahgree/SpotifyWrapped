@@ -42,6 +42,12 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
         // Assume images are loaded somehow, possibly with an image loading library
     }
 
+    public void addWrap(WrapObject newWrap) {
+        wraps.add(newWrap);  // `wraps` is the list in the adapter
+        notifyItemInserted(wraps.size() - 1);
+    }
+
+
     @Override
     public int getItemCount() {
         return wraps.size();

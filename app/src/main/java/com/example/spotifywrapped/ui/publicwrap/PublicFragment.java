@@ -56,6 +56,7 @@ public class PublicFragment extends Fragment {
         ArrayList<WrapObject> wraps = new ArrayList<>();
         wrapAdapter = new WrapAdapter(getContext(), wraps);
         recyclerView.setAdapter(wrapAdapter);
+        wrapAdapter.notifyDataSetChanged();
 
 
         publicRef.get().addOnSuccessListener(documentSnapshot -> {

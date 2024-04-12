@@ -25,6 +25,10 @@ import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentGalleryBinding;
 import com.example.spotifywrapped.user.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -40,27 +44,60 @@ public class GalleryFragment extends Fragment {
     private User currentUser; // Assume this is obtained correctly
 
     private Context context;
+    private FirebaseAuth mAuth;
+
+    private FirebaseFirestore db;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context = MainActivity.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         context = MainActivity.getInstance();
-        currentUser = MainActivity.getCurrentUser();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Assuming you have the current user's ID stored (e.g., as a field in the User object)
+        FirebaseUser user = mAuth.getCurrentUser();
+
+
+        // Reference to the user's document in Firestore
+        DocumentReference userRef = db.collection("Accounts").document(user.getUid());
+
         ArrayList<WrapObject> wraps = new ArrayList<>();
-        //currentUser = loadUser(); // Ensure this method exists and correctly fetches the current user
-        if (currentUser != null && currentUser.getwraps() != null) {
-            Log.d("GALLERY", "LOADED!!: " + currentUser.getwraps().size());
-            List<Map<String, Object>> temp = currentUser.getwraps();
-            for(int i = 0; i < temp.size(); i++) {
-                Log.d("GALLERY", "LOADED: " + ((List<String>) temp.get(i).get("artistsimage")).get(0));
-                wraps.add(new WrapObject(i, "Wrap #" + i + 1, ((List<String>) temp.get(i).get("artistsimage")).get(0), ((List<String>) temp.get(i).get("tracksimage")).get(0), ((List<String>) temp.get(i).get("artists")).get(0), ((List<String>) temp.get(i).get("tracks")).get(0)));
-            }
-        }
         recyclerView = root.findViewById(R.id.wrapRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         wrapAdapterP = new WrapAdapter(getContext(), wraps);
         recyclerView.setAdapter(wrapAdapterP);
+        wrapAdapterP.notifyDataSetChanged();
+
+        userRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
+                if (wrapList != null) {
+                    for (int i = 0; i < wrapList.size(); i++) {
+                        Map<String, Object> wrapData = wrapList.get(i);
+                        WrapObject wrap = new WrapObject(i, "Wrap #" + (i + 1),
+                                ((ArrayList<String>) wrapData.get("artistsimage")).get(0),
+                                ((ArrayList<String>) wrapData.get("tracksimage")).get(0),
+                                ((ArrayList<String>) wrapData.get("artists")).get(0),
+                                ((ArrayList<String>) wrapData.get("tracks")).get(0));
+                        wraps.add(wrap);
+                    }
+                    wrapAdapterP.notifyDataSetChanged();
+                }
+            } else {
+                Log.d("FIRESTORE", "No such document");
+            }
+        }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
         // Set the click listener for the button
         binding.addButtonTask.setOnClickListener(new View.OnClickListener() {
             @Override
