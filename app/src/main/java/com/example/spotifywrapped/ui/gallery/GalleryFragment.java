@@ -36,7 +36,7 @@ import java.util.Map;
 public class GalleryFragment extends Fragment {
     private FragmentGalleryBinding binding;
     private RecyclerView recyclerView;
-    public static WrapAdapter wrapAdapter;
+    public static WrapAdapter wrapAdapterP;
     private User currentUser; // Assume this is obtained correctly
 
     private Context context;
@@ -50,7 +50,7 @@ public class GalleryFragment extends Fragment {
         ArrayList<WrapObject> wraps = new ArrayList<>();
         //currentUser = loadUser(); // Ensure this method exists and correctly fetches the current user
         if (currentUser != null && currentUser.getwraps() != null) {
-            Log.d("GALLERY", "LOADED: " + currentUser.getwraps().size());
+            Log.d("GALLERY", "LOADED!!: " + currentUser.getwraps().size());
             List<Map<String, Object>> temp = currentUser.getwraps();
             for(int i = 0; i < temp.size(); i++) {
                 Log.d("GALLERY", "LOADED: " + ((List<String>) temp.get(i).get("artistsimage")).get(0));
@@ -59,8 +59,8 @@ public class GalleryFragment extends Fragment {
         }
         recyclerView = root.findViewById(R.id.wrapRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        wrapAdapter = new WrapAdapter(getContext(), wraps);
-        recyclerView.setAdapter(wrapAdapter);
+        wrapAdapterP = new WrapAdapter(getContext(), wraps);
+        recyclerView.setAdapter(wrapAdapterP);
         // Set the click listener for the button
         binding.addButtonTask.setOnClickListener(new View.OnClickListener() {
             @Override

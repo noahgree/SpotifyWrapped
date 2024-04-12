@@ -254,8 +254,8 @@ public class AddWrapFragment extends Fragment {
 
 
         // Reference to the user's document in Firestore
-        DocumentReference userRef = db.collection("users").document(user.getUid());
-        DocumentReference publicRef = db.collection("users").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
+        DocumentReference userRef = db.collection("Accounts").document(user.getUid());
+        DocumentReference publicRef = db.collection("Accounts").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
 
         binding.generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,33 +274,22 @@ public class AddWrapFragment extends Fragment {
                         TextView testText = (TextView) root.findViewById(R.id.testText);
                         testText.setText(updatedWrap.toString());
                         Map<String, Object> dataToUpdate = new HashMap<>();
-                        dataToUpdate.put("name", MainActivity.getCurrentUser().getName());
-                        dataToUpdate.put("email", user.getEmail());
-                        dataToUpdate.put("wraps", FieldValue.arrayUnion(updatedWrap));
-                        List<Map<String, Object>> wraps = currentUser.getwraps();
-                        wraps.add(updatedWrap);
-                        Log.d("Firestore CHECK____________", wraps.toString());
-                        dataToUpdate.put("name", MainActivity.getCurrentUser().getName());
-                        dataToUpdate.put("email", user.getEmail());
-                        dataToUpdate.put("wraps", wraps);
-                        db.collection("Accounts").document(user.getUid())
-                                .set(dataToUpdate)
-                                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
-                                .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+
+                        userRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
+                                .addOnSuccessListener(aVoid -> Log.d(TAG, "Public wrap added to array successfully"))
+                                .addOnFailureListener(e -> Log.e(TAG, "Error adding public wrap to array", e));
+
                         Log.d("Firestore CHECK", user.getUid());
                         currentUser.addWrap(updatedWrap);
                         RadioButton pub = (RadioButton) root.findViewById(R.id.radioButton2);
                         if (pub.isChecked()) {
-                            dataToUpdate.put("name", "public");
-                            dataToUpdate.put("email", "public@gmail.com");
-                            dataToUpdate.put("wraps", FieldValue.arrayUnion(updatedWrap));
 
-                            db.collection("Accounts").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62")
-                                    .set(dataToUpdate)
-                                    .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
-                                    .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+                            publicRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
+                                    .addOnSuccessListener(aVoid -> Log.d(TAG, "Public wrap added to array successfully"))
+                                    .addOnFailureListener(e -> Log.e(TAG, "Error adding public wrap to array", e));
+
                             Log.d("Firestore CHECK", user.getUid());
-                            //GalleryFragment.wrapAdapter.notifyDataSetChanged();//TODO DO THIS
+                            //GalleryFragment.wrapAdapterP.notifyDataSetChanged();//TODO DO THIS
                         }
                     });
                 };
