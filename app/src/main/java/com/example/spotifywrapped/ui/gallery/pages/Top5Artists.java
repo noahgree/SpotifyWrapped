@@ -116,6 +116,13 @@ public class Top5Artists extends Fragment {
                 navController.navigate(R.id.nav_topArtist);
             }
         });
+        binding.top5artistsexit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.nav_gallery);
+            }
+        });
 
         return root;
     }

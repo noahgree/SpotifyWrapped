@@ -120,6 +120,13 @@ public class Top5Songs extends Fragment {
                 navController.navigate(R.id.nav_topSong);
             }
         });
+        binding.top5songsexit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.nav_gallery);
+            }
+        });
 
         return root;
     }
