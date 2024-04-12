@@ -43,8 +43,8 @@
 
         <ImageView
             android:id="@+id/artistimage"
-            android:layout_width="325dp"
-            android:layout_height="325dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_gravity="center_horizontal"
             android:padding="8dp"
             android:scaleType="centerCrop"
