@@ -210,11 +210,11 @@ public class AddWrapFragment extends Fragment {
                                     for (int i = 0; i < 5; i++) {
                                         if (thing.equals("artists")) {
                                             name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
-                                            url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("images").getJSONObject(2).getString("url"));
+                                            url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("images").getJSONObject(0).getString("url"));
                                             genre.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").getString(0));
                                         } else {
                                             name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
-                                            url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONObject("album").getJSONArray("images").getJSONObject(2).getString("url"));
+                                            url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url"));
                                         }
                                     }
                                     wrap.put(thing, name);
