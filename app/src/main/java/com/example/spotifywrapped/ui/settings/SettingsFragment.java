@@ -50,6 +50,7 @@ public class SettingsFragment extends Fragment {
                 Log.d("AUTH CHANGE", newEmail);
                 if (user != null && !newEmail.isEmpty()) {
                     user.updatePassword(newEmail)
+                            //Changes
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
