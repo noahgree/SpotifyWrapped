@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             // User is still logged in with Firebase, load the user profile
             onLoginSuccess(currentUser.getName(), currentUser.getEmail());
             updateUserProfilePhoto();
-
             if (currentUser.getmAccessToken() == null) {
                 Log.d(TAG, "NO ACCESS TOKEN");
                 navigateToSpotifyLoginFragment();
@@ -93,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                             navigateToSpotifyLoginFragment();
                             return;
                         } else {
+                            //TODO: Make it so if the token from the saved user is not valid, then it also checks the token stored in firebase
                             setupNavigationAndToolbar();
                         }
                     }

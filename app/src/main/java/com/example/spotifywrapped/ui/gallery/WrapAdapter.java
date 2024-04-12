@@ -1,5 +1,7 @@
 package com.example.spotifywrapped.ui.gallery;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,12 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
     @Override
     public WrapViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_wrap, parent, false);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("WRAP", "Existing wrapped clicked");
+            }
+        });
         return new WrapViewHolder(itemView);
     }
 
