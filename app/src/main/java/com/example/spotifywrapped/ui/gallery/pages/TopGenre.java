@@ -85,15 +85,10 @@ public class TopGenre extends Fragment {
         binding.topgenreexit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActionBar actionBar = ((AppCompatActivity) MainActivity.getInstance()).getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.show();
-                }
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_gallery);
 
-                // Show the toolbar
-                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                ActionBar actionBar = ((AppCompatActivity) MainActivity.getInstance()).getSupportActionBar();
                 if (actionBar != null) {
                     actionBar.show();
                 }
