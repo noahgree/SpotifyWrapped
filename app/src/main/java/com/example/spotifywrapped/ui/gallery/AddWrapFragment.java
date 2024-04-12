@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -261,8 +263,14 @@ public class AddWrapFragment extends Fragment {
         binding.generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // switch to slideshow view
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topSong);
+                // hide action bar up top
+                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.hide();
+                }
 
                 String term = spinner.getSelectedItem().toString().split(" ")[0].toLowerCase();
                 EditText name = (EditText) root.findViewById(R.id.editTextName);
