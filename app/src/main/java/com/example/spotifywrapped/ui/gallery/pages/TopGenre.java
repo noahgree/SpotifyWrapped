@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -84,6 +85,10 @@ public class TopGenre extends Fragment {
         binding.topgenreexit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ActionBar actionBar = ((AppCompatActivity) MainActivity.getInstance()).getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.show();
+                }
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_gallery);
             }
