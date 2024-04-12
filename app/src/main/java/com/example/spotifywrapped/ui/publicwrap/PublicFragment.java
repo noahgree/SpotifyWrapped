@@ -49,7 +49,7 @@ public class PublicFragment extends Fragment {
         context = MainActivity.getInstance();
         currentUser = MainActivity.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference publicRef = db.collection("users").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
+        DocumentReference publicRef = db.collection("Accounts").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
         recyclerView = root.findViewById(R.id.publicWrapRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -65,10 +65,10 @@ public class PublicFragment extends Fragment {
                     for (int i = 0; i < wrapList.size(); i++) {
                         Map<String, Object> wrapData = wrapList.get(i);
                         WrapObject wrap = new WrapObject(i, "Wrap #" + (i + 1),
-                                (String) wrapData.get("artistsimage"),
-                                (String) wrapData.get("tracksimage"),
-                                (String) wrapData.get("artists"),
-                                (String) wrapData.get("tracks"));
+                                ((ArrayList<String>) wrapData.get("artistsimage")).get(0),
+                                ((ArrayList<String>) wrapData.get("tracksimage")).get(0),
+                                ((ArrayList<String>) wrapData.get("artists")).get(0),
+                                ((ArrayList<String>) wrapData.get("tracks")).get(0));
                         wraps.add(wrap);
                     }
                     wrapAdapter.notifyDataSetChanged();
