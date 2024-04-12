@@ -74,19 +74,18 @@ public class TopGenre extends Fragment {
 
 
         // Set the click listener for the button
-        binding.topgenrenext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showActionBar();
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_gallery);
-            }
-        });
         binding.topgenreback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_top5Artists);
+            }
+        });
+        binding.topgenreexit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.nav_gallery);
             }
         });
 
