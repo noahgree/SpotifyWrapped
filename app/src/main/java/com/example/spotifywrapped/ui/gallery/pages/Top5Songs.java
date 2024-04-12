@@ -125,6 +125,12 @@ public class Top5Songs extends Fragment {
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_gallery);
+
+                // Show the toolbar
+                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.show();
+                }
             }
         });
 
