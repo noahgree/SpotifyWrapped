@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -51,6 +53,7 @@ public class Top5Songs extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         binding = FragmentTop5SongsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         context = MainActivity.getInstance();
@@ -58,7 +61,7 @@ public class Top5Songs extends Fragment {
 
         ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
         if (!wraps.isEmpty()) {
-            Map<String, Object> wrap = wraps.get(0);
+            Map<String, Object> wrap = wraps.get(wraps.size() - 1);
             String name1 = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
             String image1 = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
             String name2 = (String) ((ArrayList<String>) wrap.get("tracks")).get(1);
@@ -115,6 +118,19 @@ public class Top5Songs extends Fragment {
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topSong);
+            }
+        });
+        binding.top5songsexit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.nav_gallery);
+
+                // Show the toolbar
+                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.show();
+                }
             }
         });
 

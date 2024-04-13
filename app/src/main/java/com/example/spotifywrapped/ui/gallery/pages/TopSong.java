@@ -10,6 +10,8 @@ import android.graphics.drawable.Icon;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -75,7 +77,7 @@ public class TopSong extends Fragment {
 
         ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
         if (wraps != null && !wraps.isEmpty()) {
-            Map<String, Object> wrap = wraps.get(0);
+            Map<String, Object> wrap = wraps.get(wraps.size() - 1);
             String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
             String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
             TextView songName = (TextView) root.findViewById(R.id.topsong);
@@ -91,6 +93,19 @@ public class TopSong extends Fragment {
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_top5Songs);
+            }
+        });
+        binding.topsongexit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.nav_gallery);
+
+                // Show the toolbar
+                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.show();
+                }
             }
         });
 

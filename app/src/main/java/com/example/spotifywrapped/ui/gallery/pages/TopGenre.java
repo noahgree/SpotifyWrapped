@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -59,7 +61,7 @@ public class TopGenre extends Fragment {
 
         ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
         if (!wraps.isEmpty()) {
-            Map<String, Object> wrap = wraps.get(0);
+            Map<String, Object> wrap = wraps.get(wraps.size() - 1);
             String genre = (String) ((ArrayList<String>) wrap.get("artistsgenre")).get(0);
             String image = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(0);
             TextView artistName = (TextView) root.findViewById(R.id.topgenre);
@@ -70,14 +72,9 @@ public class TopGenre extends Fragment {
                     .into(topartistimage);
         }
 
+
+
         // Set the click listener for the button
-        binding.topgenrenext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_gallery);
-            }
-        });
         binding.topgenreback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,8 +82,29 @@ public class TopGenre extends Fragment {
                 navController.navigate(R.id.nav_top5Artists);
             }
         });
+        binding.topgenreexit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.nav_gallery);
+
+                ActionBar actionBar = ((AppCompatActivity) MainActivity.getInstance()).getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.show();
+                }
+            }
+        });
 
         return root;
+    }
+
+    private void showActionBar() {
+        if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+            AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+            if (appCompatActivity.getSupportActionBar() != null) {
+                appCompatActivity.getSupportActionBar().show();
+            }
+        }
     }
 
     @Override

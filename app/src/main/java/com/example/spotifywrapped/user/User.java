@@ -19,6 +19,7 @@ public class User {
         this.USER_ID = USER_ID;
         this.name = name;
         this.wraps = wraps;
+        //this.mAccessToken = token;
     }
 
     public String getName() {

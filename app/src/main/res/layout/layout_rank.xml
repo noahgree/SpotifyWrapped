@@ -29,7 +29,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/album1"
             android:layout_width="15sp"
             android:layout_height="15sp"
             android:layout_margin="5sp"

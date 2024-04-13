@@ -1,5 +1,7 @@
 package com.example.spotifywrapped;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static MainActivity instance;
 
+    private String publicID;
+
     public static Context context;
 
     private FirebaseFirestore db;
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        publicID = "bIQXuN4oAPUWGUx6ikPoDw1cjx62";
         mAuth = FirebaseAuth.getInstance();
         navigationView = findViewById(R.id.nav_view);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -76,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
             // User is still logged in with Firebase, load the user profile
             onLoginSuccess(currentUser.getName(), currentUser.getEmail());
             updateUserProfilePhoto();
-
             if (currentUser.getmAccessToken() == null) {
+                Log.d(TAG, "NO ACCESS TOKEN");
                 navigateToSpotifyLoginFragment();
             } else {
                 isSpotifyTokenValid(new CallbackTwo() {
@@ -87,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                             navigateToSpotifyLoginFragment();
                             return;
                         } else {
+                            //TODO: Make it so if the token from the saved user is not valid, then it also checks the token stored in firebase
                             setupNavigationAndToolbar();
                         }
                     }
@@ -98,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
         }
         //TODO: NEED TO IMPLEMENT THE LOG OUT BUTTON
     }
+
+//    private String fetchAccessTokenFirebase() {
+//        return;
+//    }
 
     public static MainActivity getInstance() {
         return instance;
@@ -195,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_settings) // Add or remove IDs as needed
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_public, R.id.nav_slideshow, R.id.nav_settings) // Add or remove IDs as needed
                 .setOpenableLayout(drawer)
                 .build();
 

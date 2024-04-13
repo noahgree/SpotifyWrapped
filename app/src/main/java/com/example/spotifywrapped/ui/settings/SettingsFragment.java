@@ -1,27 +1,89 @@
 package com.example.spotifywrapped.ui.settings;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
+import com.example.spotifywrapped.databinding.FragmentSettingsBinding;
+import com.example.spotifywrapped.databinding.FragmentTopGenreBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SettingsFragment extends Fragment {
-
+    private FragmentSettingsBinding binding;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        Button btnNewEmail = root.findViewById(R.id.btnSubmitAccountEmail);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        String userId = auth.getCurrentUser().getUid();
+        btnNewEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText newEmailField = (EditText) root.findViewById(R.id.newEmailInput);
+                String newEmail = newEmailField.getText().toString();
+                Log.d("AUTH CHANGE", newEmail);
+                if (user != null && !newEmail.isEmpty()) {
+                    user.updatePassword(newEmail)
+                            //Changes
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG, "User password updated.");
+                                    }
+                                }
+                            });
+//                    user.updateEmail(newEmail)
+//                            .addOnSuccessListener(aVoid -> {
+//                                Toast.makeText(getActivity(), "Email updated successfully!", Toast.LENGTH_SHORT).show();
+//                                Log.d(TAG, "Email updated successfully!");
+//
+//                                // Optionally update the email in your Firestore database as well
+//                                Map<String, Object> userAccount = new HashMap<>();
+//                                userAccount.put("email", newEmail);
+//                                db.collection("Accounts").document(user.getUid())
+//                                        .set(userAccount)
+//                                        .addOnSuccessListener(aVoidFirestore -> Log.d(TAG, "Firestore email update successful"))
+//                                        .addOnFailureListener(e -> Log.w(TAG, "Firestore update failed", e));
+//
+//                                // Notify other parts of your application if necessary
+//                                MainActivity.onLoginSuccess(MainActivity.getCurrentUser().getName(), newEmail);
+//                            })
+//                            .addOnFailureListener(e -> {
+//                                Toast.makeText(getActivity(), "Failed to update email: " + e.getMessage(), Toast.LENGTH_LONG).show();
+//                                Log.e(TAG, "Email update failed", e);
+//                            });
+                } else {
+                    Toast.makeText(getActivity(), "Email field is empty or user is not logged in", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         Button btnDeleteAccount = root.findViewById(R.id.btnDeleteAccount);
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {

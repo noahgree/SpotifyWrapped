@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -30,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentAddWrapBinding;
+import com.example.spotifywrapped.ui.publicwrap.PublicFragment;
 import com.example.spotifywrapped.user.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -209,11 +212,11 @@ public class AddWrapFragment extends Fragment {
                                     for (int i = 0; i < 5; i++) {
                                         if (thing.equals("artists")) {
                                             name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
-                                            url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("images").getJSONObject(2).getString("url"));
+                                            url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("images").getJSONObject(0).getString("url"));
                                             genre.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").getString(0));
                                         } else {
                                             name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
-                                            url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONObject("album").getJSONArray("images").getJSONObject(2).getString("url"));
+                                            url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url"));
                                         }
                                     }
                                     wrap.put(thing, name);
@@ -254,14 +257,20 @@ public class AddWrapFragment extends Fragment {
 
 
         // Reference to the user's document in Firestore
-        DocumentReference userRef = db.collection("users").document(user.getUid());
-        DocumentReference publicRef = db.collection("users").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
+        DocumentReference userRef = db.collection("Accounts").document(user.getUid());
+        DocumentReference publicRef = db.collection("Accounts").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
 
         binding.generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // switch to slideshow view
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topSong);
+                // hide action bar up top
+                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.hide();
+                }
 
                 String term = spinner.getSelectedItem().toString().split(" ")[0].toLowerCase();
                 EditText name = (EditText) root.findViewById(R.id.editTextName);
@@ -274,38 +283,31 @@ public class AddWrapFragment extends Fragment {
                         TextView testText = (TextView) root.findViewById(R.id.testText);
                         testText.setText(updatedWrap.toString());
                         Map<String, Object> dataToUpdate = new HashMap<>();
-                        dataToUpdate.put("name", user.getDisplayName());
-                        dataToUpdate.put("email", user.getEmail());
-                        dataToUpdate.put("wraps", FieldValue.arrayUnion(updatedWrap));
-                        List<Map<String, Object>> wraps = currentUser.getwraps();
-                        wraps.add(updatedWrap);
-                        Log.d("Firestore CHECK____________", wraps.toString());
-                        dataToUpdate.put("name", user.getDisplayName());
-                        dataToUpdate.put("email", user.getEmail());
-                        dataToUpdate.put("wraps", wraps);
-                        db.collection("Accounts").document(user.getUid())
-                                .set(dataToUpdate)
-                                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
-                                .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+
+                        userRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
+                                .addOnSuccessListener(aVoid -> Log.d(TAG, "Public wrap added to array successfully"))
+                                .addOnFailureListener(e -> Log.e(TAG, "Error adding public wrap to array", e));
+
                         Log.d("Firestore CHECK", user.getUid());
+                        //int count = GalleryFragment.wrapAdapterP.getItemCount();
+                        //GalleryFragment.wrapAdapterP.addWrap(new WrapObject(count, "Wrap #" + (count + 1), ((List<String>) updatedWrap.get("artistsimage")).get(0), ((List<String>) updatedWrap.get("tracksimage")).get(0), ((List<String>) updatedWrap.get("artists")).get(0), ((List<String>) updatedWrap.get("tracks")).get(0)));
                         currentUser.addWrap(updatedWrap);
                         RadioButton pub = (RadioButton) root.findViewById(R.id.radioButton2);
-                        if (pub.isActivated()) {
-                            dataToUpdate.put("name", "public");
-                            dataToUpdate.put("email", "public@gmail.com");
-                            dataToUpdate.put("wraps", FieldValue.arrayUnion(updatedWrap));
+                        if (pub.isChecked()) {
 
-                            db.collection("Accounts").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62")
-                                    .set(dataToUpdate)
-                                    .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
-                                    .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+                            publicRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
+                                    .addOnSuccessListener(aVoid -> Log.d(TAG, "Public wrap added to array successfully"))
+                                    .addOnFailureListener(e -> Log.e(TAG, "Error adding public wrap to array", e));
+
                             Log.d("Firestore CHECK", user.getUid());
-
+                            //count = PublicFragment.wrapAdapter.getItemCount();
+                            //PublicFragment.wrapAdapter.addWrap(new WrapObject(count, "Wrap #" + (count + 1), ((List<String>) updatedWrap.get("artistsimage")).get(0), ((List<String>) updatedWrap.get("tracksimage")).get(0), ((List<String>) updatedWrap.get("artists")).get(0), ((List<String>) updatedWrap.get("tracks")).get(0)));
                         }
                     });
                 };
 
                 onWrapMade(context, root, mOkHttpClient, term, wrap, handler);
+
             }
         });
 
