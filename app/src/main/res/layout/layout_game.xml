@@ -5,9 +5,9 @@
     android:id="@+id/classCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="15dp"
     android:backgroundTint="@color/spotify_dark_grey"
-    app:cardCornerRadius="25dp"
+    app:cardCornerRadius="15dp"
     app:cardElevation="4dp">
 
     <LinearLayout

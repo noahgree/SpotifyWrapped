@@ -17,4 +17,6 @@
     <color name="spotify_light_grey">#B3B3B3</color>
     <!-- Spotify Dark Grey -->
     <color name="spotify_dark_grey">#404040</color>
+    <!-- Spotify Darker Grey -->
+    <color name="spotify_darker_grey">#212121</color>
 </resources>

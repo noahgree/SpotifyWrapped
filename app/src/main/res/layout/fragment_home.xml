@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/spotify_dark_grey"
+    android:background="@color/spotify_black"
     tools:context=".ui.home.HomeFragment">
 
     <LinearLayout
@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:textColor="@color/spotify_white"
             tools:text="Token:" />
 
         <Button
@@ -31,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:textColor="@color/spotify_white"
             tools:text="Code:" />
 
         <Button
@@ -44,6 +46,7 @@
             android:id="@+id/response_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/spotify_white"
             android:textSize="10sp"
             tools:text="Line 1\nLine 2\nLine 3" />
 

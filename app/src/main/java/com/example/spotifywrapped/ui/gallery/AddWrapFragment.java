@@ -5,11 +5,14 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -140,22 +143,26 @@ public class AddWrapFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.time_frame_options, android.R.layout.simple_spinner_item);
 
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
+        // Specify the layout to use when the list of choices appears.
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
+        // Apply the adapter to the spinner.
         timeFrameSpinner.setAdapter(adapter);
 
         // Set the spinner's onItemSelectedListener if you need to handle selection events
         timeFrameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                // Your selection handling code here
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ((TextView) view).setTextColor(ContextCompat.getColor(timeFrameSpinner.getContext(), R.color.spotify_white));
+                ((TextView) view).setTextSize(18);
+                // Create a Typeface from the font resource
+                Typeface spotifyTypeface = ResourcesCompat.getFont(timeFrameSpinner.getContext(), R.font.spotify_font);
+                Typeface boldSpotifyTypeface = Typeface.create(spotifyTypeface, Typeface.BOLD);
+                ((TextView) view).setTypeface(spotifyTypeface);
+                ((TextView) view).setPadding(8, 0, 0, 0);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // Another interface callback
+            public void onNothingSelected(AdapterView<?> parent) {
+                //
             }
         });
     }
@@ -280,8 +287,8 @@ public class AddWrapFragment extends Fragment {
                 DataCompletionHandler handler = updatedWrap -> {
                     // This block will be called once data fetching is complete.
                     getActivity().runOnUiThread(() -> {
-                        TextView testText = (TextView) root.findViewById(R.id.testText);
-                        testText.setText(updatedWrap.toString());
+//                        TextView testText = (TextView) root.findViewById(R.id.testText);
+//                        testText.setText(updatedWrap.toString());
                         Map<String, Object> dataToUpdate = new HashMap<>();
 
                         userRef.update("wraps", FieldValue.arrayUnion(updatedWrap))

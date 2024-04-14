@@ -17,7 +17,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20sp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="15dp"
             android:fontFamily="@font/spotify_font"
             android:text="Make a Wrap"
             android:textColor="@color/spotify_green"
@@ -25,12 +26,12 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+            android:id="@+id/textViewN"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20sp"
+            android:layout_marginHorizontal="15dp"
             android:fontFamily="@font/spotify_font"
-            android:text="Name: "
+            android:text="Name"
             android:textColor="@color/spotify_green"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -39,60 +40,50 @@
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20sp"
-            android:backgroundTint="@color/spotify_green"
-            android:ems="10"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/spotify_white"
             android:fontFamily="@font/spotify_font"
+            android:hint="Add a name"
             android:inputType="text"
-            android:hint="Enter name here"
-            android:textColorHint="@color/spotify_white"
-            android:textColor="@color/spotify_green"
-            android:textSize="20sp" />
+            android:textColor="@color/spotify_white"
+            android:textColorHint="@color/spotify_light_grey"
+            android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textViewTF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20sp"
+            android:layout_marginHorizontal="15dp"
             android:fontFamily="@font/spotify_font"
-            android:text="Time Frame: "
+            android:text="Time Frame"
             android:textColor="@color/spotify_green"
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20sp"
-            android:fontFamily="@font/spotify_font"
-            android:text="Tap on the view below to select a time frame."
-            android:textColor="@color/spotify_white" />
-
         <Spinner
             android:id="@+id/timeFrameSpinner"
-            style="@android:style/Widget.Spinner.DropDown"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20sp"
-            android:layout_marginTop="10sp"
-            android:background="@color/spotify_green"
-            android:dropDownWidth="wrap_content"
-            android:dropDownSelector="@android:drawable/arrow_down_float"
-            android:entries="@array/time_frame_options"
-            android:minHeight="50dp"
-            android:popupBackground="@color/spotify_green"
+            android:layout_height="55dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/spotify_white"
+            android:dropDownWidth="200dp"
+            android:dropDownSelector="@color/spotify_white"
+            android:popupBackground="@drawable/spinner_item_background_rounded"
+            android:popupElevation="40dp"
+            android:scrollbarThumbHorizontal="@color/spotify_black"
+            android:scrollbarThumbVertical="@color/spotify_black"
             android:spinnerMode="dropdown" />
 
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/textViewV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20sp"
-            android:layout_marginVertical="10sp"
+            android:layout_marginHorizontal="15dp"
             android:fontFamily="@font/spotify_font"
-            android:text="Post? "
+            android:text="Visibility"
             android:textColor="@color/spotify_green"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -105,39 +96,38 @@
                 android:id="@+id/radioButton2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20sp"
+                android:layout_marginStart="30dp"
+                android:buttonTint="@color/spotify_white"
                 android:fontFamily="@font/spotify_font"
                 android:text="Public"
-                android:textColor="@color/spotify_green"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textColor="@color/spotify_white"
+                android:textColorLink="@color/spotify_green"
+                android:textSize="18sp" />
 
             <RadioButton
                 android:id="@+id/radioButton3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20sp"
+                android:layout_marginStart="30dp"
+                android:buttonTint="@color/spotify_white"
                 android:fontFamily="@font/spotify_font"
                 android:text="Private"
-                android:textColor="@color/spotify_green"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textColor="@color/spotify_white"
+                android:textColorLink="@color/spotify_green"
+                android:textSize="18sp" />
 
         </RadioGroup>
 
         <Button
             android:id="@+id/generateButton"
-            android:layout_width="wrap_content"
+            android:layout_width="126dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_margin="20sp"
-            android:text="Generate" />
-
-        <TextView
-            android:id="@+id/testText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/spotify_white" />
+            android:layout_margin="15dp"
+            android:fontFamily="@font/spotify_font"
+            android:text="Generate"
+            android:textColor="@color/spotify_white"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
