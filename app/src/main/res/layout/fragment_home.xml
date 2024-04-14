@@ -16,7 +16,7 @@
         android:layout_marginBottom="15dp"
         android:fontFamily="@font/spotify_font"
         android:text="Debug"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textColor="@color/spotify_green"
         android:textSize="48sp"
         android:textStyle="bold" />

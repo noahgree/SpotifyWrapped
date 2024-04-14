@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.spotifywrapped.MainActivity;
@@ -248,6 +249,8 @@ public class LogInFragment extends Fragment {
             AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
             if (appCompatActivity.getSupportActionBar() != null) {
                 appCompatActivity.getSupportActionBar().hide();
+                ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                imageView.setVisibility(View.GONE);
             }
         }
     }

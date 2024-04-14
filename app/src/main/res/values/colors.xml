@@ -23,4 +23,6 @@
     <color name="spotify_dark_grey">#404040</color>
     <!-- Spotify Darker Grey -->
     <color name="spotify_darker_grey">#212121</color>
+    <!-- Spotify Custom Red -->
+    <color name="spotify_red">#FF3333</color>
 </resources>

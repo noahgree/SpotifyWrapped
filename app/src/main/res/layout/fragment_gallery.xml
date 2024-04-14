@@ -19,8 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Your Wraps"
-            android:textAlignment="center"
+            android:text="My Wraps"
+            android:textAlignment="textStart"
             android:textColor="@color/spotify_green"
             android:textSize="48sp"
             android:textStyle="bold"
@@ -29,28 +29,28 @@
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addButton_task"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@android:drawable/ic_input_add"
+            app:backgroundTint="@color/spotify_green"
+            app:elevation="0dp"
+            app:fabCustomSize="50dp"
+            app:pressedTranslationZ="0dp"
+            app:tint="@color/spotify_white" />
+
 
     </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addButton_task"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginTop="15dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/spotify_green"
-        app:elevation="0dp"
-        app:fabCustomSize="50dp"
-        app:pressedTranslationZ="0dp"
-        app:tint="@color/spotify_black" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15dp">
+        android:layout_margin="15dp"
+        android:layout_weight="1">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/wrapRecycler"
@@ -58,4 +58,5 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/layout_wrap" />
     </ScrollView>
+
 </LinearLayout>

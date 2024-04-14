@@ -68,15 +68,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         publicID = "bIQXuN4oAPUWGUx6ikPoDw1cjx62";
         mAuth = FirebaseAuth.getInstance();
+
         navigationView = findViewById(R.id.nav_view);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //currentUser = loadUser();
         instance = this;
-        currentUser = loadUser();
         context = MainActivity.this;
+
+        currentUser = loadUser();
+
         //Deals with if user needs to log in or refresh the spotify token.
         if (mAuth.getCurrentUser() != null && currentUser != null) {
             // User is still logged in with Firebase, load the user profile
@@ -91,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(boolean isValid) {
                         if (!isValid) {
                             navigateToSpotifyLoginFragment();
-                            return;
                         } else {
                             //TODO: Make it so if the token from the saved user is not valid, then it also checks the token stored in firebase
                             setupNavigationAndToolbar();
@@ -105,13 +107,11 @@ public class MainActivity extends AppCompatActivity {
         }
         //TODO: NEED TO IMPLEMENT THE LOG OUT BUTTON
 
-        // For swapping toolbar icon
+        // For swapping toolbar icon depending on current layout
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-
         ImageView currentPageIcon = binding.getRoot().findViewById(R.id.currentPageIcon);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int destId = destination.getId();
-            Log.d("navigation", "changed to" + destId);
 
             if (destId == R.id.nav_home) {
                 currentPageIcon.setImageResource(R.drawable.key);
@@ -273,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
         View navView = navigationView.getHeaderView(0);
         //Side Navigation
         TextView navName = navView.findViewById(R.id.navName);
+
         TextView navEmail = navView.findViewById(R.id.navEmail);
         navName.setText(name);
         navEmail.setText(email);
@@ -371,6 +372,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String userJson = gson.toJson(user);
+        Log.d("bugg", "Saving user: " + userJson);
         editor.putString("CurrentUser", userJson);
         editor.apply();
     }

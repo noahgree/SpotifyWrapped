@@ -12,7 +12,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/spotify_black</item>
         <item name="android:navigationBarColor">@color/spotify_black</item>
-
         <!-- Customize your theme here. -->
     </style>
 
@@ -26,4 +25,8 @@
     </style>
 
     <style name="Theme.SpotifyWrapped.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ButtonStyle1" parent="android:style/Widget.Button">
+        <item name="android:background">#FF0000</item>
+    </style>
 </resources>
