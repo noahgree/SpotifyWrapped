@@ -256,11 +256,5 @@ public class LogInFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-
-        // Show the toolbar
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.show();
-        }
     }
 }
