@@ -86,6 +86,7 @@ public class GalleryFragment extends Fragment {
                         for (int i = 0; i < wrapList.size(); i++) {
                             Map<String, Object> wrapData = wrapList.get(i);
                             if (wrapData != null) {
+                                    
                                 WrapObject wrap = new WrapObject(i, (String)wrapData.get("Name"),
                                         ((ArrayList<String>) wrapData.get("artistsimage")).get(0),
                                         ((ArrayList<String>) wrapData.get("tracksimage")).get(0),

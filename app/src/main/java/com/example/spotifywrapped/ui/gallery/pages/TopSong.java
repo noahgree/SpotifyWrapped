@@ -31,6 +31,7 @@ import com.example.spotifywrapped.databinding.FragmentTopSongBinding;
 import com.example.spotifywrapped.ui.gallery.WrapObject;
 import com.example.spotifywrapped.user.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -65,6 +66,17 @@ public class TopSong extends Fragment {
     public static Context context;
 
     private static User currentUser;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context = MainActivity.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+    }
+
 
 
     @Override
@@ -72,22 +84,38 @@ public class TopSong extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentTopSongBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        context = MainActivity.getInstance();
-        currentUser = loadUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
-        if (wraps != null && !wraps.isEmpty()) {
-            Map<String, Object> wrap = wraps.get(wraps.size() - 1);
-            String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
-            String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
-            TextView songName = (TextView) root.findViewById(R.id.topsong);
-            songName.setText(name);
-            ImageView topartistimage = (ImageView) root.findViewById(R.id.topsongimage);
-            Glide.with(context)
-                    .load(image)
-                    .into(topartistimage);
-            setNameonTitle();
-        }
+        // Assuming you have the current user's ID stored (e.g., as a field in the User object)
+        FirebaseUser user = mAuth.getCurrentUser();
+
+
+        // Reference to the user's document in Firestore
+        DocumentReference userRef = db.collection("Accounts").document(user.getUid());
+
+        userRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
+                if (wrapList != null) {
+                    Map<String, Object> wrapData = wrapList.get(wrapList.size() - 1);
+                    if (wrapData != null) {
+                        Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
+                        String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
+                        String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
+                        TextView songName = (TextView) root.findViewById(R.id.topsong);
+                        songName.setText(name);
+                        ImageView topartistimage = (ImageView) root.findViewById(R.id.topsongimage);
+                        Glide.with(context)
+                                .load(image)
+                                .into(topartistimage);
+                        setNameonTitle();
+                    }
+                }
+            } else {
+                Log.d("FIRESTORE", "No such document");
+            }
+        }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
+
         // Set the click listener for the button
         binding.topsongnext.setOnClickListener(new View.OnClickListener() {
             @Override

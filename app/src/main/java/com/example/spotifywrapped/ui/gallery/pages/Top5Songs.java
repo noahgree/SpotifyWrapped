@@ -26,9 +26,14 @@ import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentTop5SongsBinding;
 import com.example.spotifywrapped.databinding.FragmentTopSongBinding;
 import com.example.spotifywrapped.user.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,6 +53,17 @@ public class Top5Songs extends Fragment {
     public static Context context;
 
     private static User currentUser;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context = MainActivity.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+    }
+
 
 
     private void setNameonTitle() {
@@ -68,54 +84,69 @@ public class Top5Songs extends Fragment {
 
         binding = FragmentTop5SongsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        context = MainActivity.getInstance();
-        currentUser = loadUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
-        if (!wraps.isEmpty()) {
-            Map<String, Object> wrap = wraps.get(wraps.size() - 1);
-            String name1 = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
-            String image1 = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
-            String name2 = (String) ((ArrayList<String>) wrap.get("tracks")).get(1);
-            String image2 = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(1);
-            String name3 = (String) ((ArrayList<String>) wrap.get("tracks")).get(2);
-            String image3 = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(2);
-            String name4 = (String) ((ArrayList<String>) wrap.get("tracks")).get(3);
-            String image4 = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(3);
-            String name5 = (String) ((ArrayList<String>) wrap.get("tracks")).get(4);
-            String image5 = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(4);
-            TextView songName = (TextView) root.findViewById(R.id.topsongtext1);
-            songName.setText(name1);
-            songName = (TextView) root.findViewById(R.id.topsongtext2);
-            songName.setText(name2);
-            songName = (TextView) root.findViewById(R.id.topsongtext3);
-            songName.setText(name3);
-            songName = (TextView) root.findViewById(R.id.topsongtext4);
-            songName.setText(name4);
-            songName = (TextView) root.findViewById(R.id.topsongtext5);
-            songName.setText(name5);
-            ImageView topsongimage = (ImageView) root.findViewById(R.id.topsongimage1);
-            Glide.with(context)
-                    .load(image1)
-                    .into(topsongimage);
-            topsongimage = (ImageView) root.findViewById(R.id.topsongimage2);
-            Glide.with(context)
-                    .load(image2)
-                    .into(topsongimage);
-            topsongimage = (ImageView) root.findViewById(R.id.topsongimage3);
-            Glide.with(context)
-                    .load(image3)
-                    .into(topsongimage);
-            topsongimage = (ImageView) root.findViewById(R.id.topsongimage4);
-            Glide.with(context)
-                    .load(image4)
-                    .into(topsongimage);
-            topsongimage = (ImageView) root.findViewById(R.id.topsongimage5);
-            Glide.with(context)
-                    .load(image5)
-                    .into(topsongimage);
-            setNameonTitle();
-        }
+        // Assuming you have the current user's ID stored (e.g., as a field in the User object)
+        FirebaseUser user = mAuth.getCurrentUser();
+
+
+        // Reference to the user's document in Firestore
+        DocumentReference userRef = db.collection("Accounts").document(user.getUid());
+
+        userRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
+                if (wrapList != null) {
+                    Map<String, Object> wrapData = wrapList.get(wrapList.size() - 1);
+                    if (wrapData != null) {
+                        Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
+                        String name1 = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
+                        String image1 = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
+                        String name2 = (String) ((ArrayList<String>) wrap.get("tracks")).get(1);
+                        String image2 = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(1);
+                        String name3 = (String) ((ArrayList<String>) wrap.get("tracks")).get(2);
+                        String image3 = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(2);
+                        String name4 = (String) ((ArrayList<String>) wrap.get("tracks")).get(3);
+                        String image4 = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(3);
+                        String name5 = (String) ((ArrayList<String>) wrap.get("tracks")).get(4);
+                        String image5 = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(4);
+                        TextView songName = (TextView) root.findViewById(R.id.topsongtext1);
+                        songName.setText(name1);
+                        songName = (TextView) root.findViewById(R.id.topsongtext2);
+                        songName.setText(name2);
+                        songName = (TextView) root.findViewById(R.id.topsongtext3);
+                        songName.setText(name3);
+                        songName = (TextView) root.findViewById(R.id.topsongtext4);
+                        songName.setText(name4);
+                        songName = (TextView) root.findViewById(R.id.topsongtext5);
+                        songName.setText(name5);
+                        ImageView topsongimage = (ImageView) root.findViewById(R.id.topsongimage1);
+                        Glide.with(context)
+                                .load(image1)
+                                .into(topsongimage);
+                        topsongimage = (ImageView) root.findViewById(R.id.topsongimage2);
+                        Glide.with(context)
+                                .load(image2)
+                                .into(topsongimage);
+                        topsongimage = (ImageView) root.findViewById(R.id.topsongimage3);
+                        Glide.with(context)
+                                .load(image3)
+                                .into(topsongimage);
+                        topsongimage = (ImageView) root.findViewById(R.id.topsongimage4);
+                        Glide.with(context)
+                                .load(image4)
+                                .into(topsongimage);
+                        topsongimage = (ImageView) root.findViewById(R.id.topsongimage5);
+                        Glide.with(context)
+                                .load(image5)
+                                .into(topsongimage);
+                        setNameonTitle();
+                    }
+                }
+            } else {
+                Log.d("FIRESTORE", "No such document");
+            }
+        }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
 
         // Set the click listener for the button
         binding.top5songsnext.setOnClickListener(new View.OnClickListener() {
