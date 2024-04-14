@@ -86,6 +86,7 @@ public class TopSong extends Fragment {
             Glide.with(context)
                     .load(image)
                     .into(topartistimage);
+            setNameonTitle();
         }
         // Set the click listener for the button
         binding.topsongnext.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +113,18 @@ public class TopSong extends Fragment {
         });
 
         return root;
+    }
+
+    private void setNameonTitle() {
+        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
+        String userName = (String) MainActivity.getCurrentUser().getName();
+        if (userName != null && !userName.isEmpty()) {
+            userName = userName.substring(0, userName.indexOf(" "));
+        } else {
+            userName = "User";
+        }
+        userName = userName + "'s ";
+        titlesWithName.setText(userName + titlesWithName.getText());
     }
 
 

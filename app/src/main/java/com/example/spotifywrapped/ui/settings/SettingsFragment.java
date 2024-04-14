@@ -50,13 +50,15 @@ public class SettingsFragment extends Fragment {
             Log.d("AUTH CHANGE", newPassword);
 
             if (user != null && !newPassword.isEmpty()) {
-                user.updatePassword(newPassword)
-                        //Changes
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                Log.d(TAG, "User password updated.");
-                            }
-                        });
+                if(newPassword.length() >= 6) {
+                    user.updatePassword(newPassword)
+                            //Changes
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "User password updated.");
+                                    Toast.makeText(getContext(), "Password changed sucessfully!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
 //                    user.updateEmail(newEmail)
 //                            .addOnSuccessListener(aVoid -> {
 //                                Toast.makeText(getActivity(), "Email updated successfully!", Toast.LENGTH_SHORT).show();
@@ -77,6 +79,10 @@ public class SettingsFragment extends Fragment {
 //                                Toast.makeText(getActivity(), "Failed to update email: " + e.getMessage(), Toast.LENGTH_LONG).show();
 //                                Log.e(TAG, "Email update failed", e);
 //                            });
+                } else {
+                    Log.d(TAG, "Password too short.");
+                    Toast.makeText(getContext(), "Password needs to be at least 6 characters long.", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(getActivity(), "Email field is empty or user is not logged in", Toast.LENGTH_SHORT).show();
             }

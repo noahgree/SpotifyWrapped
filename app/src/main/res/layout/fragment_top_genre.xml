@@ -69,14 +69,14 @@
                 app:srcCompat="@drawable/logo" />
 
             <TextView
-                android:id="@+id/top5artistsintro"
+                android:id="@+id/topSongIntro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/spotify_font"
-                android:text="Your #1 Genre"
+                android:text="#1 Genre"
                 android:textAlignment="center"
                 android:textColor="@color/spotify_black"
                 android:textSize="25sp"

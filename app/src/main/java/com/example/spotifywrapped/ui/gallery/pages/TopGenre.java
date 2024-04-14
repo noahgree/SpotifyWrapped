@@ -50,6 +50,18 @@ public class TopGenre extends Fragment {
         return gson.fromJson(userJson, User.class);
     }
 
+    private void setNameonTitle() {
+        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
+        String userName = (String) MainActivity.getCurrentUser().getName();
+        if (userName != null && !userName.isEmpty()) {
+            userName = userName.substring(0, userName.indexOf(" "));
+        } else {
+            userName = "User";
+        }
+        userName = userName + "'s ";
+        titlesWithName.setText(userName + titlesWithName.getText());
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -70,6 +82,7 @@ public class TopGenre extends Fragment {
             Glide.with(context)
                     .load(image)
                     .into(topartistimage);
+            setNameonTitle();
         }
 
 

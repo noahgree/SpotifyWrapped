@@ -49,6 +49,18 @@ public class Top5Artists extends Fragment {
 
     private static User currentUser;
 
+    private void setNameonTitle() {
+        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
+        String userName = (String) MainActivity.getCurrentUser().getName();
+        if (userName != null && !userName.isEmpty()) {
+            userName = userName.substring(0, userName.indexOf(" "));
+        } else {
+            userName = "User";
+        }
+        userName = userName + "'s ";
+        titlesWithName.setText(userName + titlesWithName.getText());
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -100,6 +112,7 @@ public class Top5Artists extends Fragment {
             Glide.with(context)
                     .load(image5)
                     .into(topsongimage);
+            setNameonTitle();
         }
 
 

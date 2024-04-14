@@ -128,6 +128,9 @@ public class LogInFragment extends Fragment {
                 if(email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(root.getContext(), "Sign up failed.",
                             Toast.LENGTH_SHORT).show();
+                } else if (password.length() < 6) {
+                    Toast.makeText(root.getContext(), "Password entered is too short. Please use at least 6 characters.",
+                            Toast.LENGTH_SHORT).show();
                 } else {
                     // Create an AlertDialog.Builder to get the user's name
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
