@@ -38,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 app:tint="@color/spotify_darker_grey"
-                app:srcCompat="@drawable/logo" />
+                app:srcCompat="@drawable/logo"/>
+
         </FrameLayout>
 
     </com.google.android.material.navigation.NavigationView>

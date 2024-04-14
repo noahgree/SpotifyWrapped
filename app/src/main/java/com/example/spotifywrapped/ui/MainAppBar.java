@@ -35,7 +35,6 @@ public class MainAppBar extends Fragment {
         ImageView currentPageIcon = root.findViewById(R.id.currentPageIcon);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int destId = destination.getId();
-            Log.d("navigation", "changed to" + destId);
 
             if (destId == R.id.nav_home) {
                 currentPageIcon.setImageResource(R.drawable.key);

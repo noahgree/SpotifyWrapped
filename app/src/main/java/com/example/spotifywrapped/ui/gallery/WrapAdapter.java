@@ -55,8 +55,11 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
             @Override
             public void onClick(View v) {
                 ActionBar actionBar = ((AppCompatActivity) MainActivity.getInstance()).getSupportActionBar();
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 if (actionBar != null) {
                     actionBar.hide();
+                    ImageView imageView = activity.findViewById(R.id.currentPageIcon);
+                    imageView.setVisibility(View.GONE);
                 }
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topSong);

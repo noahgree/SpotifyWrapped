@@ -32,24 +32,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentAddWrapBinding;
-import com.example.spotifywrapped.ui.publicwrap.PublicFragment;
 import com.example.spotifywrapped.user.User;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskCompletionSource;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,7 +48,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -172,21 +162,18 @@ public class AddWrapFragment extends Fragment {
         void onDataCompleted(Map<String, Object> wrap);
     }
 
-
     public static String getSpotifyToken() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
         String string = sharedPreferences.getString("SpotifyToken", null);
         Log.d("SharedPreferences", "Loaded token: " + string);
         return sharedPreferences.getString("SpotifyToken", null);
     }
-    public static void onWrapMade(Context context, View view, OkHttpClient okHttpClient, String term, Map<String, Object> wrap, DataCompletionHandler handler) {
 
+    public static void onWrapMade(Context context, View view, OkHttpClient okHttpClient, String term, Map<String, Object> wrap, DataCompletionHandler handler) {
         if (getSpotifyToken() == null) {
             Toast.makeText(context, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
             return;
         }
-
-
 
         final AtomicInteger completionCounter = new AtomicInteger(0); // Synchronization counter
         List<String> endpoints = Arrays.asList("artists", "tracks"); // Assuming these are your two categories
@@ -232,6 +219,7 @@ public class AddWrapFragment extends Fragment {
                                     if (thing.equals("artists")) {
                                         wrap.put(thing + "genre", genre);
                                     }
+
                                     if (handler != null && completionCounter.incrementAndGet() == 2) {
                                         handler.onDataCompleted(wrap);
                                     }
@@ -274,6 +262,7 @@ public class AddWrapFragment extends Fragment {
                 // switch to slideshow view
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topSong);
+
                 // hide action bar up top
                 ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
                 if (actionBar != null) {

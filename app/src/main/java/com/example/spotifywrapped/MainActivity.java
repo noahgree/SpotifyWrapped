@@ -372,7 +372,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String userJson = gson.toJson(user);
-        Log.d("bugg", "Saving user: " + userJson);
         editor.putString("CurrentUser", userJson);
         editor.apply();
     }
