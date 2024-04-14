@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -70,6 +71,12 @@ public class LogInFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        MainActivity mainActivity = (MainActivity) getActivity();
+
+        if (mainActivity != null) {
+            mainActivity.setupNavigationAndToolbar();
+            hideActionBar();
+        }
         // Inflate the layout for this fragment
         binding = FragmentLogInBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -79,6 +86,7 @@ public class LogInFragment extends Fragment {
         //Signup Button
         Button signupButton = root.findViewById(R.id.signupButton);
         signupButton.setBackgroundResource(R.drawable.rounded_button);
+
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -248,5 +256,11 @@ public class LogInFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+
+        // Show the toolbar
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.show();
+        }
     }
 }
