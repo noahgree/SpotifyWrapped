@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         // Show the AppBar (Toolbar) if it was previously hidden
         binding.appBarMain.toolbar.setVisibility(View.VISIBLE);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override

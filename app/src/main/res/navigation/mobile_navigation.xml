@@ -8,79 +8,64 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.spotifywrapped.ui.home.HomeFragment"
-        android:label="Token Check"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
         android:name="com.example.spotifywrapped.ui.gallery.GalleryFragment"
-        android:label="Wraps"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.spotifywrapped.ui.slideshow.SlideshowFragment"
-        android:label="Games"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/nav_login"
         android:name="com.example.spotifywrapped.ui.login.LogInFragment"
-        android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" />
     <fragment
         android:id="@+id/spotifyLoginFragment"
         android:name="com.example.spotifywrapped.ui.spotifylogin.SpotifyLoginFragment"
-        android:label="Log into Spotify"
         tools:layout="@layout/fragment_spotify_login" />
     <fragment
         android:id="@+id/nav_sample"
         android:name="com.example.spotifywrapped.ui.SampleMusicFragment"
-        android:label="Sample Music"
         tools:layout="@layout/fragment_sample_music" />
     <fragment
         android:id="@+id/nav_addWrap"
         android:name="com.example.spotifywrapped.ui.gallery.AddWrapFragment"
-        android:label="Add a New Wrap"
         tools:layout="@layout/fragment_add_wrap" />
     <fragment
         android:id="@+id/nav_topSong"
         android:name="com.example.spotifywrapped.ui.gallery.pages.TopSong"
-        android:label="TopSong"
         tools:layout="@layout/fragment_top_song" />
     <fragment
         android:id="@+id/nav_topArtist"
         android:name="com.example.spotifywrapped.ui.gallery.pages.TopArtist"
-        android:label="TopArtist"
         tools:layout="@layout/fragment_top_artist" />
     <fragment
         android:id="@+id/nav_top5Songs"
         android:name="com.example.spotifywrapped.ui.gallery.pages.Top5Songs"
-        android:label="Top5Songs"
         tools:layout="@layout/fragment_top_5_songs" />
     <fragment
         android:id="@+id/nav_top5Artists"
         android:name="com.example.spotifywrapped.ui.gallery.pages.Top5Artists"
-        android:label="Top5Artists"
         tools:layout="@layout/fragment_top_5_artists" />
     <fragment
         android:id="@+id/nav_topGenre"
         android:name="com.example.spotifywrapped.ui.gallery.pages.TopGenre"
-        android:label="TopGenre"
         tools:layout="@layout/fragment_top_genre" />
     <fragment
         android:id="@+id/nav_wrappedSummary"
         android:name="com.example.spotifywrapped.ui.gallery.pages.WrappedSummary"
-        android:label="WrappedSummary"
         tools:layout="@layout/fragment_wrapped_summary" />
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.example.spotifywrapped.ui.settings.SettingsFragment"
-        android:label="Settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/nav_public"
         android:name="com.example.spotifywrapped.ui.publicwrap.PublicFragment"
-        android:label="Public Wraps"
         tools:layout="@layout/fragment_public" />
 
 </navigation>

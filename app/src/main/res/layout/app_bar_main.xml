@@ -15,7 +15,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/spotify_dark_grey"
+            android:background="@color/spotify_black"
+            app:title=""
             app:popupTheme="@style/Theme.SpotifyWrapped.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
