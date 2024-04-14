@@ -17,7 +17,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -26,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
+                android:layout_marginBottom="10dp"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="Wrap Name"
@@ -37,7 +39,6 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="15dp"
                 android:alpha="1"
                 android:background="@color/spotify_black" />
