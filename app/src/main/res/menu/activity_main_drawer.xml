@@ -10,14 +10,14 @@
             android:title="Spotify Token" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/rectangle_stack_fill"
+            android:icon="@drawable/rectangle_stack_person_crop_fill"
             android:title="My Wraps" />
         <item
             android:id="@+id/nav_public"
-            android:icon="@drawable/rectangle_stack_person_crop_fill"
+            android:icon="@drawable/people_nearby"
             android:title="Public Wraps" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_games"
             android:icon="@drawable/gameboy_solid"
             android:title="Games" />
         <item

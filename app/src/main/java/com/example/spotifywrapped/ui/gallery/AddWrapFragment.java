@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -277,6 +278,8 @@ public class AddWrapFragment extends Fragment {
                 ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
                 if (actionBar != null) {
                     actionBar.hide();
+                    ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                    imageView.setVisibility(View.GONE);
                 }
 
                 String term = spinner.getSelectedItem().toString().split(" ")[0].toLowerCase();

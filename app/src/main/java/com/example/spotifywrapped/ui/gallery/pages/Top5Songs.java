@@ -130,6 +130,8 @@ public class Top5Songs extends Fragment {
                 ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
                 if (actionBar != null) {
                     actionBar.show();
+                    ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                    imageView.setVisibility(View.VISIBLE);
                 }
             }
         });

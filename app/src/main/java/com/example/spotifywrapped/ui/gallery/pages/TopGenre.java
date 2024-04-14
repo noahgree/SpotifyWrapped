@@ -91,6 +91,8 @@ public class TopGenre extends Fragment {
                 ActionBar actionBar = ((AppCompatActivity) MainActivity.getInstance()).getSupportActionBar();
                 if (actionBar != null) {
                     actionBar.show();
+                    ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                    imageView.setVisibility(View.VISIBLE);
                 }
             }
         });

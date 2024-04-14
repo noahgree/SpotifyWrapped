@@ -104,6 +104,32 @@ public class MainActivity extends AppCompatActivity {
             navigateToLoginFragment();
         }
         //TODO: NEED TO IMPLEMENT THE LOG OUT BUTTON
+
+        // For swapping toolbar icon
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+
+        ImageView currentPageIcon = binding.getRoot().findViewById(R.id.currentPageIcon);
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            int destId = destination.getId();
+            Log.d("navigation", "changed to" + destId);
+
+            if (destId == R.id.nav_home) {
+                currentPageIcon.setImageResource(R.drawable.key);
+            } else if (destId == R.id.nav_gallery) {
+                currentPageIcon.setImageResource(R.drawable.rectangle_stack_person_crop_fill);
+            } else if (destId == R.id.nav_public) {
+                currentPageIcon.setImageResource(R.drawable.people_nearby);
+            } else if (destId == R.id.nav_games) {
+                currentPageIcon.setImageResource(R.drawable.gameboy_solid);
+            } else if (destId == R.id.nav_settings) {
+                currentPageIcon.setImageResource(R.drawable.settings);
+            } else if (destId == R.id.nav_addWrap) {
+                currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill_badge_plus);
+            }
+            else {
+                currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill); // Fallback icon
+            }
+        });
     }
 
 //    private String fetchAccessTokenFirebase() {
@@ -169,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigateToLoginFragment() {
         // Ensure the AppBar (Toolbar) is not shown for the Login Fragment
-        binding.appBarMain.toolbar.setVisibility(View.GONE);
+        binding.mainAppBar.toolbar.setVisibility(View.GONE);
         // Navigate to the Login Fragment immediately
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         navController.navigate(R.id.nav_login); // Adjust this ID based on your navigation graph
@@ -177,14 +203,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigateToNewWrapFragment() {
         // Ensure the AppBar (Toolbar) is not shown for the Login Fragment
-        binding.appBarMain.toolbar.setVisibility(View.GONE);
+        binding.mainAppBar.toolbar.setVisibility(View.GONE);
         // Navigate to the Login Fragment immediately
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         navController.navigate(R.id.nav_addWrap); // Adjust this ID based on your navigation graph
     }
 
     private void updateToolbarForLoggedOutUser() {
-        setSupportActionBar(binding.appBarMain.toolbar);
+        setSupportActionBar(binding.mainAppBar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false); // Remove the back/up button
     }
 
@@ -201,20 +227,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void setupNavigationAndToolbar() {
         // Set up Toolbar
-        setSupportActionBar(binding.appBarMain.toolbar);
+        setSupportActionBar(binding.mainAppBar.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_public, R.id.nav_slideshow, R.id.nav_settings) // Add or remove IDs as needed
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_public, R.id.nav_games, R.id.nav_settings) // Add or remove IDs as needed
                 .setOpenableLayout(drawer)
                 .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
         // Show the AppBar (Toolbar) if it was previously hidden
-        binding.appBarMain.toolbar.setVisibility(View.VISIBLE);
+        binding.mainAppBar.toolbar.setVisibility(View.VISIBLE);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
@@ -231,6 +258,15 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_logout) {
+            logoutUser();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     //Updates new values with the current user.
     public static void onLoginSuccess(String name, String email) {
         NavigationView navigationView = (NavigationView) binding.navView;
@@ -241,15 +277,6 @@ public class MainActivity extends AppCompatActivity {
         navName.setText(name);
         navEmail.setText(email);
         //Wrapped Fragment
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_logout) {
-            logoutUser();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void logoutUser() {
