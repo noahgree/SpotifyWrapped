@@ -259,9 +259,6 @@ public class AddWrapFragment extends Fragment {
         binding.generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // switch to slideshow view
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_topSong);
 
                 // hide action bar up top
                 ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -302,6 +299,9 @@ public class AddWrapFragment extends Fragment {
                             //count = PublicFragment.wrapAdapter.getItemCount();
                             //PublicFragment.wrapAdapter.addWrap(new WrapObject(count, "Wrap #" + (count + 1), ((List<String>) updatedWrap.get("artistsimage")).get(0), ((List<String>) updatedWrap.get("tracksimage")).get(0), ((List<String>) updatedWrap.get("artists")).get(0), ((List<String>) updatedWrap.get("tracks")).get(0)));
                         }
+                        // switch to slideshow view
+                        NavController navController = Navigation.findNavController(v);
+                        navController.navigate(R.id.nav_topSong);
                     });
                 };
 
