@@ -15,12 +15,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginBottom="15dp"
             android:fontFamily="@font/spotify_font"
             android:text="Make a Wrap"
+            android:textAlignment="center"
             android:textColor="@color/spotify_green"
             android:textSize="48sp"
             android:textStyle="bold" />

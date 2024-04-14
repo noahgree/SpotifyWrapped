@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/spotify_black"
+    android:orientation="vertical"
     tools:context=".ui.settings.SettingsFragment"
     tools:ignore="MissingDefaultResource">
 
@@ -18,34 +19,40 @@
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginBottom="15dp"
                     android:fontFamily="@font/spotify_font"
                     android:text="Settings"
                     android:textAlignment="center"
-                    android:textColor="@color/spotify_white"
-                    android:textSize="50sp" />
+                    android:textColor="@color/spotify_green"
+                    android:textSize="48sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="150dp"
                     android:fontFamily="@font/spotify_font"
                     android:text="Change Your Password"
                     android:textAlignment="center"
-                    android:layout_marginTop="150dp"
                     android:textColor="@color/spotify_white"
                     android:textSize="25sp" />
+
                 <EditText
                     android:id="@+id/newEmailInput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:layout_marginBottom="7.5dp"
+                    android:layout_weight="0"
                     android:background="@drawable/rounded_edittext"
                     android:ems="10"
                     android:fontFamily="@font/spotify_font"
                     android:hint="New Password"
-                    android:layout_weight="0"
-                    android:layout_margin="10dp"
                     android:inputType="textEmailAddress"
                     android:textColor="@color/spotify_black" />
+
                 <Button
                     android:id="@+id/btnSubmitAccountEmail"
                     android:layout_width="wrap_content"
@@ -62,6 +69,7 @@
                     android:textSize="18sp"
                     app:cornerRadius="10sp"
                     app:iconTint="@android:color/holo_red_dark" />
+
                 <Button
                     android:id="@+id/btnDeleteAccount"
                     android:layout_width="wrap_content"
@@ -80,4 +88,4 @@
                     app:iconTint="@android:color/holo_red_dark" />
         </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
