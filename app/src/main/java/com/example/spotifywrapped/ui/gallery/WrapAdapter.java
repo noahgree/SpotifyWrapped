@@ -51,6 +51,16 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
         holder.nameTextView.setText(wrap.getName());
         holder.artistTextView.setText(wrap.getArtistName());
         holder.songTextView.setText(wrap.getSongName());
+        ArrayList<Map<String, Object>> wraps = MainActivity.getCurrentUser().getwraps();
+        if (!wraps.isEmpty()) {
+            Map<String, Object> wrapMap = wraps.get(wraps.size() - 1);
+            String genre = (String) ((ArrayList<String>) wrapMap.get("artistsgenre")).get(0);
+            String image = (String) ((ArrayList<String>) wrapMap.get("artistsimage")).get(0);
+            holder.genreTextView.setText(genre);
+            Glide.with(context)
+                    .load(image)
+                    .into(holder.genreImageView);
+        }
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,8 +93,8 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
 
     public static class WrapViewHolder extends RecyclerView.ViewHolder {
         public View cardView;
-        public TextView nameTextView, artistTextView, songTextView;
-        public ImageView artistImageView, songImageView;
+        public TextView nameTextView, artistTextView, songTextView, genreTextView;
+        public ImageView artistImageView, songImageView, genreImageView;
 
         public WrapViewHolder(View itemView) {
             super(itemView);
@@ -94,6 +104,8 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
             songImageView = itemView.findViewById(R.id.album2);
             artistTextView = itemView.findViewById(R.id.albumName1);
             songTextView = itemView.findViewById(R.id.albumName2);
+            genreTextView = itemView.findViewById(R.id.genreNameCard);
+            genreImageView = itemView.findViewById(R.id.genreImageView);
         }
     }
 }

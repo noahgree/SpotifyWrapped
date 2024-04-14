@@ -90,7 +90,7 @@
                         android:layout_weight="1">
 
                         <ImageView
-                            android:id="@+id/album3"
+                            android:id="@+id/genreImageView"
                             android:layout_width="75dp"
                             android:layout_height="75dp"
                             android:layout_gravity="center"
@@ -134,7 +134,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/albumName3"
+                        android:id="@+id/genreNameCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|top"
