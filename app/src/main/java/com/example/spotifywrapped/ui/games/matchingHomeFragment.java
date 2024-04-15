@@ -74,7 +74,9 @@ public class matchingHomeFragment extends Fragment {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), matchingGameFragment.class));
+                Intent intent = new Intent(requireContext(), matchingGameFragment.class);
+                startActivity(intent);
+
             }
         });
 
