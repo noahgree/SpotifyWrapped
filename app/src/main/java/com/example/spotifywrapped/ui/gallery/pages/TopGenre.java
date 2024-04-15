@@ -202,6 +202,8 @@ public class TopGenre extends Fragment {
             }
         });
 
+        MainActivity.updateForHoliday(binding);
+
         return root;
     }
 

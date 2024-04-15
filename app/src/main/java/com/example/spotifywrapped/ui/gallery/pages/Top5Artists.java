@@ -266,6 +266,8 @@ public class Top5Artists extends Fragment {
             }
         });
 
+        MainActivity.updateForHoliday(binding);
+
         return root;
     }
 

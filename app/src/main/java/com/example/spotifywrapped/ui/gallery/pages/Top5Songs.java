@@ -270,6 +270,8 @@ public class Top5Songs extends Fragment {
             }
         });
 
+        MainActivity.updateForHoliday(binding);
+
         return root;
     }
 

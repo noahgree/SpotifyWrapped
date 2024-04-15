@@ -203,6 +203,8 @@ public class TopSong extends Fragment {
             }
         });
 
+        MainActivity.updateForHoliday(binding);
+
         MainActivity.playSong("spotify:track:6rqhFgbbKwnb9MLmUQDhG6");
 
         return root;
