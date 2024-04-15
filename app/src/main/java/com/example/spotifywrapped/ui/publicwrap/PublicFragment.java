@@ -49,7 +49,7 @@ public class PublicFragment extends Fragment {
         context = MainActivity.getInstance();
         currentUser = MainActivity.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference publicRef = db.collection("Accounts").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
+        DocumentReference publicRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");
         recyclerView = root.findViewById(R.id.publicWrapRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

@@ -254,7 +254,7 @@ public class AddWrapFragment extends Fragment {
 
         // Reference to the user's document in Firestore
         DocumentReference userRef = db.collection("Accounts").document(user.getUid());
-        DocumentReference publicRef = db.collection("Accounts").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
+        DocumentReference publicRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");
 
         binding.generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
