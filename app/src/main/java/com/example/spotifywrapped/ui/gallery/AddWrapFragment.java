@@ -5,11 +5,14 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -23,29 +26,21 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentAddWrapBinding;
-import com.example.spotifywrapped.ui.publicwrap.PublicFragment;
 import com.example.spotifywrapped.user.User;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskCompletionSource;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,7 +48,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,22 +134,26 @@ public class AddWrapFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.time_frame_options, android.R.layout.simple_spinner_item);
 
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
+        // Specify the layout to use when the list of choices appears.
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
+        // Apply the adapter to the spinner.
         timeFrameSpinner.setAdapter(adapter);
 
         // Set the spinner's onItemSelectedListener if you need to handle selection events
         timeFrameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                // Your selection handling code here
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ((TextView) view).setTextColor(ContextCompat.getColor(timeFrameSpinner.getContext(), R.color.spotify_white));
+                ((TextView) view).setTextSize(18);
+                // Create a Typeface from the font resource
+                Typeface spotifyTypeface = ResourcesCompat.getFont(timeFrameSpinner.getContext(), R.font.spotify_font);
+                Typeface boldSpotifyTypeface = Typeface.create(spotifyTypeface, Typeface.BOLD);
+                ((TextView) view).setTypeface(spotifyTypeface);
+                ((TextView) view).setPadding(8, 0, 0, 0);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // Another interface callback
+            public void onNothingSelected(AdapterView<?> parent) {
+                //
             }
         });
     }
@@ -164,21 +162,18 @@ public class AddWrapFragment extends Fragment {
         void onDataCompleted(Map<String, Object> wrap);
     }
 
-
     public static String getSpotifyToken() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
         String string = sharedPreferences.getString("SpotifyToken", null);
         Log.d("SharedPreferences", "Loaded token: " + string);
         return sharedPreferences.getString("SpotifyToken", null);
     }
-    public static void onWrapMade(Context context, View view, OkHttpClient okHttpClient, String term, Map<String, Object> wrap, DataCompletionHandler handler) {
 
+    public static void onWrapMade(Context context, View view, OkHttpClient okHttpClient, String term, Map<String, Object> wrap, DataCompletionHandler handler) {
         if (getSpotifyToken() == null) {
             Toast.makeText(context, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
             return;
         }
-
-
 
         final AtomicInteger completionCounter = new AtomicInteger(0); // Synchronization counter
         List<String> endpoints = Arrays.asList("artists", "tracks"); // Assuming these are your two categories
@@ -224,6 +219,7 @@ public class AddWrapFragment extends Fragment {
                                     if (thing.equals("artists")) {
                                         wrap.put(thing + "genre", genre);
                                     }
+
                                     if (handler != null && completionCounter.incrementAndGet() == 2) {
                                         handler.onDataCompleted(wrap);
                                     }
@@ -258,18 +254,18 @@ public class AddWrapFragment extends Fragment {
 
         // Reference to the user's document in Firestore
         DocumentReference userRef = db.collection("Accounts").document(user.getUid());
-        DocumentReference publicRef = db.collection("Accounts").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
+        DocumentReference publicRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");
 
         binding.generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // switch to slideshow view
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_topSong);
+
                 // hide action bar up top
                 ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
                 if (actionBar != null) {
                     actionBar.hide();
+                    ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                    imageView.setVisibility(View.GONE);
                 }
 
                 String term = spinner.getSelectedItem().toString().split(" ")[0].toLowerCase();
@@ -280,8 +276,8 @@ public class AddWrapFragment extends Fragment {
                 DataCompletionHandler handler = updatedWrap -> {
                     // This block will be called once data fetching is complete.
                     getActivity().runOnUiThread(() -> {
-                        TextView testText = (TextView) root.findViewById(R.id.testText);
-                        testText.setText(updatedWrap.toString());
+//                        TextView testText = (TextView) root.findViewById(R.id.testText);
+//                        testText.setText(updatedWrap.toString());
                         Map<String, Object> dataToUpdate = new HashMap<>();
 
                         userRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
@@ -303,6 +299,9 @@ public class AddWrapFragment extends Fragment {
                             //count = PublicFragment.wrapAdapter.getItemCount();
                             //PublicFragment.wrapAdapter.addWrap(new WrapObject(count, "Wrap #" + (count + 1), ((List<String>) updatedWrap.get("artistsimage")).get(0), ((List<String>) updatedWrap.get("tracksimage")).get(0), ((List<String>) updatedWrap.get("artists")).get(0), ((List<String>) updatedWrap.get("tracks")).get(0)));
                         }
+                        // switch to slideshow view
+                        NavController navController = Navigation.findNavController(v);
+                        navController.navigate(R.id.nav_topSong);
                     });
                 };
 

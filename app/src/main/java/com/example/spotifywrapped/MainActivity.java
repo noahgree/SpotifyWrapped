@@ -17,8 +17,10 @@ import android.widget.Toast;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import com.bumptech.glide.Glide;
@@ -31,17 +33,21 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.viewbinding.ViewBinding;
 
 import com.example.spotifywrapped.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,22 +66,32 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
 
+    private static String theme = "Default";
+
     interface CallbackTwo {
         void onComplete(boolean isValid);
+    }
+
+    public interface TrackUriCallback {
+        void onCompleted(String trackUri);
+        void onError(String errorMessage);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        publicID = "bIQXuN4oAPUWGUx6ikPoDw1cjx62";
+
+        publicID = "vGLXVzArF0OObsE5bJT4jNpdOy33";
         mAuth = FirebaseAuth.getInstance();
+
         navigationView = findViewById(R.id.nav_view);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //currentUser = loadUser();
         instance = this;
-        currentUser = loadUser();
         context = MainActivity.this;
+
+        currentUser = loadUser();
+        checkForHolidays();
         //Deals with if user needs to log in or refresh the spotify token.
         if (mAuth.getCurrentUser() != null && currentUser != null) {
             // User is still logged in with Firebase, load the user profile
@@ -90,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(boolean isValid) {
                         if (!isValid) {
                             navigateToSpotifyLoginFragment();
-                            return;
                         } else {
                             //TODO: Make it so if the token from the saved user is not valid, then it also checks the token stored in firebase
                             setupNavigationAndToolbar();
@@ -98,16 +113,184 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-
         } else {
             navigateToLoginFragment();
         }
         //TODO: NEED TO IMPLEMENT THE LOG OUT BUTTON
+
+        // For swapping toolbar icon depending on current layout
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        ImageView currentPageIcon = binding.getRoot().findViewById(R.id.currentPageIcon);
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            int destId = destination.getId();
+
+            if (destId == R.id.nav_home) {
+                currentPageIcon.setImageResource(R.drawable.key);
+            } else if (destId == R.id.nav_gallery) {
+                currentPageIcon.setImageResource(R.drawable.rectangle_stack_person_crop_fill);
+            } else if (destId == R.id.nav_public) {
+                currentPageIcon.setImageResource(R.drawable.people_nearby);
+            } else if (destId == R.id.nav_games) {
+                currentPageIcon.setImageResource(R.drawable.gameboy_solid);
+            } else if (destId == R.id.nav_settings) {
+                currentPageIcon.setImageResource(R.drawable.settings);
+            } else if (destId == R.id.nav_addWrap) {
+                currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill_badge_plus);
+            }
+            else {
+                currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill); // Fallback icon
+            }
+        });
     }
 
-//    private String fetchAccessTokenFirebase() {
-//        return;
-//    }
+    public static String getThemeName() {
+        return theme;
+    }
+
+    public static void setTheme(String theme) {
+        MainActivity.theme = theme;
+    }
+
+    public static void updateForHoliday(ViewBinding binding) {
+        ImageView imageView = (ImageView) binding.getRoot().findViewById(R.id.topSongPattern);
+        if (theme.equals("Christmas")) {
+            Glide.with(context)
+                    .load(R.drawable.christmas_pattern)
+                    .into(imageView);
+        }
+        if (theme.equals("Valentines")) {
+            Glide.with(context)
+                    .load(R.drawable.valentines_pattern)
+                    .into(imageView);
+        }
+        if (theme.equals("Halloween")) {
+            Glide.with(context)
+                    .load(R.drawable.halloween_pattern)
+                    .into(imageView);
+        }
+    }
+
+    private void checkForHolidays() {
+        Calendar now = Calendar.getInstance();
+        int month = now.get(Calendar.MONTH); // Note: January is 0, December is 11
+        int day = now.get(Calendar.DAY_OF_MONTH);
+
+        if (month == Calendar.DECEMBER && day == 25) {
+            theme = "Christmas";
+        } else if (month == Calendar.FEBRUARY && day == 14) {
+            theme = "Valentines";
+        } else if (month == Calendar.OCTOBER && day == 31) {
+            theme = "Halloween";
+        } else {
+            theme = "Default"; // Default theme when it's not a special holiday
+        }
+    }
+
+    public static void fetchTrackUriFromSongName(String songName, TrackUriCallback callback) {
+        if (!isSpotifyLoggedIn()) {
+            callback.onError("User is not logged in to Spotify.");
+            return;
+        }
+
+        String accessToken = currentUser.getmAccessToken();
+        OkHttpClient client = new OkHttpClient();
+        String encodedSongName;
+        try {
+            encodedSongName = URLEncoder.encode(songName, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            callback.onError("Error encoding the song name.");
+            return;
+        }
+
+        String searchUrl = "https://api.spotify.com/v1/search?q=" + encodedSongName + "&type=track&limit=1";
+
+        Request request = new Request.Builder()
+                .url(searchUrl)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .get()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Failed to search song: " + e.getMessage());
+                new Handler(Looper.getMainLooper()).post(() -> callback.onError("Failed to search for the song."));
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    Log.e(TAG, "Search failed: " + response.message());
+                    new Handler(Looper.getMainLooper()).post(() -> callback.onError("Failed to fetch song URI."));
+                    return;
+                }
+
+                String responseData = response.body().string();
+                try {
+                    JSONObject jsonObject = new JSONObject(responseData);
+                    JSONObject tracks = jsonObject.getJSONObject("tracks");
+                    JSONArray items = tracks.getJSONArray("items");
+
+                    if (items.length() > 0) {
+                        String trackUri = items.getJSONObject(0).getString("uri");
+                        new Handler(Looper.getMainLooper()).post(() -> callback.onCompleted(trackUri));
+                    } else {
+                        new Handler(Looper.getMainLooper()).post(() -> callback.onError("No track found for the given song name."));
+                    }
+                } catch (JSONException e) {
+                    Log.e(TAG, "Failed to parse data: " + e.getMessage());
+                    new Handler(Looper.getMainLooper()).post(() -> callback.onError("Failed to parse track data."));
+                }
+            }
+        });
+    }
+
+    public static void playSong(String trackUri) {
+        if (!isSpotifyLoggedIn()) {
+            Toast.makeText(context, "You need to log in to Spotify first!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String accessToken = currentUser.getmAccessToken();
+        OkHttpClient client = new OkHttpClient();
+        String playUrl = "https://api.spotify.com/v1/me/player/play";
+
+        JSONObject json = new JSONObject();
+        try {
+            JSONArray uris = new JSONArray();
+            uris.put(trackUri);
+            json.put("uris", uris);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json.toString());
+        Request request = new Request.Builder()
+                .url(playUrl)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Failed to play song: " + e.getMessage());
+                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to play song", Toast.LENGTH_SHORT).show());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    Log.e(TAG, "Failed to play song: " + response.message());
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to play song", Toast.LENGTH_SHORT).show());
+                } else {
+                    Log.d(TAG, "Song played successfully.");
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Song played successfully!", Toast.LENGTH_SHORT).show());
+                }
+            }
+        });
+    }
+
 
     public static MainActivity getInstance() {
         return instance;
@@ -168,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigateToLoginFragment() {
         // Ensure the AppBar (Toolbar) is not shown for the Login Fragment
-        binding.appBarMain.toolbar.setVisibility(View.GONE);
+        binding.mainAppBar.toolbar.setVisibility(View.GONE);
         // Navigate to the Login Fragment immediately
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         navController.navigate(R.id.nav_login); // Adjust this ID based on your navigation graph
@@ -176,14 +359,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigateToNewWrapFragment() {
         // Ensure the AppBar (Toolbar) is not shown for the Login Fragment
-        binding.appBarMain.toolbar.setVisibility(View.GONE);
+        binding.mainAppBar.toolbar.setVisibility(View.GONE);
         // Navigate to the Login Fragment immediately
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         navController.navigate(R.id.nav_addWrap); // Adjust this ID based on your navigation graph
     }
 
     private void updateToolbarForLoggedOutUser() {
-        setSupportActionBar(binding.appBarMain.toolbar);
+        setSupportActionBar(binding.mainAppBar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false); // Remove the back/up button
     }
 
@@ -200,20 +383,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void setupNavigationAndToolbar() {
         // Set up Toolbar
-        setSupportActionBar(binding.appBarMain.toolbar);
+        setSupportActionBar(binding.mainAppBar.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_public, R.id.nav_slideshow, R.id.nav_settings) // Add or remove IDs as needed
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_public, R.id.nav_games, R.id.nav_settings) // Add or remove IDs as needed
                 .setOpenableLayout(drawer)
                 .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
         // Show the AppBar (Toolbar) if it was previously hidden
-        binding.appBarMain.toolbar.setVisibility(View.VISIBLE);
+        binding.mainAppBar.toolbar.setVisibility(View.VISIBLE);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
@@ -229,18 +414,6 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-    //Updates new values with the current user.
-    public static void onLoginSuccess(String name, String email) {
-        NavigationView navigationView = (NavigationView) binding.navView;
-        View navView = navigationView.getHeaderView(0);
-        //Side Navigation
-        TextView navName = navView.findViewById(R.id.navName);
-        TextView navEmail = navView.findViewById(R.id.navEmail);
-        navName.setText(name);
-        navEmail.setText(email);
-        //Wrapped Fragment
-    }
-
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_logout) {
@@ -248,6 +421,19 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //Updates new values with the current user.
+    public static void onLoginSuccess(String name, String email) {
+        NavigationView navigationView = (NavigationView) binding.navView;
+        View navView = navigationView.getHeaderView(0);
+        //Side Navigation
+        TextView navName = navView.findViewById(R.id.navName);
+
+        TextView navEmail = navView.findViewById(R.id.navEmail);
+        navName.setText(name);
+        navEmail.setText(email);
+        //Wrapped Fragment
     }
 
     private void logoutUser() {

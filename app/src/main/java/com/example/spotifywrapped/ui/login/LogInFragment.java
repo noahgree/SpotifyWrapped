@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.spotifywrapped.MainActivity;
@@ -70,6 +72,12 @@ public class LogInFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        MainActivity mainActivity = (MainActivity) getActivity();
+
+        if (mainActivity != null) {
+            mainActivity.setupNavigationAndToolbar();
+            hideActionBar();
+        }
         // Inflate the layout for this fragment
         binding = FragmentLogInBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -79,6 +87,7 @@ public class LogInFragment extends Fragment {
         //Signup Button
         Button signupButton = root.findViewById(R.id.signupButton);
         signupButton.setBackgroundResource(R.drawable.rounded_button);
+
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +127,9 @@ public class LogInFragment extends Fragment {
                 String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
                 if(email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(root.getContext(), "Sign up failed.",
+                            Toast.LENGTH_SHORT).show();
+                } else if (password.length() < 6) {
+                    Toast.makeText(root.getContext(), "Password entered is too short. Please use at least 6 characters.",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     // Create an AlertDialog.Builder to get the user's name
@@ -240,6 +252,8 @@ public class LogInFragment extends Fragment {
             AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
             if (appCompatActivity.getSupportActionBar() != null) {
                 appCompatActivity.getSupportActionBar().hide();
+                ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                imageView.setVisibility(View.GONE);
             }
         }
     }

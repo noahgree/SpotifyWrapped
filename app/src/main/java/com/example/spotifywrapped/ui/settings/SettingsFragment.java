@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,21 +43,20 @@ public class SettingsFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         String userId = auth.getCurrentUser().getUid();
-        btnNewEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText newEmailField = (EditText) root.findViewById(R.id.newEmailInput);
-                String newEmail = newEmailField.getText().toString();
-                Log.d("AUTH CHANGE", newEmail);
-                if (user != null && !newEmail.isEmpty()) {
-                    user.updatePassword(newEmail)
+        btnNewEmail.setOnClickListener(view -> {
+            EditText newEmailField = (EditText) root.findViewById(R.id.newEmailInput);
+            String newPassword = newEmailField.getText().toString();
+
+            Log.d("AUTH CHANGE", newPassword);
+
+            if (user != null && !newPassword.isEmpty()) {
+                if(newPassword.length() >= 6) {
+                    user.updatePassword(newPassword)
                             //Changes
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d(TAG, "User password updated.");
-                                    }
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "User password updated.");
+                                    Toast.makeText(getContext(), "Password changed sucessfully!", Toast.LENGTH_SHORT).show();
                                 }
                             });
 //                    user.updateEmail(newEmail)
@@ -80,18 +80,16 @@ public class SettingsFragment extends Fragment {
 //                                Log.e(TAG, "Email update failed", e);
 //                            });
                 } else {
-                    Toast.makeText(getActivity(), "Email field is empty or user is not logged in", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Password too short.");
+                    Toast.makeText(getContext(), "Password needs to be at least 6 characters long.", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Toast.makeText(getActivity(), "Email field is empty or user is not logged in", Toast.LENGTH_SHORT).show();
             }
         });
 
         Button btnDeleteAccount = root.findViewById(R.id.btnDeleteAccount);
-        btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteAccount();
-            }
-        });
+        btnDeleteAccount.setOnClickListener(view -> deleteAccount());
 
         return root;
     }
@@ -121,6 +119,8 @@ public class SettingsFragment extends Fragment {
             AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
             if (appCompatActivity.getSupportActionBar() != null) {
                 appCompatActivity.getSupportActionBar().hide();
+                ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                imageView.setVisibility(View.GONE);
             }
         }
     }

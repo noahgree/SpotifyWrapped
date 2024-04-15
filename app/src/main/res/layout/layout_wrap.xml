@@ -5,20 +5,20 @@
     android:id="@+id/classCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="15dp"
     android:backgroundTint="@color/spotify_green"
-    app:cardCornerRadius="25dp"
+    app:cardCornerRadius="15dp"
     app:cardElevation="4dp">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -26,76 +26,140 @@
                 android:id="@+id/wrapName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginBottom="10dp"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:singleLine="true"
-                android:text="Account Name"
+                android:text="Wrap Name"
                 android:textColor="@color/spotify_white"
-                android:textSize="34sp"
+                android:textSize="26sp"
                 android:textStyle="bold" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginBottom="15dp"
+                android:alpha="1"
+                android:background="@color/spotify_dark_green" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_marginHorizontal="15dp"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/album1"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_gravity="center"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/logo" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/album2"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_gravity="center"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/logo" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/genreImageView"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_gravity="center"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/logo" />
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/album1"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/logo" />
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/albumName1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center_horizontal|top"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
-                        android:text="ArtistName"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="Top Artist"
                         android:textAlignment="center"
                         android:textAllCaps="false"
                         android:textColor="@color/spotify_white"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/album2"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/logo" />
 
                     <TextView
                         android:id="@+id/albumName2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center_horizontal|top"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
-                        android:text="SongName"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="Top Song"
                         android:textAlignment="center"
                         android:textColor="@color/spotify_white"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/genreNameCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="Top Genre"
+                        android:textAlignment="center"
+                        android:textColor="@color/spotify_white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </FrameLayout>
 
 </androidx.cardview.widget.CardView>

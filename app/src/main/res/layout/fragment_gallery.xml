@@ -6,23 +6,20 @@
     android:layout_height="match_parent"
     android:background="@color/spotify_black"
     android:orientation="vertical"
-    android:padding="20sp"
     tools:context=".ui.gallery.GalleryFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/minslistened_intro"
+            android:id="@+id/MWtitletext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:text="Your Wraps"
+            android:text="My Wraps"
             android:textAlignment="textStart"
             android:textColor="@color/spotify_green"
             android:textSize="48sp"
@@ -32,26 +29,28 @@
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform" />
 
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addButton_task"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal|center_vertical"
             android:clickable="true"
             android:focusable="true"
             android:src="@android:drawable/ic_input_add"
             app:backgroundTint="@color/spotify_green"
+            app:elevation="0dp"
             app:fabCustomSize="50dp"
-            app:tint="@color/spotify_black" />
+            app:pressedTranslationZ="0dp"
+            app:tint="@color/spotify_white" />
+
+
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_margin="25dp"
+        android:layout_weight="1">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/wrapRecycler"
@@ -59,4 +58,5 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/layout_wrap" />
     </ScrollView>
+
 </LinearLayout>

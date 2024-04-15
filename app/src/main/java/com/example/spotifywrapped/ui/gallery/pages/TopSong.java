@@ -3,10 +3,15 @@ package com.example.spotifywrapped.ui.gallery.pages;
 import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,10 +21,16 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.PixelCopy;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,12 +42,21 @@ import com.example.spotifywrapped.databinding.FragmentTopSongBinding;
 import com.example.spotifywrapped.ui.gallery.WrapObject;
 import com.example.spotifywrapped.user.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,32 +80,97 @@ public class TopSong extends Fragment {
     }
 
 
-    private FragmentTopSongBinding binding;
+    private static FragmentTopSongBinding binding;
 
     public static Context context;
 
     private static User currentUser;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
+    public static boolean publicWrap = false;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context = MainActivity.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+    }
+
+
+    public static FragmentTopSongBinding getBinding() {
+        return binding;
+    }
+
+    public static boolean isPublicWrap() {
+        return publicWrap;
+    }
+
+    public static void setPublicWrap(boolean publicWrap) {
+        TopSong.publicWrap = publicWrap;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentTopSongBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        context = MainActivity.getInstance();
-        currentUser = loadUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
-        if (wraps != null && !wraps.isEmpty()) {
-            Map<String, Object> wrap = wraps.get(wraps.size() - 1);
-            String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
-            String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
-            TextView songName = (TextView) root.findViewById(R.id.topsong);
-            songName.setText(name);
-            ImageView topartistimage = (ImageView) root.findViewById(R.id.topsongimage);
-            Glide.with(context)
-                    .load(image)
-                    .into(topartistimage);
+        // Assuming you have the current user's ID stored (e.g., as a field in the User object)
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (!WrappedSummary.isPublicWrap()) {
+            // Reference to the user's document in Firestore
+            DocumentReference userRef = db.collection("Accounts").document(user.getUid());
+            userRef.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
+                    if (wrapList != null) {
+                        Map<String, Object> wrapData = wrapList.get(wrapList.size() - 1);
+                        if (wrapData != null) {
+                            Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
+                            String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
+                            String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
+                            TextView songName = (TextView) root.findViewById(R.id.topsong);
+                            songName.setText(name);
+                            ImageView topartistimage = (ImageView) root.findViewById(R.id.topsongimage);
+                            Glide.with(context)
+                                    .load(image)
+                                    .into(topartistimage);
+                            setNameonTitle();
+                        }
+                    }
+                } else {
+                    Log.d("FIRESTORE", "No such document");
+                }
+            }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
+        } else {
+            //Public wrap
+            DocumentReference userRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");
+            userRef.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
+                    if (wrapList != null) {
+                        int index = 0;
+                        Map<String, Object> wrapData = wrapList.get(WrappedSummary.getPublicWrapIndex());
+                        if (wrapData != null) {
+                            Map<String, Object> wrap = wrapList.get(WrappedSummary.getPublicWrapIndex());
+                            String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
+                            String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
+                            TextView songName = (TextView) root.findViewById(R.id.topsong);
+                            songName.setText(name);
+                            ImageView topartistimage = (ImageView) root.findViewById(R.id.topsongimage);
+                            Glide.with(context)
+                                    .load(image)
+                                    .into(topartistimage);
+                            setDefaultOnTitle();
+                        }
+                    }
+                } else {
+                    Log.d("FIRESTORE", "No such document");
+                }
+            }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
         }
         // Set the click listener for the button
         binding.topsongnext.setOnClickListener(new View.OnClickListener() {
@@ -105,11 +190,127 @@ public class TopSong extends Fragment {
                 ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
                 if (actionBar != null) {
                     actionBar.show();
+                    ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                    imageView.setVisibility(View.VISIBLE);
                 }
             }
         });
 
+        binding.TSSaveImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeAndSaveScreenShot();
+            }
+        });
+
+        MainActivity.updateForHoliday(binding);
+
+        MainActivity.playSong("spotify:track:6rqhFgbbKwnb9MLmUQDhG6");
+
         return root;
+    }
+
+    public void takeAndSaveScreenShot() {
+        if (getActivity() != null) {
+            final Activity currentActivity = getActivity();
+
+            // hide elements we don't want in the image
+            currentActivity.findViewById(R.id.topsongexit).setVisibility(View.GONE);
+            currentActivity.findViewById(R.id.TSbottombar).setVisibility(View.GONE);
+
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                final View mainView = currentActivity.getWindow().getDecorView();
+                final Window window = currentActivity.getWindow();
+
+                // Create a bitmap for the part of the screen that needs to be captured
+                Point size = new Point();
+                int height = currentActivity.getWindow().getWindowManager().getCurrentWindowMetrics().getBounds().height();
+                int width = currentActivity.getWindow().getWindowManager().getCurrentWindowMetrics().getBounds().width();
+                final Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+                // Use PixelCopy to copy the screen content to the bitmap
+                PixelCopy.request(window, bitmap, (copyResult) -> {
+                    if (copyResult == PixelCopy.SUCCESS) {
+                        try {
+                            // Height to crop from the bottom
+                            int heightToCrop = 0; // Set this to the height you want to crop
+
+                            // New height for the cropped image
+                            int newHeight = bitmap.getHeight() - heightToCrop;
+
+                            // Create a new cropped Bitmap
+                            Bitmap croppedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), newHeight);
+
+                            // Save the cropped bitmap to file (optional, only if you need a file copy)
+                            File file = saveBitmapToFile(currentActivity, croppedBitmap, "MyWrappedImage", "Image description");
+
+                            // Directly add the cropped Bitmap to the gallery
+                            addImageToGallery(currentActivity, croppedBitmap, "MyWrappedImage", "Image description");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Handler(Looper.getMainLooper()));
+
+                // Restore visibility
+                currentActivity.findViewById(R.id.topsongexit).setVisibility(View.VISIBLE);
+                currentActivity.findViewById(R.id.TSbottombar).setVisibility(View.VISIBLE);
+            }, 100); // Delay in milliseconds
+        }
+    }
+
+    private File saveBitmapToFile(Context context, Bitmap bitmap, String title, String description) throws IOException {
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
+        File file = new File(path, title + ".png");
+        try (OutputStream out = Files.newOutputStream(file.toPath())) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+        }
+        return file;
+    }
+
+    private void addImageToGallery(Context context, Bitmap bitmap, String title, String description) {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, title + ".png");
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+        values.put(MediaStore.Images.Media.DESCRIPTION, description);
+        values.put(MediaStore.Images.Media.IS_PENDING, 1);
+
+        Uri collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
+        Uri item = context.getContentResolver().insert(collection, values);
+
+        if (item != null) {
+            try (OutputStream out = context.getContentResolver().openOutputStream(item)) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+                out.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            values.clear();
+            values.put(MediaStore.Images.Media.IS_PENDING, 0);
+            context.getContentResolver().update(item, values, null, null);
+        }
+    }
+
+    public static void setNameonTitle() {
+        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
+        String userName = (String) MainActivity.getCurrentUser().getName();
+        if (userName != null && !userName.isEmpty()) {
+            userName = userName.substring(0, userName.indexOf(" "));
+        } else {
+            userName = "User";
+        }
+        userName = userName + "'s ";
+        titlesWithName.setText(userName + titlesWithName.getText());
+    }
+
+    public static void setDefaultOnTitle() {
+        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
+        String userName = (String) MainActivity.getCurrentUser().getName();
+        userName = "User";
+        userName = userName + "'s ";
+        titlesWithName.setText(userName + titlesWithName.getText());
     }
 
 

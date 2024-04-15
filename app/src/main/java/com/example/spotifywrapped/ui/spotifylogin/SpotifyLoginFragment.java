@@ -31,6 +31,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -270,5 +271,13 @@ public class SpotifyLoginFragment extends Fragment {
     public void onDestroy() {
         cancelCall();
         super.onDestroy();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+        ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+        imageView.setVisibility(View.VISIBLE);
     }
 }

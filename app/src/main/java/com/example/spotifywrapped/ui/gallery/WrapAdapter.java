@@ -18,6 +18,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
+import com.example.spotifywrapped.databinding.FragmentTopSongBinding;
+import com.example.spotifywrapped.ui.gallery.pages.TopSong;
+import com.example.spotifywrapped.ui.gallery.pages.WrappedSummary;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,15 +58,34 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
         holder.nameTextView.setText(wrap.getName());
         holder.artistTextView.setText(wrap.getArtistName());
         holder.songTextView.setText(wrap.getSongName());
+        ArrayList<Map<String, Object>> wraps = MainActivity.getCurrentUser().getwraps();
+        if (!wraps.isEmpty()) {
+            Map<String, Object> wrapMap = wraps.get(wraps.size() - 1);
+            String genre = (String) ((ArrayList<String>) wrapMap.get("artistsgenre")).get(0);
+            String image = (String) ((ArrayList<String>) wrapMap.get("artistsimage")).get(0);
+            holder.genreTextView.setText(genre);
+            Glide.with(context)
+                    .load(image)
+                    .into(holder.genreImageView);
+        }
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActionBar actionBar = ((AppCompatActivity) MainActivity.getInstance()).getSupportActionBar();
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 if (actionBar != null) {
                     actionBar.hide();
+                    ImageView imageView = activity.findViewById(R.id.currentPageIcon);
+                    imageView.setVisibility(View.GONE);
                 }
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topSong);
+                if (wrap.isPublicWrap()) {
+                    WrappedSummary.setPublicWrap(true);
+                    WrappedSummary.setPublicWrapIndex(position);
+                } else {
+                    WrappedSummary.setPublicWrap(false);
+                }
             }
         });
 
@@ -67,6 +93,7 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
         Glide.with(context).load(wrap.getSongImage()).into(holder.songImageView);
         // Assume images are loaded somehow, possibly with an image loading library
     }
+
 
     public void addWrap(WrapObject newWrap) {
         wraps.add(newWrap);  // `wraps` is the list in the adapter
@@ -80,8 +107,8 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
 
     public static class WrapViewHolder extends RecyclerView.ViewHolder {
         public View cardView;
-        public TextView nameTextView, artistTextView, songTextView;
-        public ImageView artistImageView, songImageView;
+        public TextView nameTextView, artistTextView, songTextView, genreTextView;
+        public ImageView artistImageView, songImageView, genreImageView;
 
         public WrapViewHolder(View itemView) {
             super(itemView);
@@ -91,6 +118,8 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
             songImageView = itemView.findViewById(R.id.album2);
             artistTextView = itemView.findViewById(R.id.albumName1);
             songTextView = itemView.findViewById(R.id.albumName2);
+            genreTextView = itemView.findViewById(R.id.genreNameCard);
+            genreImageView = itemView.findViewById(R.id.genreImageView);
         }
     }
 }
