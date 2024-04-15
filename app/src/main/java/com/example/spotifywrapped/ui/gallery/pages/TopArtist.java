@@ -141,7 +141,7 @@ public class TopArtist extends Fragment {
                 }
             }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
         } else {
-            DocumentReference userRef = db.collection("Accounts").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
+            DocumentReference userRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");
 
             userRef.get().addOnSuccessListener(documentSnapshot -> {
                 if (documentSnapshot.exists()) {

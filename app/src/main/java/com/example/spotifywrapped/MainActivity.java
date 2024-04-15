@@ -17,8 +17,10 @@ import android.widget.Toast;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import com.bumptech.glide.Glide;
@@ -33,16 +35,18 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import com.example.spotifywrapped.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,11 +69,16 @@ public class MainActivity extends AppCompatActivity {
         void onComplete(boolean isValid);
     }
 
+    public interface TrackUriCallback {
+        void onCompleted(String trackUri);
+        void onError(String errorMessage);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        publicID = "bIQXuN4oAPUWGUx6ikPoDw1cjx62";
+        publicID = "vGLXVzArF0OObsE5bJT4jNpdOy33";
         mAuth = FirebaseAuth.getInstance();
 
         navigationView = findViewById(R.id.nav_view);
@@ -131,9 +140,111 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    private String fetchAccessTokenFirebase() {
-//        return;
-//    }
+    public static void fetchTrackUriFromSongName(String songName, TrackUriCallback callback) {
+        if (!isSpotifyLoggedIn()) {
+            callback.onError("User is not logged in to Spotify.");
+            return;
+        }
+
+        String accessToken = currentUser.getmAccessToken();
+        OkHttpClient client = new OkHttpClient();
+        String encodedSongName;
+        try {
+            encodedSongName = URLEncoder.encode(songName, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            callback.onError("Error encoding the song name.");
+            return;
+        }
+
+        String searchUrl = "https://api.spotify.com/v1/search?q=" + encodedSongName + "&type=track&limit=1";
+
+        Request request = new Request.Builder()
+                .url(searchUrl)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .get()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Failed to search song: " + e.getMessage());
+                new Handler(Looper.getMainLooper()).post(() -> callback.onError("Failed to search for the song."));
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    Log.e(TAG, "Search failed: " + response.message());
+                    new Handler(Looper.getMainLooper()).post(() -> callback.onError("Failed to fetch song URI."));
+                    return;
+                }
+
+                String responseData = response.body().string();
+                try {
+                    JSONObject jsonObject = new JSONObject(responseData);
+                    JSONObject tracks = jsonObject.getJSONObject("tracks");
+                    JSONArray items = tracks.getJSONArray("items");
+
+                    if (items.length() > 0) {
+                        String trackUri = items.getJSONObject(0).getString("uri");
+                        new Handler(Looper.getMainLooper()).post(() -> callback.onCompleted(trackUri));
+                    } else {
+                        new Handler(Looper.getMainLooper()).post(() -> callback.onError("No track found for the given song name."));
+                    }
+                } catch (JSONException e) {
+                    Log.e(TAG, "Failed to parse data: " + e.getMessage());
+                    new Handler(Looper.getMainLooper()).post(() -> callback.onError("Failed to parse track data."));
+                }
+            }
+        });
+    }
+
+    public static void playSong(String trackUri) {
+        if (!isSpotifyLoggedIn()) {
+            Toast.makeText(context, "You need to log in to Spotify first!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String accessToken = currentUser.getmAccessToken();
+        OkHttpClient client = new OkHttpClient();
+        String playUrl = "https://api.spotify.com/v1/me/player/play";
+
+        JSONObject json = new JSONObject();
+        try {
+            JSONArray uris = new JSONArray();
+            uris.put(trackUri);
+            json.put("uris", uris);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json.toString());
+        Request request = new Request.Builder()
+                .url(playUrl)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Failed to play song: " + e.getMessage());
+                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to play song", Toast.LENGTH_SHORT).show());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    Log.e(TAG, "Failed to play song: " + response.message());
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to play song", Toast.LENGTH_SHORT).show());
+                } else {
+                    Log.d(TAG, "Song played successfully.");
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Song played successfully!", Toast.LENGTH_SHORT).show());
+                }
+            }
+        });
+    }
+
 
     public static MainActivity getInstance() {
         return instance;

@@ -147,7 +147,7 @@ public class TopSong extends Fragment {
             }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
         } else {
             //Public wrap
-            DocumentReference userRef = db.collection("Accounts").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
+            DocumentReference userRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");
             userRef.get().addOnSuccessListener(documentSnapshot -> {
                 if (documentSnapshot.exists()) {
                     List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
@@ -202,6 +202,8 @@ public class TopSong extends Fragment {
                 takeAndSaveScreenShot();
             }
         });
+
+        MainActivity.playSong("spotify:track:6rqhFgbbKwnb9MLmUQDhG6");
 
         return root;
     }
