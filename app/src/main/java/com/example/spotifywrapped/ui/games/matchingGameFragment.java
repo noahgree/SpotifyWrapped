@@ -1,5 +1,8 @@
 package com.example.spotifywrapped.ui.games;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -95,10 +98,11 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             if (v == albumTiles[i]) {
                 if (firstTileIndex == -1) {
                     firstTileIndex = i;
-                    albumTiles[i].setImageResource(albumTileIds[i]);
+                    flipTile(albumTiles[i], albumTileIds[i]);
                 } else if (secondTileIndex == -1) {
                     secondTileIndex = i;
                     albumTiles[i].setImageResource((albumTileIds[i]));
+                    flipTile(albumTiles[i], albumTileIds[i]);
                     checkTiles();
                 }
             }
@@ -112,11 +116,28 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             secondTileIndex = -1;
         } else {
             albumTiles[firstTileIndex].postDelayed(() -> {
-                albumTiles[firstTileIndex].setImageResource(R.drawable.logo);
-                albumTiles[secondTileIndex].setImageResource(R.drawable.logo);
+                albumTiles[firstTileIndex].setImageResource(R.drawable.tile_back);
+                albumTiles[secondTileIndex].setImageResource(R.drawable.tile_back);
                 firstTileIndex = -1;
                 secondTileIndex = -1;
             }, 1000);
         }
+    }
+
+    private void flipTile(ImageView imageView, int imageId) {
+        ObjectAnimator flipOut = ObjectAnimator.ofFloat(imageView, "rotationY", 0f, 90f);
+        flipOut.setDuration(200);
+        flipOut.start();
+
+        flipOut.addListener(new AnimatorListenerAdapter() {
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                imageView.setImageResource(imageId);
+
+                ObjectAnimator flipIn = ObjectAnimator.ofFloat(imageView, "rotationY", -90f, 0f);
+                flipIn.setDuration(200);
+                flipIn.start();
+            }
+        });
     }
 }
