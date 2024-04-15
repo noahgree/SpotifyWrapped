@@ -1,92 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1af1b1">
+    android:background="#1af1b1"
+    android:orientation="vertical">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/matchingback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:outlineAmbientShadowColor="#00FFFFFF"
-        android:outlineSpotShadowColor="#00FFFFFF"
-        app:backgroundTint="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/matchingexit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:clickable="true"
-        android:outlineAmbientShadowColor="#00FFFFFF"
-        android:outlineSpotShadowColor="#00FFFFFF"
-        app:backgroundTint="#00FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_delete" />
+    <ImageView
+        android:id="@+id/matchingHomePattern"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.25"
+        android:scaleType="center"
+        app:srcCompat="@drawable/stripes_image"
+        tools:layout_editor_absoluteX="-4dp"
+        tools:layout_editor_absoluteY="-183dp" />
 
     <TextView
         android:id="@+id/matchinghometext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="60dp"
         android:fontFamily="@font/spotify_font"
         android:text="@string/matching_game_home"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/spotify_black"
         android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.088" />
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/dropdowntext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/spotify_font"
-        android:text="Set Your Album Timeframe:"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="@color/spotify_black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.723" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/matchingstart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="16dp"
-        android:text="START!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/matchinghomeimage"
-        android:layout_width="338dp"
-        android:layout_height="309dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.405"
-        app:srcCompat="@drawable/logo" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/topartistexit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_vertical"
+                android:layout_margin="15dp"
+                android:clickable="true"
+                android:elevation="0dp"
+                android:rotationY="180"
+                app:backgroundTint="@android:color/transparent"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:pressedTranslationZ="0dp"
+                app:srcCompat="@android:drawable/ic_delete"
+                app:tint="@color/spotify_black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/matchinghomeimage"
+                android:layout_width="338dp"
+                android:layout_height="309dp"
+                app:srcCompat="@drawable/logo" />
+
+            <Button
+                android:id="@+id/matchingstart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="START!" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
