@@ -28,6 +28,8 @@ public class WrapObject{
     private String songName;
     private int num;
 
+    private boolean publicWrap;
+
     public WrapObject(int num, String name, String artistImage, String songImage, String artistName, String songName) {
         this.name = name;
         this.artistImage = artistImage;
@@ -35,8 +37,16 @@ public class WrapObject{
         this.artistName = artistName;
         this.songName = songName;
         this.num = num;
+        this.publicWrap = false;
     }
 
+    public boolean isPublicWrap() {
+        return publicWrap;
+    }
+
+    public void setPublicWrap(boolean publicWrap) {
+        this.publicWrap = publicWrap;
+    }
 
     public int getNum() {
         return num;

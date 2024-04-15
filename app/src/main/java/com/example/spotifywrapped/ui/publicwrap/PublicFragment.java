@@ -70,6 +70,7 @@ public class PublicFragment extends Fragment {
                                 ((ArrayList<String>) wrapData.get("tracksimage")).get(0),
                                 ((ArrayList<String>) wrapData.get("artists")).get(0),
                                 ((ArrayList<String>) wrapData.get("tracks")).get(0));
+                        wrap.setPublicWrap(true);
                         wraps.add(wrap);
                     }
                     wrapAdapter.notifyDataSetChanged();

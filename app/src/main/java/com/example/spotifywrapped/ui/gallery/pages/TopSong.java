@@ -80,13 +80,15 @@ public class TopSong extends Fragment {
     }
 
 
-    private FragmentTopSongBinding binding;
+    private static FragmentTopSongBinding binding;
 
     public static Context context;
 
     private static User currentUser;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+
+    public static boolean publicWrap = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,17 @@ public class TopSong extends Fragment {
     }
 
 
+    public static FragmentTopSongBinding getBinding() {
+        return binding;
+    }
+
+    public static boolean isPublicWrap() {
+        return publicWrap;
+    }
+
+    public static void setPublicWrap(boolean publicWrap) {
+        TopSong.publicWrap = publicWrap;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -107,34 +120,58 @@ public class TopSong extends Fragment {
 
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
         FirebaseUser user = mAuth.getCurrentUser();
-
-
-        // Reference to the user's document in Firestore
-        DocumentReference userRef = db.collection("Accounts").document(user.getUid());
-
-        userRef.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
-                if (wrapList != null) {
-                    Map<String, Object> wrapData = wrapList.get(wrapList.size() - 1);
-                    if (wrapData != null) {
-                        Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
-                        String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
-                        String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
-                        TextView songName = (TextView) root.findViewById(R.id.topsong);
-                        songName.setText(name);
-                        ImageView topartistimage = (ImageView) root.findViewById(R.id.topsongimage);
-                        Glide.with(context)
-                                .load(image)
-                                .into(topartistimage);
-                        setNameonTitle();
+        if (!WrappedSummary.isPublicWrap()) {
+            // Reference to the user's document in Firestore
+            DocumentReference userRef = db.collection("Accounts").document(user.getUid());
+            userRef.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
+                    if (wrapList != null) {
+                        Map<String, Object> wrapData = wrapList.get(wrapList.size() - 1);
+                        if (wrapData != null) {
+                            Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
+                            String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
+                            String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
+                            TextView songName = (TextView) root.findViewById(R.id.topsong);
+                            songName.setText(name);
+                            ImageView topartistimage = (ImageView) root.findViewById(R.id.topsongimage);
+                            Glide.with(context)
+                                    .load(image)
+                                    .into(topartistimage);
+                            setNameonTitle();
+                        }
                     }
+                } else {
+                    Log.d("FIRESTORE", "No such document");
                 }
-            } else {
-                Log.d("FIRESTORE", "No such document");
-            }
-        }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
-
+            }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
+        } else {
+            //Public wrap
+            DocumentReference userRef = db.collection("Accounts").document("bIQXuN4oAPUWGUx6ikPoDw1cjx62");
+            userRef.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
+                    if (wrapList != null) {
+                        int index = 0;
+                        Map<String, Object> wrapData = wrapList.get(WrappedSummary.getPublicWrapIndex());
+                        if (wrapData != null) {
+                            Map<String, Object> wrap = wrapList.get(WrappedSummary.getPublicWrapIndex());
+                            String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
+                            String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
+                            TextView songName = (TextView) root.findViewById(R.id.topsong);
+                            songName.setText(name);
+                            ImageView topartistimage = (ImageView) root.findViewById(R.id.topsongimage);
+                            Glide.with(context)
+                                    .load(image)
+                                    .into(topartistimage);
+                            setDefaultOnTitle();
+                        }
+                    }
+                } else {
+                    Log.d("FIRESTORE", "No such document");
+                }
+            }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
+        }
         // Set the click listener for the button
         binding.topsongnext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,7 +289,7 @@ public class TopSong extends Fragment {
         }
     }
 
-    private void setNameonTitle() {
+    public static void setNameonTitle() {
         TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
         String userName = (String) MainActivity.getCurrentUser().getName();
         if (userName != null && !userName.isEmpty()) {
@@ -260,6 +297,14 @@ public class TopSong extends Fragment {
         } else {
             userName = "User";
         }
+        userName = userName + "'s ";
+        titlesWithName.setText(userName + titlesWithName.getText());
+    }
+
+    public static void setDefaultOnTitle() {
+        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
+        String userName = (String) MainActivity.getCurrentUser().getName();
+        userName = "User";
         userName = userName + "'s ";
         titlesWithName.setText(userName + titlesWithName.getText());
     }

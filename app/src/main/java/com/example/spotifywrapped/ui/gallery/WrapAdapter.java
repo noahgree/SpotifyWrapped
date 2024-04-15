@@ -18,6 +18,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
+import com.example.spotifywrapped.databinding.FragmentTopSongBinding;
+import com.example.spotifywrapped.ui.gallery.pages.TopSong;
+import com.example.spotifywrapped.ui.gallery.pages.WrappedSummary;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +80,12 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
                 }
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topSong);
+                if (wrap.isPublicWrap()) {
+                    WrappedSummary.setPublicWrap(true);
+                    WrappedSummary.setPublicWrapIndex(position);
+                } else {
+                    WrappedSummary.setPublicWrap(false);
+                }
             }
         });
 
@@ -80,6 +93,7 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
         Glide.with(context).load(wrap.getSongImage()).into(holder.songImageView);
         // Assume images are loaded somehow, possibly with an image loading library
     }
+
 
     public void addWrap(WrapObject newWrap) {
         wraps.add(newWrap);  // `wraps` is the list in the adapter
