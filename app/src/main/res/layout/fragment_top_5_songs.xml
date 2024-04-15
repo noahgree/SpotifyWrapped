@@ -37,6 +37,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:fontFamily="@font/spotify_font"
+                android:maxLines="2"
                 android:paddingStart="15dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="15dp"
@@ -74,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="15dp"
+                android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corners_drawable"
                 android:backgroundTint="#f06829"
@@ -110,7 +111,9 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
+                    android:maxLines="2"
                     android:text="@string/top_song_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -128,7 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="15dp"
+                android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corners_drawable"
                 android:backgroundTint="#f05e1a"
@@ -164,7 +167,9 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="3"
+                    android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
+                    android:maxLines="2"
                     android:text="@string/top_song_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -180,7 +185,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corners_drawable"
                 android:backgroundTint="#f06829"
@@ -216,7 +221,9 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="3"
+                    android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
+                    android:maxLines="2"
                     android:text="@string/top_song_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -233,7 +240,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="15dp"
+                android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corners_drawable"
                 android:backgroundTint="#f05e1a"
@@ -269,7 +276,9 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="3"
+                    android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
+                    android:maxLines="2"
                     android:text="@string/top_song_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -286,7 +295,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="15dp"
+                android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corners_drawable"
                 android:backgroundTint="#f06829"
@@ -322,7 +331,9 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="3"
+                    android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
+                    android:maxLines="2"
                     android:text="@string/top_song_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -330,48 +341,79 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
+            <View
+                android:id="@+id/T5SHiddenSpacer"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:visibility="gone" />
+
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/T5Sbottombar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/top5songsback"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="15dp"
-                android:clickable="true"
-                android:elevation="0dp"
-                app:backgroundTint="#000000"
-                app:borderWidth="0dp"
-                app:elevation="0dp"
-                app:pressedTranslationZ="0dp"
-                app:srcCompat="?attr/actionModeCloseDrawable"
-                app:tint="@color/white" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/top5songsback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_margin="15dp"
+                    android:clickable="true"
+                    android:elevation="0dp"
+                    android:rotationY="0"
+                    app:backgroundTint="#000000"
+                    app:borderWidth="0dp"
+                    app:elevation="0dp"
+                    app:pressedTranslationZ="0dp"
+                    app:srcCompat="?attr/actionModeCloseDrawable"
+                    app:tint="@color/white" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/top5songsnext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="15dp"
-                android:clickable="true"
-                android:elevation="0dp"
-                android:rotationY="180"
-                app:backgroundTint="#000000"
-                app:borderWidth="0dp"
-                app:elevation="0dp"
-                app:pressedTranslationZ="0dp"
-                app:srcCompat="?attr/actionModeCloseDrawable"
-                app:tint="@color/white" />
+                <Button
+                    android:id="@+id/T5SSaveImage"
+                    android:layout_width="115dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_button"
+                    android:clickable="true"
+                    android:elevation="0dp"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="Save"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/spotify_green"
+                    app:borderWidth="0dp"
+                    app:cornerRadius="10sp"
+                    app:elevation="0dp"
+                    app:icon="@drawable/image"
+                    app:iconGravity="textStart"
+                    app:pressedTranslationZ="0dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/top5songsnext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_margin="15dp"
+                    android:clickable="true"
+                    android:elevation="0dp"
+                    android:rotationY="180"
+                    app:backgroundTint="#000000"
+                    app:borderWidth="0dp"
+                    app:elevation="0dp"
+                    app:pressedTranslationZ="0dp"
+                    app:srcCompat="?attr/actionModeCloseDrawable"
+                    app:tint="@color/white" />
+
+            </FrameLayout>
         </LinearLayout>
     </LinearLayout>
 

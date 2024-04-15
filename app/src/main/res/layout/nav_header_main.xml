@@ -35,7 +35,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/spotify_font"
+                android:maxLines="1"
                 android:text="@string/nav_header_title"
                 android:textColor="@color/spotify_white"
                 android:textStyle="bold" />
@@ -45,7 +47,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/spotify_font"
+                android:maxLines="1"
                 android:text="@string/nav_header_subtitle"
                 android:textColor="@color/spotify_light_grey"
                 android:textSize="12sp" />

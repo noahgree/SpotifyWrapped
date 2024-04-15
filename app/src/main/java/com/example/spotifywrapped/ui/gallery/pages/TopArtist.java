@@ -2,10 +2,15 @@ package com.example.spotifywrapped.ui.gallery.pages;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,10 +20,16 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.PixelCopy;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,6 +45,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -150,7 +165,98 @@ public class TopArtist extends Fragment {
             }
         });
 
+
+        binding.TASaveImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeAndSaveScreenShot();
+            }
+        });
+
         return root;
+    }
+
+    public void takeAndSaveScreenShot() {
+        if (getActivity() != null) {
+            final Activity currentActivity = getActivity();
+
+            // hide elements we don't want in the image
+            currentActivity.findViewById(R.id.topartistexit).setVisibility(View.GONE);
+            currentActivity.findViewById(R.id.TAbottomBar).setVisibility(View.GONE);
+
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                final View mainView = currentActivity.getWindow().getDecorView();
+                final Window window = currentActivity.getWindow();
+
+                // Create a bitmap for the part of the screen that needs to be captured
+                Point size = new Point();
+                int height = currentActivity.getWindow().getWindowManager().getCurrentWindowMetrics().getBounds().height();
+                int width = currentActivity.getWindow().getWindowManager().getCurrentWindowMetrics().getBounds().width();
+                final Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+                // Use PixelCopy to copy the screen content to the bitmap
+                PixelCopy.request(window, bitmap, (copyResult) -> {
+                    if (copyResult == PixelCopy.SUCCESS) {
+                        try {
+                            // Height to crop from the bottom
+                            int heightToCrop = 0; // Set this to the height you want to crop
+
+                            // New height for the cropped image
+                            int newHeight = bitmap.getHeight() - heightToCrop;
+
+                            // Create a new cropped Bitmap
+                            Bitmap croppedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), newHeight);
+
+                            // Save the cropped bitmap to file (optional, only if you need a file copy)
+                            File file = saveBitmapToFile(currentActivity, croppedBitmap, "MyWrappedImage", "Image description");
+
+                            // Directly add the cropped Bitmap to the gallery
+                            addImageToGallery(currentActivity, croppedBitmap, "MyWrappedImage", "Image description");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Handler(Looper.getMainLooper()));
+
+                // Restore visibility
+                currentActivity.findViewById(R.id.topartistexit).setVisibility(View.VISIBLE);
+                currentActivity.findViewById(R.id.TAbottomBar).setVisibility(View.VISIBLE);
+            }, 100); // Delay in milliseconds
+        }
+    }
+
+    private File saveBitmapToFile(Context context, Bitmap bitmap, String title, String description) throws IOException {
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
+        File file = new File(path, title + ".png");
+        try (OutputStream out = Files.newOutputStream(file.toPath())) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+        }
+        return file;
+    }
+
+    private void addImageToGallery(Context context, Bitmap bitmap, String title, String description) {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, title + ".png");
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+        values.put(MediaStore.Images.Media.DESCRIPTION, description);
+        values.put(MediaStore.Images.Media.IS_PENDING, 1);
+
+        Uri collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
+        Uri item = context.getContentResolver().insert(collection, values);
+
+        if (item != null) {
+            try (OutputStream out = context.getContentResolver().openOutputStream(item)) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+                out.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            values.clear();
+            values.put(MediaStore.Images.Media.IS_PENDING, 0);
+            context.getContentResolver().update(item, values, null, null);
+        }
     }
 
     @Override
