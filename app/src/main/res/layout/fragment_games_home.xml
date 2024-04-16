@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,512 +8,531 @@
     android:orientation="vertical"
     tools:context=".ui.gallery.GalleryFragment">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/Gtitletext"
+        <ImageView
+            android:id="@+id/imageView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/spotify_font"
-            android:text="Games"
-            android:textAlignment="textStart"
-            android:textColor="@color/spotify_green"
-            android:textSize="48sp"
-            android:textStyle="bold"
-            app:autoSizeMaxTextSize="48sp"
-            app:autoSizeMinTextSize="12sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform" />
-
-
-    </LinearLayout>
+            android:scaleType="centerCrop"
+            android:scaleX="2"
+            android:src="@drawable/stripes_image" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="25dp"
-        android:layout_marginVertical="20dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:orientation="horizontal">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <TextView
+                android:id="@+id/Gtitletext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="@color/spotify_green"
-                android:backgroundTintMode="add">
+                android:fontFamily="@font/spotify_font"
+                android:text="Games"
+                android:textAlignment="textStart"
+                android:textColor="@color/spotify_green"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="48sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeStepGranularity="2sp"
+                app:autoSizeTextType="uniform" />
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.075"
-                    android:scaleType="centerCrop"
-                    android:scaleX="1.2"
-                    android:scaleY="1.2"
-                    android:src="@drawable/matching_background" />
 
-                <LinearLayout
-                    android:id="@+id/matchCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:outlineAmbientShadowColor="@color/spotify_black">
-
-                    <TextView
-                        android:id="@+id/matchName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/spotify_font"
-                        android:text="Matching Game"
-                        android:textColor="@color/spotify_white"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_margin="25dp">
-
-                        <ImageView
-                            android:id="@+id/matchImage"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/compare_match_icon" />
-                    </FrameLayout>
-                </LinearLayout>
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/scoreboardMatching"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="25dp"
-                android:layout_weight="1.7"
-                android:background="@drawable/rounded_corners_flat_top_drawable"
-                android:backgroundTint="@color/spotify_dark_grey"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/less_rounded_corners_drawable"
-                        android:backgroundTint="@color/spotify_black"
-                        android:backgroundTintMode="add"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/mg1"
-                            android:layout_width="55dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="@font/spotify_font"
-                            android:text="mm:ss"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/spotify_white"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
-
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/mgPlayer1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="10dp"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/spotify_font"
-                            android:maxLines="1"
-                            android:text="Player Name"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/spotify_white"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
-
-                    </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/less_rounded_corners_drawable"
-                        android:backgroundTint="@color/spotify_black"
-                        android:backgroundTintMode="add"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/mg2"
-                            android:layout_width="55dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="@font/spotify_font"
-                            android:text="mm:ss"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/spotify_white"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
-
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/mgPlayer2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="10dp"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/spotify_font"
-                            android:maxLines="1"
-                            android:text="Player Name"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/spotify_white"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
-
-                    </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/less_rounded_corners_drawable"
-                        android:backgroundTint="@color/spotify_black"
-                        android:backgroundTintMode="add"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/mg3"
-                            android:layout_width="55dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="@font/spotify_font"
-                            android:text="mm:ss"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/spotify_white"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
-
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/mgPlayer3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="10dp"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/spotify_font"
-                            android:maxLines="1"
-                            android:text="Player Name"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/spotify_white"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="25dp">
-
-        </Space>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="20dp"
             android:orientation="vertical">
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="@color/spotify_green"
-                android:backgroundTintMode="add">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.1"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/handman_background" />
-
-                <LinearLayout
-                    android:id="@+id/hangCard"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_corners_drawable"
+                    android:backgroundTint="@color/spotify_green"
+                    android:backgroundTintMode="add">
 
-                    <TextView
-                        android:id="@+id/hangName"
+                    <ImageView
+                        android:id="@+id/imageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/spotify_font"
-                        android:text="Hangman"
-                        android:textColor="@color/spotify_white"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
+                        android:alpha="0.075"
+                        android:scaleType="centerCrop"
+                        android:scaleX="1.2"
+                        android:scaleY="1.2"
+                        android:src="@drawable/matching_background" />
 
-                    <FrameLayout
+                    <LinearLayout
+                        android:id="@+id/matchCard"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_margin="25dp">
+                        android:orientation="vertical"
+                        android:outlineAmbientShadowColor="@color/spotify_black">
 
-                        <ImageView
-                            android:id="@+id/hangImage"
+                        <TextView
+                            android:id="@+id/matchName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/spotify_font"
+                            android:text="Matching Game"
+                            android:textColor="@color/spotify_white"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/hangman" />
-                    </FrameLayout>
+                            android:layout_margin="25dp">
 
-                </LinearLayout>
-            </FrameLayout>
+                            <ImageView
+                                android:id="@+id/matchImage"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/compare_match_icon" />
+                        </FrameLayout>
+                    </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/scoreboardHang"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="25dp"
-                android:layout_weight="1.7"
-                android:background="@drawable/rounded_corners_flat_top_drawable"
-                android:backgroundTint="@color/spotify_dark_grey"
-                android:orientation="vertical">
+                </FrameLayout>
 
                 <LinearLayout
+                    android:id="@+id/scoreboardMatching"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_weight="1.7"
+                    android:background="@drawable/rounded_corners_flat_top_drawable"
+                    android:backgroundTint="@color/spotify_dark_grey"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/less_rounded_corners_drawable"
-                        android:backgroundTint="@color/spotify_black"
-                        android:backgroundTintMode="add"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/hm1"
-                            android:layout_width="55dp"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="@font/spotify_font"
-                            android:text="mm:ss"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/spotify_white"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/less_rounded_corners_drawable"
+                            android:backgroundTint="@color/spotify_black"
+                            android:backgroundTintMode="add"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/mg1"
+                                android:layout_width="55dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/spotify_font"
+                                android:text="mm:ss"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/spotify_white"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/mgPlayer1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="10dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/spotify_font"
+                                android:maxLines="1"
+                                android:text="Player Name"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/spotify_white"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+                        </LinearLayout>
 
                         <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
                             android:layout_weight="1" />
 
-                        <TextView
-                            android:id="@+id/hmPlayer1"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="10dp"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/spotify_font"
-                            android:maxLines="1"
-                            android:text="Player Name"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/spotify_white"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/less_rounded_corners_drawable"
+                            android:backgroundTint="@color/spotify_black"
+                            android:backgroundTintMode="add"
+                            android:orientation="horizontal">
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/mg2"
+                                android:layout_width="55dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/spotify_font"
+                                android:text="mm:ss"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/spotify_white"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" />
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/less_rounded_corners_drawable"
-                        android:backgroundTint="@color/spotify_black"
-                        android:backgroundTintMode="add"
-                        android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/mgPlayer2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="10dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/spotify_font"
+                                android:maxLines="1"
+                                android:text="Player Name"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/spotify_white"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
 
-                        <TextView
-                            android:id="@+id/hm2"
-                            android:layout_width="55dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="@font/spotify_font"
-                            android:text="mm:ss"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/spotify_white"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
+                        </LinearLayout>
 
                         <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
                             android:layout_weight="1" />
 
-                        <TextView
-                            android:id="@+id/hmPlayer2"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="10dp"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/spotify_font"
-                            android:maxLines="1"
-                            android:text="Player Name"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/spotify_white"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/less_rounded_corners_drawable"
+                            android:backgroundTint="@color/spotify_black"
+                            android:backgroundTintMode="add"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/mg3"
+                                android:layout_width="55dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/spotify_font"
+                                android:text="mm:ss"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/spotify_white"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/mgPlayer3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="10dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/spotify_font"
+                                android:maxLines="1"
+                                android:text="Player Name"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/spotify_white"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/less_rounded_corners_drawable"
-                        android:backgroundTint="@color/spotify_black"
-                        android:backgroundTintMode="add"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/hm3"
-                            android:layout_width="55dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="@font/spotify_font"
-                            android:text="mm:ss"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/spotify_white"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
-
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/hmPlayer3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="10dp"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/spotify_font"
-                            android:maxLines="1"
-                            android:text="Player Name"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/spotify_white"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
-
-                    </LinearLayout>
-
                 </LinearLayout>
             </LinearLayout>
 
-        </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
 
+            </Space>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_corners_drawable"
+                    android:backgroundTint="@color/spotify_green"
+                    android:backgroundTintMode="add">
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.1"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/handman_background" />
+
+                    <LinearLayout
+                        android:id="@+id/hangCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/hangName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/spotify_font"
+                            android:text="Hangman"
+                            android:textColor="@color/spotify_white"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_margin="25dp">
+
+                            <ImageView
+                                android:id="@+id/hangImage"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/hangman" />
+                        </FrameLayout>
+
+                    </LinearLayout>
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/scoreboardHang"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_weight="1.7"
+                    android:background="@drawable/rounded_corners_flat_top_drawable"
+                    android:backgroundTint="@color/spotify_dark_grey"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/less_rounded_corners_drawable"
+                            android:backgroundTint="@color/spotify_black"
+                            android:backgroundTintMode="add"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/hm1"
+                                android:layout_width="55dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/spotify_font"
+                                android:text="mm:ss"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/spotify_white"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/hmPlayer1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="10dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/spotify_font"
+                                android:maxLines="1"
+                                android:text="Player Name"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/spotify_white"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/less_rounded_corners_drawable"
+                            android:backgroundTint="@color/spotify_black"
+                            android:backgroundTintMode="add"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/hm2"
+                                android:layout_width="55dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/spotify_font"
+                                android:text="mm:ss"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/spotify_white"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/hmPlayer2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="10dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/spotify_font"
+                                android:maxLines="1"
+                                android:text="Player Name"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/spotify_white"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/less_rounded_corners_drawable"
+                            android:backgroundTint="@color/spotify_black"
+                            android:backgroundTintMode="add"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/hm3"
+                                android:layout_width="55dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="10dp"
+                                android:fontFamily="@font/spotify_font"
+                                android:text="mm:ss"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/spotify_white"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/hmPlayer3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="10dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/spotify_font"
+                                android:maxLines="1"
+                                android:text="Player Name"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/spotify_white"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

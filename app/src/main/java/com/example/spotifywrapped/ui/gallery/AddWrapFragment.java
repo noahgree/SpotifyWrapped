@@ -89,7 +89,7 @@ public class AddWrapFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
-        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
     }
 
     private User loadUser() {

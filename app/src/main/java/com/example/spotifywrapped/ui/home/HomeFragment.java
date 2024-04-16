@@ -1,6 +1,7 @@
 package com.example.spotifywrapped.ui.home;
 
 import android.os.Bundle;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.spotifywrapped.MainActivity;
+import com.example.spotifywrapped.R;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
@@ -64,6 +66,9 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
 
         // Initialize the views
         tokenTextView = binding.tokenTextView;

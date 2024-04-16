@@ -1,27 +1,32 @@
 package com.example.spotifywrapped.ui.slideshow;
 
 import android.os.Bundle;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentGamesHomeBinding;
 
-public class SlideshowFragment extends Fragment {
+public class GamesHomeFragment extends Fragment {
 
     private FragmentGamesHomeBinding binding;
     private RecyclerView recyclerView;
     private GamesAdapter adapter;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

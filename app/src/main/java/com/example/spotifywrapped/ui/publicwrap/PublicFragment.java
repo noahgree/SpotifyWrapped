@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,9 @@ public class PublicFragment extends Fragment {
         View root = binding.getRoot();
         context = MainActivity.getInstance();
         currentUser = MainActivity.getCurrentUser();
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference publicRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");
         recyclerView = root.findViewById(R.id.publicWrapRecycler);

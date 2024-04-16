@@ -1,6 +1,7 @@
 package com.example.spotifywrapped.ui.gallery;
 
 import android.content.Intent;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

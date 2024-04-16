@@ -23,13 +23,19 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.transition.TransitionInflater;
+import android.transition.TransitionSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.PixelCopy;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -261,16 +267,36 @@ public class Top5Songs extends Fragment {
         binding.top5songsexit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+                TransitionSet exitTransitionSet = new TransitionSet();
+                exitTransitionSet.addTransition(new Slide(Gravity.END));
+                exitTransitionSet.addTransition(new Fade());
+                exitTransitionSet.setDuration(300);
+                setExitTransition(exitTransitionSet);
+
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_gallery);
 
-                // Show the toolbar
+                // Show the toolbar with animation
                 ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
                 if (actionBar != null) {
                     actionBar.show();
+                    int resId = getResources().getIdentifier("action_bar_container", "id", "android");
+
+
+                    // Load the fade-in animation
+                    Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
+
+                    // Get a reference to the ActionBar's container view by its identifier (e.g., "action_bar_container").
+                    // Note: The ID might differ based on the Android version or theme you are using.
+                    View actionBarContainer = getActivity().findViewById(resId);
+                    if (actionBarContainer != null) {
+                        actionBarContainer.startAnimation(fadeIn);
+                    }
+
+                    // Animate the ImageView
                     ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
                     imageView.setVisibility(View.VISIBLE);
+                    imageView.startAnimation(fadeIn);
                 }
             }
         });

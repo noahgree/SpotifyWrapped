@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/nav_games"
-        android:name="com.example.spotifywrapped.ui.slideshow.SlideshowFragment"
+        android:name="com.example.spotifywrapped.ui.slideshow.GamesHomeFragment"
         tools:layout="@layout/fragment_games_home" />
     <fragment
         android:id="@+id/nav_login"

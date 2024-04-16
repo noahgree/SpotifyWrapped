@@ -10,7 +10,8 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.SpotifyWrapped.AppBarOverlay">
+        android:theme="@style/Theme.SpotifyWrapped.AppBarOverlay"
+        app:elevation="0dp">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -20,7 +21,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/spotify_black"
+                android:background="@android:color/transparent"
+                android:elevation="0dp"
                 app:popupTheme="@style/Theme.SpotifyWrapped.PopupOverlay"
                 app:title="" />
 

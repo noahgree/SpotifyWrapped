@@ -291,51 +291,51 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public static void playSong(String trackUri) {
-        if (!isSpotifyLoggedIn()) {
-            Toast.makeText(context, "You need to log in to Spotify first!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String accessToken = currentUser.getmAccessToken();
-        OkHttpClient client = new OkHttpClient();
-        String playUrl = "https://api.spotify.com/v1/me/player/play";
-
-        JSONObject json = new JSONObject();
-        try {
-            JSONArray uris = new JSONArray();
-            uris.put(trackUri);
-            json.put("uris", uris);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json.toString());
-        Request request = new Request.Builder()
-                .url(playUrl)
-                .addHeader("Authorization", "Bearer " + accessToken)
-                .post(body)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "Failed to play song: " + e.getMessage());
-                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to play song", Toast.LENGTH_SHORT).show());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (!response.isSuccessful()) {
-                    Log.e(TAG, "Failed to play song: " + response.message());
-                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to play song", Toast.LENGTH_SHORT).show());
-                } else {
-                    Log.d(TAG, "Song played successfully.");
-                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Song played successfully!", Toast.LENGTH_SHORT).show());
-                }
-            }
-        });
-    }
+//    public static void playSong(String trackUri) {
+//        if (!isSpotifyLoggedIn()) {
+//            Toast.makeText(context, "You need to log in to Spotify first!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        String accessToken = currentUser.getmAccessToken();
+//        OkHttpClient client = new OkHttpClient();
+//        String playUrl = "https://api.spotify.com/v1/me/player/play";
+//
+//        JSONObject json = new JSONObject();
+//        try {
+//            JSONArray uris = new JSONArray();
+//            uris.put(trackUri);
+//            json.put("uris", uris);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json.toString());
+//        Request request = new Request.Builder()
+//                .url(playUrl)
+//                .addHeader("Authorization", "Bearer " + accessToken)
+//                .post(body)
+//                .build();
+//
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                Log.e(TAG, "Failed to play song: " + e.getMessage());
+//                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to play song", Toast.LENGTH_SHORT).show());
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                if (!response.isSuccessful()) {
+//                    Log.e(TAG, "Failed to play song: " + response.message());
+//                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to play song", Toast.LENGTH_SHORT).show());
+//                } else {
+//                    Log.d(TAG, "Song played successfully.");
+//                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Song played successfully!", Toast.LENGTH_SHORT).show());
+//                }
+//            }
+//        });
+//    }
 
 
     public static MainActivity getInstance() {
