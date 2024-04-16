@@ -47,21 +47,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/topartistexit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center_vertical"
-                android:layout_margin="15dp"
-                android:clickable="true"
-                android:elevation="0dp"
-                android:rotationY="180"
-                app:backgroundTint="@android:color/transparent"
-                app:borderWidth="0dp"
-                app:elevation="0dp"
-                app:pressedTranslationZ="0dp"
-                app:srcCompat="@android:drawable/ic_delete"
-                app:tint="@color/spotify_black" />
         </LinearLayout>
 
         <LinearLayout
