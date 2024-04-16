@@ -207,18 +207,9 @@ public class TopSong extends Fragment {
                 ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
                 if (actionBar != null) {
                     actionBar.show();
-                    int resId = getResources().getIdentifier("action_bar_container", "id", "android");
-
 
                     // Load the fade-in animation
                     Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
-
-                    // Get a reference to the ActionBar's container view by its identifier (e.g., "action_bar_container").
-                    // Note: The ID might differ based on the Android version or theme you are using.
-                    View actionBarContainer = getActivity().findViewById(resId);
-                    if (actionBarContainer != null) {
-                        actionBarContainer.startAnimation(fadeIn);
-                    }
 
                     // Animate the ImageView
                     ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);

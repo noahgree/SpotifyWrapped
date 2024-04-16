@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -126,8 +128,12 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int destId = destination.getId();
 
+            Animation slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+            Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+
             Handler handler = new Handler(Looper.getMainLooper());
             handler.postDelayed(() -> {
+                currentPageIcon.startAnimation(slideDown);
                 if (destId == R.id.nav_home) {
                     currentPageIcon.setImageResource(R.drawable.key);
                     // Set the navigation bar color
