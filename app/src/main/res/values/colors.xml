@@ -42,4 +42,30 @@
     <!-- Wrap Summary Color -->
     <color name="wrap_summary_color">#E91E63</color>
 
+    <!-- CUSTOM GRADIENT BACKGROUND COLORS -->
+    <!-- Top Song Colors -->
+    <color name="colorGradientStartTS">#c086fc</color>
+    <color name="colorGradientCenterTS">#9735ff</color>
+    <color name="colorGradientEndTS">#FF1493</color>
+    <!-- Top 5 Songs Colors -->
+    <color name="colorGradientStartT5S">#EF540C</color>
+    <color name="colorGradientCenterT5S">#ff4e33</color>
+    <color name="colorGradientEndT5S">#ffbe33</color>
+    <!-- Top Artist Colors -->
+    <color name="colorGradientStartTA">#f1b51a</color>
+    <color name="colorGradientCenterTA">#bcf21b</color>
+    <color name="colorGradientEndTA">#6bf21b</color>
+    <!-- Top 5 Artist Colors -->
+    <color name="colorGradientStartT5A">#007bff</color>
+    <color name="colorGradientCenterT5A">#5700ff</color>
+    <color name="colorGradientEndT5A">#8600e0</color>
+    <!-- Top Genre Colors -->
+    <color name="colorGradientStartTG">#00ff49</color>
+    <color name="colorGradientCenterTG">#00d7ff</color>
+    <color name="colorGradientEndTG">#007fff</color>
+    <!-- Wrap Summary Colors -->
+    <color name="colorGradientStartWS">#dc1ee8</color>
+    <color name="colorGradientCenterWS">#e81e6e</color>
+    <color name="colorGradientEndWS">#e84a1e</color>
+
 </resources>

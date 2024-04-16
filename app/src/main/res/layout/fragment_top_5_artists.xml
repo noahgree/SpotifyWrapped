@@ -2,9 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/top5ArtistsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/top_5_artists_color"
+    android:background="@drawable/gradient_animation_t5a"
     android:orientation="vertical">
 
     <FrameLayout
@@ -78,7 +79,7 @@
                 android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="#2579ff"
+                android:backgroundTint="#41FFFFFF"
                 android:backgroundTintMode="add"
                 android:orientation="horizontal">
 
@@ -114,7 +115,7 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
-                    android:maxLines="2"
+                    android:maxLines="3"
                     android:text="@string/top_artist_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -135,7 +136,7 @@
                 android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="#0e6bff"
+                android:backgroundTint="#41FFFFFF"
                 android:backgroundTintMode="add"
                 android:orientation="horizontal">
 
@@ -171,7 +172,7 @@
                     android:layout_weight="3"
                     android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
-                    android:maxLines="2"
+                    android:maxLines="3"
                     android:text="@string/top_artist_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -190,7 +191,7 @@
                 android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="#2579ff"
+                android:backgroundTint="#41FFFFFF"
                 android:backgroundTintMode="add"
                 android:orientation="horizontal">
 
@@ -226,7 +227,7 @@
                     android:layout_weight="3"
                     android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
-                    android:maxLines="2"
+                    android:maxLines="3"
                     android:text="@string/top_artist_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -246,7 +247,7 @@
                 android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="#0e6bff"
+                android:backgroundTint="#41FFFFFF"
                 android:backgroundTintMode="add"
                 android:orientation="horizontal">
 
@@ -282,7 +283,7 @@
                     android:layout_weight="3"
                     android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
-                    android:maxLines="2"
+                    android:maxLines="3"
                     android:text="@string/top_artist_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -303,7 +304,7 @@
                 android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="#2579ff"
+                android:backgroundTint="#41FFFFFF"
                 android:backgroundTintMode="add"
                 android:orientation="horizontal">
 
@@ -339,7 +340,7 @@
                     android:layout_weight="3"
                     android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
-                    android:maxLines="2"
+                    android:maxLines="3"
                     android:text="@string/top_artist_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"

@@ -21,7 +21,7 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginBottom="15dp"
             android:fontFamily="@font/spotify_font"
-            android:text="Make a Wrap"
+            android:text="New Wrap"
             android:textAlignment="textStart"
             android:textColor="@color/spotify_green"
             android:textSize="48sp"
@@ -31,7 +31,8 @@
             android:id="@+id/textViewN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginBottom="5dp"
             android:fontFamily="@font/spotify_font"
             android:text="Name"
             android:textColor="@color/spotify_green"
@@ -42,13 +43,13 @@
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/spotify_white"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/less_rounded_edit_text"
             android:fontFamily="@font/spotify_font"
             android:hint="Add a name"
             android:inputType="text"
-            android:textColor="@color/spotify_white"
+            android:textColor="@color/spotify_black"
             android:textColorHint="@color/spotify_light_grey"
             android:textSize="18sp" />
 
@@ -56,34 +57,62 @@
             android:id="@+id/textViewTF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
+            android:layout_marginHorizontal="25dp"
             android:fontFamily="@font/spotify_font"
             android:text="Time Frame"
             android:textColor="@color/spotify_green"
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/timeFrameSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/spotify_white"
-            android:dropDownWidth="200dp"
-            android:dropDownSelector="@color/spotify_white"
-            android:popupBackground="@drawable/spinner_item_background_rounded"
-            android:popupElevation="40dp"
-            android:scrollbarThumbHorizontal="@color/spotify_black"
-            android:scrollbarThumbVertical="@color/spotify_black"
-            android:spinnerMode="dropdown" />
 
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/shortTermBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:buttonTint="@color/spotify_white"
+                android:fontFamily="@font/spotify_font"
+                android:text="Short Term"
+                android:textColor="@color/spotify_white"
+                android:textColorLink="@color/spotify_green"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/mediumTermBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:buttonTint="@color/spotify_white"
+                android:fontFamily="@font/spotify_font"
+                android:text="Medium Term"
+                android:textColor="@color/spotify_white"
+                android:textColorLink="@color/spotify_green"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/longTermBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginBottom="20dp"
+                android:buttonTint="@color/spotify_white"
+                android:fontFamily="@font/spotify_font"
+                android:text="Long Term"
+                android:textColor="@color/spotify_white"
+                android:textColorLink="@color/spotify_green"
+                android:textSize="18sp" />
+
+        </RadioGroup>
 
         <TextView
             android:id="@+id/textViewV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
+            android:layout_marginHorizontal="25dp"
             android:fontFamily="@font/spotify_font"
             android:text="Visibility"
             android:textColor="@color/spotify_green"
@@ -125,7 +154,8 @@
             android:layout_width="126dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_margin="15dp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="15dp"
             android:fontFamily="@font/spotify_font"
             android:text="Generate"
             android:textColor="@color/spotify_white"
@@ -143,8 +173,8 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="175dp"
-                android:layout_height="175dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="centerInside"
                 android:src="@drawable/add_icon"
@@ -154,6 +184,7 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
             android:layout_weight="1" />
 
     </LinearLayout>

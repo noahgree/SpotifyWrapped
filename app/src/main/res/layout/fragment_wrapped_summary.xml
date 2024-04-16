@@ -2,9 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wrapSummaryLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/wrap_summary_color"
+    android:background="@drawable/gradient_animation_ws"
     android:orientation="vertical">
 
     <FrameLayout
@@ -18,7 +19,7 @@
             android:id="@+id/topSongPattern"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha="0.24"
+            android:alpha="0.3"
             android:scaleType="center"
             app:srcCompat="@drawable/stars_image" />
     </FrameLayout>
@@ -56,7 +57,7 @@
                     android:fontFamily="@font/spotify_font"
                     android:gravity="center_vertical"
                     android:maxLines="2"
-                    android:text="Wrapped"
+                    android:text="Wrap"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_white"
                     android:textSize="55sp"
@@ -87,25 +88,34 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/TopSongsTitleSum"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/spotify_font"
-                android:text="TOP SONGS"
-                android:textColor="@color/spotify_black"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corners_drawable_flat_bottom"
+                android:backgroundTint="@color/spotify_black">
+
+                <TextView
+                    android:id="@+id/TopSongsTitleSum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="TOP SONGS"
+                    android:textColor="@color/spotify_white"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1" />
 
         </LinearLayout>
@@ -190,7 +200,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#e8447b"
+                    android:backgroundTint="#de4580"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
@@ -241,7 +251,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#e8326f"
+                    android:backgroundTint="#de4580"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
@@ -291,7 +301,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#e8447b"
+                    android:backgroundTint="#de4580"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
@@ -342,7 +352,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#e8326f"
+                    android:backgroundTint="#de4580"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
@@ -393,7 +403,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#e8447b"
+                    android:backgroundTint="#de4580"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
@@ -439,29 +449,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
             android:orientation="horizontal">
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/TopArtistsTitleSum"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/spotify_font"
-                android:text="TOP ARTISTS"
-                android:textColor="@color/spotify_black"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corners_drawable_flat_bottom"
+                android:backgroundTint="@color/spotify_black">
+
+                <TextView
+                    android:id="@+id/TopArtistsTitleSum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="TOP ARTISTS"
+                    android:textColor="@color/spotify_white"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1" />
 
         </LinearLayout>
@@ -545,7 +566,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#e8447b"
+                    android:backgroundTint="#de4580"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
@@ -596,7 +617,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#e8326f"
+                    android:backgroundTint="#de4580"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
@@ -646,7 +667,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#e8447b"
+                    android:backgroundTint="#de4580"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
@@ -697,7 +718,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#e8326f"
+                    android:backgroundTint="#de4580"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
@@ -748,7 +769,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#e8447b"
+                    android:backgroundTint="#de4580"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
@@ -827,26 +848,35 @@
             android:orientation="horizontal"
             android:visibility="visible">
 
-            <TextView
-                android:id="@+id/invisDateForSS"
+            <FrameLayout
+                android:id="@+id/invisDateBox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginHorizontal="15sp"
-                android:autoSizeMaxTextSize="48sp"
-                android:autoSizeMinTextSize="30sp"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizeTextType="uniform"
-                android:ellipsize="end"
-                android:fontFamily="@font/spotify_font"
-                android:gravity="center_vertical"
-                android:maxLines="2"
-                android:text="Date"
-                android:textAlignment="center"
-                android:textColor="@color/spotify_white"
-                android:textSize="48sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
+                android:layout_marginVertical="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/invisDateForSS"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginHorizontal="15sp"
+                    android:autoSizeMaxTextSize="48sp"
+                    android:autoSizeMinTextSize="30sp"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/spotify_font"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
+                    android:text="Date"
+                    android:textAlignment="center"
+                    android:textColor="@color/spotify_white"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+            </FrameLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"

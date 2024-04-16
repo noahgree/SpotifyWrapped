@@ -1,6 +1,5 @@
 package com.example.spotifywrapped.ui.gallery.pages;
 
-import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
@@ -9,8 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -25,26 +23,28 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.PixelCopy;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
-import com.example.spotifywrapped.databinding.FragmentTopArtistBinding;
 import com.example.spotifywrapped.databinding.FragmentTopSongBinding;
 import com.example.spotifywrapped.ui.gallery.WrapObject;
 import com.example.spotifywrapped.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
@@ -52,11 +52,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -96,8 +92,9 @@ public class TopSong extends Fragment {
         context = MainActivity.getInstance();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
     }
-
 
     public static FragmentTopSongBinding getBinding() {
         return binding;
@@ -117,6 +114,13 @@ public class TopSong extends Fragment {
         binding = FragmentTopSongBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // set up animated background
+        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.topSongLayout);
+        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
+        animDrawable.setEnterFadeDuration(2500);
+        animDrawable.setExitFadeDuration(5000);
+        animDrawable.start();
 
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
         FirebaseUser user = mAuth.getCurrentUser();
@@ -176,6 +180,7 @@ public class TopSong extends Fragment {
         binding.topsongnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_top5Songs);
             }
@@ -183,6 +188,7 @@ public class TopSong extends Fragment {
         binding.topsongexit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_gallery);
 

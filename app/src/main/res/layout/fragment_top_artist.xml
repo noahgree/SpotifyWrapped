@@ -2,9 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/topArtistLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/top_artist_color"
+    android:background="@drawable/gradient_animation_ta"
     android:orientation="vertical">
 
     <FrameLayout
@@ -59,14 +60,32 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/artistimage"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center_horizontal"
-                android:padding="8dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/logo" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:padding="20dp">
+
+                <FrameLayout
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:alpha="0.5"
+                    android:background="@color/spotify_black"
+                    android:translationX="10dp"
+                    android:translationY="10dp">
+
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/artistimage"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop"
+                    android:translationX="-10dp"
+                    android:translationY="-10dp"
+                    app:srcCompat="@drawable/sample_square_image" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/topSongIntro"

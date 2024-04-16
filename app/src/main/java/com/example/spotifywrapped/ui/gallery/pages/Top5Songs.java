@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -22,12 +23,14 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.PixelCopy;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +38,6 @@ import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentTop5SongsBinding;
-import com.example.spotifywrapped.databinding.FragmentTopSongBinding;
 import com.example.spotifywrapped.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -77,6 +79,8 @@ public class Top5Songs extends Fragment {
         context = MainActivity.getInstance();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
     }
 
 
@@ -108,6 +112,13 @@ public class Top5Songs extends Fragment {
         binding = FragmentTop5SongsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // set up animated background
+        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.top5SongsLayout);
+        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
+        animDrawable.setEnterFadeDuration(2500);
+        animDrawable.setExitFadeDuration(5000);
+        animDrawable.start();
 
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
         FirebaseUser user = mAuth.getCurrentUser();
@@ -233,6 +244,7 @@ public class Top5Songs extends Fragment {
         binding.top5songsnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topArtist);
             }
@@ -241,6 +253,7 @@ public class Top5Songs extends Fragment {
         binding.top5songsback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topSong);
             }
@@ -248,6 +261,7 @@ public class Top5Songs extends Fragment {
         binding.top5songsexit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_gallery);
 

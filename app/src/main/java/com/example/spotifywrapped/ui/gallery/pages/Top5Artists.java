@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -24,12 +25,14 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.PixelCopy;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -77,6 +80,8 @@ public class Top5Artists extends Fragment {
         context = MainActivity.getInstance();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
     }
 
 
@@ -106,6 +111,13 @@ public class Top5Artists extends Fragment {
         binding = FragmentTop5ArtistsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // set up animated background
+        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.top5ArtistsLayout);
+        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
+        animDrawable.setEnterFadeDuration(2500);
+        animDrawable.setExitFadeDuration(5000);
+        animDrawable.start();
 
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
         FirebaseUser user = mAuth.getCurrentUser();
@@ -232,6 +244,7 @@ public class Top5Artists extends Fragment {
         binding.top5artistsnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topGenre);
             }
@@ -239,6 +252,7 @@ public class Top5Artists extends Fragment {
         binding.top5artistsback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topArtist);
             }
@@ -246,6 +260,7 @@ public class Top5Artists extends Fragment {
         binding.top5artistsexit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_gallery);
 

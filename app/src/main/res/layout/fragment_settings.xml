@@ -57,7 +57,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal|center_vertical"
                             android:layout_margin="15dp"
-                            android:background="@drawable/rounded_edittext"
+                            android:background="@drawable/less_rounded_edit_text"
                             android:ems="12"
                             android:fontFamily="@font/spotify_font"
                             android:hint="New Password"

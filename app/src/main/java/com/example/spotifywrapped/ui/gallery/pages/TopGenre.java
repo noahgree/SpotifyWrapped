@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -24,12 +25,14 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.PixelCopy;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -69,6 +72,8 @@ public class TopGenre extends Fragment {
         context = MainActivity.getInstance();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
     }
 
     private User loadUser() {
@@ -108,6 +113,13 @@ public class TopGenre extends Fragment {
         context = MainActivity.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        // set up animated background
+        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.topGenreLayout);
+        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
+        animDrawable.setEnterFadeDuration(2500);
+        animDrawable.setExitFadeDuration(5000);
+        animDrawable.start();
+
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -122,6 +134,7 @@ public class TopGenre extends Fragment {
                         Map<String, Object> wrapData = wrapList.get(wrapList.size() - 1);
                         if (wrapData != null) {
                             Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
+                            Log.d("testW", (wrap).toString());
                             String genre = (String) ((ArrayList<String>) wrap.get("artistsgenre")).get(0);
                             String image = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(0);
                             TextView artistName = (TextView) root.findViewById(R.id.topgenre);
@@ -168,6 +181,7 @@ public class TopGenre extends Fragment {
         binding.topgenrenext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_wrappedSummary);
             }
@@ -175,6 +189,7 @@ public class TopGenre extends Fragment {
         binding.topgenreback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_top5Artists);
             }
@@ -182,6 +197,7 @@ public class TopGenre extends Fragment {
         binding.topgenreexit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_gallery);
 

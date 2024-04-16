@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.PixelCopy;
@@ -31,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowMetrics;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -106,6 +109,8 @@ public class WrappedSummary extends Fragment {
         context = MainActivity.getInstance();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
     }
 
     @Override
@@ -114,6 +119,13 @@ public class WrappedSummary extends Fragment {
         binding = FragmentWrappedSummaryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // set up animated background
+        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.wrapSummaryLayout);
+        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
+        animDrawable.setEnterFadeDuration(2500);
+        animDrawable.setExitFadeDuration(5000);
+        animDrawable.start();
 
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
         FirebaseUser user = mAuth.getCurrentUser();
@@ -248,6 +260,7 @@ public class WrappedSummary extends Fragment {
         binding.wrappedsummaryback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_topGenre);
             }
@@ -255,6 +268,7 @@ public class WrappedSummary extends Fragment {
         binding.wrappedsummaryexit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.nav_gallery);
 
@@ -294,9 +308,11 @@ public class WrappedSummary extends Fragment {
 
             LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd yyyy");
-            TextView dateText = (TextView) binding.getRoot().findViewById(R.id.invisDateForSS);
+            FrameLayout frame = binding.getRoot().findViewById(R.id.invisDateBox);
+            TextView dateText = binding.getRoot().findViewById(R.id.invisDateForSS);
             String dateString = currentDate.format(formatter);
             dateText.setText(dateString);
+            currentActivity.findViewById(R.id.invisDateBox).setVisibility(View.VISIBLE);
             currentActivity.findViewById(R.id.invisDateForSS).setVisibility(View.VISIBLE);
 
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
@@ -335,6 +351,7 @@ public class WrappedSummary extends Fragment {
 
                 // Restore visibility
                 currentActivity.findViewById(R.id.wrappedsummaryexit).setVisibility(View.VISIBLE);
+                currentActivity.findViewById(R.id.invisDateBox).setVisibility(View.GONE);
                 currentActivity.findViewById(R.id.invisDateForSS).setVisibility(View.GONE);
                 currentActivity.findViewById(R.id.wrappedSummaryTitle).setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
             }, 100); // Delay in milliseconds

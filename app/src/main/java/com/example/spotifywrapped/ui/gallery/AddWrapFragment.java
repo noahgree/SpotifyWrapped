@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,8 +62,6 @@ import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AddWrapFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class AddWrapFragment extends Fragment {
 
@@ -82,30 +81,6 @@ public class AddWrapFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-
-
-    public AddWrapFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddWrapFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AddWrapFragment newInstance(String param1, String param2) {
-        AddWrapFragment fragment = new AddWrapFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +88,8 @@ public class AddWrapFragment extends Fragment {
         currentUser = loadUser();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
     }
 
     private User loadUser() {
@@ -127,35 +104,35 @@ public class AddWrapFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize the spinner
-        Spinner timeFrameSpinner = view.findViewById(R.id.timeFrameSpinner);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.time_frame_options, android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears.
-        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
-        // Apply the adapter to the spinner.
-        timeFrameSpinner.setAdapter(adapter);
-
-        // Set the spinner's onItemSelectedListener if you need to handle selection events
-        timeFrameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ((TextView) view).setTextColor(ContextCompat.getColor(timeFrameSpinner.getContext(), R.color.spotify_white));
-                ((TextView) view).setTextSize(18);
-                // Create a Typeface from the font resource
-                Typeface spotifyTypeface = ResourcesCompat.getFont(timeFrameSpinner.getContext(), R.font.spotify_font);
-                Typeface boldSpotifyTypeface = Typeface.create(spotifyTypeface, Typeface.BOLD);
-                ((TextView) view).setTypeface(spotifyTypeface);
-                ((TextView) view).setPadding(8, 0, 0, 0);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //
-            }
-        });
+//        // Initialize the spinner
+//        Spinner timeFrameSpinner = view.findViewById(R.id.timeFrameSpinner);
+//
+//        // Create an ArrayAdapter using the string array and a default spinner layout
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+//                R.array.time_frame_options, android.R.layout.simple_spinner_item);
+//
+//        // Specify the layout to use when the list of choices appears.
+//        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
+//        // Apply the adapter to the spinner.
+//        timeFrameSpinner.setAdapter(adapter);
+//
+//        // Set the spinner's onItemSelectedListener if you need to handle selection events
+//        timeFrameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                ((TextView) view).setTextColor(ContextCompat.getColor(timeFrameSpinner.getContext(), R.color.spotify_white));
+//                ((TextView) view).setTextSize(18);
+//                // Create a Typeface from the font resource
+//                Typeface spotifyTypeface = ResourcesCompat.getFont(timeFrameSpinner.getContext(), R.font.spotify_font);
+//                Typeface boldSpotifyTypeface = Typeface.create(spotifyTypeface, Typeface.BOLD);
+//                ((TextView) view).setTypeface(spotifyTypeface);
+//                ((TextView) view).setPadding(8, 0, 0, 0);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//                //
+//            }
+//        });
     }
 
     public interface DataCompletionHandler {
@@ -204,15 +181,23 @@ public class AddWrapFragment extends Fragment {
                                     List<String> name = new ArrayList<>();
                                     List<String> url = new ArrayList<>();
                                     List<String> genre = new ArrayList<>();
+//                                    List<String> uniqueness = new ArrayList<>();
                                     for (int i = 0; i < 5; i++) {
                                         if (thing.equals("artists")) {
                                             name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
                                             url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("images").getJSONObject(0).getString("url"));
-                                            genre.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").getString(0));
+                                            Log.d("test", jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").toString());
+                                            if (jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").length() != 0) {
+                                                genre.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").getString(0));
+                                            }
+//                                            uniqueness.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("popularity"));
                                         } else {
                                             name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
                                             url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url"));
                                         }
+                                    }
+                                    if (genre.size() == 0) {
+                                        genre.add("None Found");
                                     }
                                     wrap.put(thing, name);
                                     wrap.put(thing + "image", url);
@@ -245,7 +230,7 @@ public class AddWrapFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentAddWrapBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        Spinner spinner = (Spinner) root.findViewById(R.id.timeFrameSpinner);
+//        Spinner spinner = (Spinner) root.findViewById(R.id.timeFrameSpinner);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
@@ -260,15 +245,19 @@ public class AddWrapFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // hide action bar up top
-                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.hide();
-                    ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
-                    imageView.setVisibility(View.GONE);
+                // determine time frame of wrap
+                RadioButton shortTerm = root.findViewById(R.id.shortTermBtn);
+                RadioButton mediumTerm = root.findViewById(R.id.mediumTermBtn);
+                RadioButton longTerm = root.findViewById(R.id.longTermBtn);
+                String term = "short";
+                if (shortTerm.isChecked()) {
+                    term = "short";
+                } else if (mediumTerm.isChecked()) {
+                    term = "medium";
+                } else if (longTerm.isChecked()) {
+                    term = "long";
                 }
 
-                String term = spinner.getSelectedItem().toString().split(" ")[0].toLowerCase();
                 EditText name = (EditText) root.findViewById(R.id.editTextName);
                 Map<String, Object> wrap = new HashMap<>();
                 wrap.put("Name", name.getText().toString());
@@ -288,7 +277,7 @@ public class AddWrapFragment extends Fragment {
                         //int count = GalleryFragment.wrapAdapterP.getItemCount();
                         //GalleryFragment.wrapAdapterP.addWrap(new WrapObject(count, "Wrap #" + (count + 1), ((List<String>) updatedWrap.get("artistsimage")).get(0), ((List<String>) updatedWrap.get("tracksimage")).get(0), ((List<String>) updatedWrap.get("artists")).get(0), ((List<String>) updatedWrap.get("tracks")).get(0)));
                         currentUser.addWrap(updatedWrap);
-                        RadioButton pub = (RadioButton) root.findViewById(R.id.radioButton2);
+                        RadioButton pub = root.findViewById(R.id.radioButton2);
                         if (pub.isChecked()) {
 
                             publicRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
@@ -302,6 +291,14 @@ public class AddWrapFragment extends Fragment {
                         // switch to slideshow view
                         NavController navController = Navigation.findNavController(v);
                         navController.navigate(R.id.nav_topSong);
+
+                        // hide action bar up top
+                        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                        if (actionBar != null) {
+                            actionBar.hide();
+                            ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                            imageView.setVisibility(View.GONE);
+                        }
                     });
                 };
 
