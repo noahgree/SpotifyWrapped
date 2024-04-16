@@ -85,10 +85,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             albumTiles[i].setOnClickListener(this);
         }
 
-        // Don't set tile images here, we'll set them only when a tile is flipped
-
-        // Initialize tile pairs based on URLs
-        setTileImages(imageUrls);
+        setTileIds(imageUrls);
 
         // Inflate the layout for this fragment
         return root;
@@ -117,6 +114,8 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             if (firstImageUrl != null && firstImageUrl.equals(secondImageUrl)) {
                 Toast.makeText(requireContext(), "Match!", Toast.LENGTH_SHORT).show();
             } else {
+                Toast.makeText(requireContext(), "No match!", Toast.LENGTH_SHORT).show();
+
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
                     if (firstTileIndex >= 0 && firstTileIndex < albumTiles.length &&
@@ -131,6 +130,8 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             secondTileIndex = -1;
         }
     }
+
+
 
 
     private String getImageUrl(int tileIndex) {
@@ -166,7 +167,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         });
     }
 
-    public void setTileImages(List<String> imageUrls) {
+    public void setTileIds(List<String> imageUrls) {
         Collections.shuffle(imageUrls);
 
         List<String> pairImageUrls = new ArrayList<>(imageUrls);
@@ -175,9 +176,6 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         Collections.shuffle(pairImageUrls);
 
         for (int i = 0; i < albumTiles.length && i < pairImageUrls.size(); i++) {
-            Glide.with(requireContext())
-                    .load(pairImageUrls.get(i))
-                    .into(albumTiles[i]);
             albumTileIds[i] = pairImageUrls.get(i).hashCode();
         }
     }
