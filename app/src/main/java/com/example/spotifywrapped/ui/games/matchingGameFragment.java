@@ -110,22 +110,28 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     }
 
     private void checkTiles() {
-        String firstImageUrl = getImageUrl(firstTileIndex);
-        String secondImageUrl = getImageUrl(secondTileIndex);
+        if (firstTileIndex != -1 && secondTileIndex != -1) {
+            String firstImageUrl = getImageUrl(firstTileIndex);
+            String secondImageUrl = getImageUrl(secondTileIndex);
 
-        if (firstImageUrl != null && firstImageUrl.equals(secondImageUrl)) {
-            Toast.makeText(requireContext(), "Match!", Toast.LENGTH_SHORT).show();
-        } else {
-            Handler handler = new Handler();
-            handler.postDelayed(() -> {
-                flipTile(albumTiles[firstTileIndex], firstTileIndex);
-                flipTile(albumTiles[secondTileIndex], secondTileIndex);
-            }, 1000);
+            if (firstImageUrl != null && firstImageUrl.equals(secondImageUrl)) {
+                Toast.makeText(requireContext(), "Match!", Toast.LENGTH_SHORT).show();
+            } else {
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    if (firstTileIndex >= 0 && firstTileIndex < albumTiles.length &&
+                            secondTileIndex >= 0 && secondTileIndex < albumTiles.length) {
+                        flipTile(albumTiles[firstTileIndex], firstTileIndex);
+                        flipTile(albumTiles[secondTileIndex], secondTileIndex);
+                    }
+                }, 1000);
+            }
+
+            firstTileIndex = -1;
+            secondTileIndex = -1;
         }
-
-        firstTileIndex = -1;
-        secondTileIndex = -1;
     }
+
 
     private String getImageUrl(int tileIndex) {
         if (tileIndex >= 0 && tileIndex < albumTiles.length) {
