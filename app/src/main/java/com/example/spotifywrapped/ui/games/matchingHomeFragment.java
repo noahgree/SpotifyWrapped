@@ -73,7 +73,7 @@ public class matchingHomeFragment extends Fragment {
 
     public static Context context;
     private static User currentUser;
-    private static final OkHttpClient mOkHttpClient = new OkHttpClient();
+    static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -199,8 +199,7 @@ public class matchingHomeFragment extends Fragment {
                     getActivity().runOnUiThread(() -> {
                         // switch to matching game view
                         List<String> images = (List<String>) updatedImages.get("artists");
-                        NavController navController = Navigation.findNavController(v);
-                        navController.navigate(R.id.matchingGameFragment3);
+                        navigateToMatchingGameFragment(images);
                     });
                 };
 
@@ -213,4 +212,12 @@ public class matchingHomeFragment extends Fragment {
         return root;
 
     }
+
+    public void navigateToMatchingGameFragment(List<String> imageUrls) {
+        NavController navController = Navigation.findNavController(requireView());
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("imageUrls", (ArrayList<String>) imageUrls);
+        navController.navigate(R.id.matchingGameFragment3, bundle);
+    }
+
 }
