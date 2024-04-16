@@ -11,7 +11,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,59 +19,38 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentMatchingGameBinding;
-import com.example.spotifywrapped.ui.gallery.AddWrapFragment;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link matchingGameFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class matchingGameFragment extends Fragment implements View.OnClickListener {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private FragmentMatchingGameBinding binding;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public static Context context;
+    private Context context;
 
-    ImageView[] albumTiles = new ImageView[16];
+    private ImageView[] albumTiles = new ImageView[16];
 
-    int[] albumTileIds = new int[16];
+    private int[] albumTileIds = new int[16];
 
-    int firstTileIndex = -1;
-    int secondTileIndex = -1;
+    private int firstTileIndex = -1;
+    private int secondTileIndex = -1;
 
     public matchingGameFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment matchingGameFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static matchingGameFragment newInstance(String param1, String param2) {
         matchingGameFragment fragment = new matchingGameFragment();
         Bundle args = new Bundle();
@@ -100,7 +78,6 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
 
         List<String> imageUrls = getArguments().getStringArrayList("imageUrls");
 
-
         for (int i = 0; i < albumTiles.length; i++) {
             String imageViewId = "albumtile" + (i + 1);
             int resId = getResources().getIdentifier(imageViewId, "id", requireActivity().getPackageName());
@@ -108,11 +85,10 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             albumTiles[i].setOnClickListener(this);
         }
 
-        if (imageUrls != null) {
-            setTileImages(imageUrls);
-        } else {
-            Log.e(TAG, "No image URLs provided.");
-        }
+        // Don't set tile images here, we'll set them only when a tile is flipped
+
+        // Initialize tile pairs based on URLs
+        setTileImages(imageUrls);
 
         // Inflate the layout for this fragment
         return root;
@@ -169,6 +145,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
 
+                // Set the image of the tile only when flipped
                 String imageUrl = getImageUrl(tileIndex);
                 if (imageUrl != null) {
                     Glide.with(requireContext())
@@ -186,13 +163,17 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     public void setTileImages(List<String> imageUrls) {
         Collections.shuffle(imageUrls);
 
-        for (int i = 0; i < albumTiles.length && i < imageUrls.size(); i++) {
+        List<String> pairImageUrls = new ArrayList<>(imageUrls);
+        pairImageUrls.addAll(imageUrls);
+
+        Collections.shuffle(pairImageUrls);
+
+        for (int i = 0; i < albumTiles.length && i < pairImageUrls.size(); i++) {
             Glide.with(requireContext())
-                    .load(imageUrls.get(i))
+                    .load(pairImageUrls.get(i))
                     .into(albumTiles[i]);
-            albumTileIds[i] = imageUrls.get(i).hashCode();
+            albumTileIds[i] = pairImageUrls.get(i).hashCode();
         }
     }
-
 
 }
