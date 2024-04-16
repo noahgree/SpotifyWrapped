@@ -67,5 +67,13 @@
         android:id="@+id/nav_public"
         android:name="com.example.spotifywrapped.ui.publicwrap.PublicFragment"
         tools:layout="@layout/fragment_public" />
+    <fragment
+        android:id="@+id/matchingHomeFragment3"
+        android:name="com.example.spotifywrapped.ui.games.matchingHomeFragment"
+        android:label="matchingHomeFragment" />
+    <fragment
+        android:id="@+id/matchingGameFragment3"
+        android:name="com.example.spotifywrapped.ui.games.matchingGameFragment"
+        android:label="matchingGameFragment" />
 
 </navigation>
