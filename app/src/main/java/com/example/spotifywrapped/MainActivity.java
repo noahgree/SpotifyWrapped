@@ -27,13 +27,13 @@ import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.user.User;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewbinding.ViewBinding;
 
 import com.example.spotifywrapped.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +47,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     public static Context context;
 
     private FirebaseFirestore db;
+
+    private static String theme = "Default";
 
     interface CallbackTwo {
         void onComplete(boolean isValid);
@@ -88,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         context = MainActivity.this;
 
         currentUser = loadUser();
-
+        checkForHolidays();
         //Deals with if user needs to log in or refresh the spotify token.
         if (mAuth.getCurrentUser() != null && currentUser != null) {
             // User is still logged in with Firebase, load the user profile
@@ -138,6 +141,49 @@ public class MainActivity extends AppCompatActivity {
                 currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill); // Fallback icon
             }
         });
+    }
+
+    public static String getThemeName() {
+        return theme;
+    }
+
+    public static void setTheme(String theme) {
+        MainActivity.theme = theme;
+    }
+
+    public static void updateForHoliday(ViewBinding binding) {
+        ImageView imageView = (ImageView) binding.getRoot().findViewById(R.id.topSongPattern);
+        if (theme.equals("Christmas")) {
+            Glide.with(context)
+                    .load(R.drawable.christmas_pattern)
+                    .into(imageView);
+        }
+        if (theme.equals("Valentines")) {
+            Glide.with(context)
+                    .load(R.drawable.valentines_pattern)
+                    .into(imageView);
+        }
+        if (theme.equals("Halloween")) {
+            Glide.with(context)
+                    .load(R.drawable.halloween_pattern)
+                    .into(imageView);
+        }
+    }
+
+    private void checkForHolidays() {
+        Calendar now = Calendar.getInstance();
+        int month = now.get(Calendar.MONTH); // Note: January is 0, December is 11
+        int day = now.get(Calendar.DAY_OF_MONTH);
+
+        if (month == Calendar.DECEMBER && day == 25) {
+            theme = "Christmas";
+        } else if (month == Calendar.FEBRUARY && day == 14) {
+            theme = "Valentines";
+        } else if (month == Calendar.OCTOBER && day == 31) {
+            theme = "Halloween";
+        } else {
+            theme = "Default"; // Default theme when it's not a special holiday
+        }
     }
 
     public static void fetchTrackUriFromSongName(String songName, TrackUriCallback callback) {

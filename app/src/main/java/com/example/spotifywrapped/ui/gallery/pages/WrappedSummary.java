@@ -275,6 +275,8 @@ public class WrappedSummary extends Fragment {
             }
         });
 
+        MainActivity.updateForHoliday(binding);
+
         return root;
     }
 

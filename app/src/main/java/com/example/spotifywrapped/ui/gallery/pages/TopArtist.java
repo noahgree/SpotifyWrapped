@@ -206,6 +206,8 @@ public class TopArtist extends Fragment {
             }
         });
 
+        MainActivity.updateForHoliday(binding);
+
         return root;
     }
 
