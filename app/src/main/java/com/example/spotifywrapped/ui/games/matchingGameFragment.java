@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentMatchingGameBinding;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link matchingGameFragment#newInstance} factory method to
@@ -81,6 +84,8 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         binding = FragmentMatchingGameBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        Collections.shuffle(Arrays.asList(albumTileIds));
 
         for (int i = 0; i < albumTiles.length; i++) {
             String imageViewId = "albumtile" + (i + 1);
