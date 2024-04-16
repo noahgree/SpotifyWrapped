@@ -31,28 +31,44 @@
             android:id="@+id/token_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Request Token" />
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/spotify_green"
+            android:backgroundTintMode="add"
+            android:fontFamily="@font/spotify_font"
+            android:text="Request Token"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/token_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
+            android:fontFamily="@font/spotify_font"
             android:textColor="@color/spotify_white"
+            android:textSize="12sp"
             tools:text="Token:" />
 
         <Button
             android:id="@+id/code_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Request Code" />
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/spotify_green"
+            android:backgroundTintMode="add"
+            android:fontFamily="@font/spotify_font"
+            android:text="Request Code"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/code_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
+            android:fontFamily="@font/spotify_font"
             android:textColor="@color/spotify_white"
+            android:textSize="12sp"
             tools:text="Code:" />
 
         <LinearLayout
@@ -65,15 +81,22 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="Get User Profile" />
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="@color/spotify_green"
+                android:backgroundTintMode="add"
+                android:fontFamily="@font/spotify_font"
+                android:text="Get User Profile"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/response_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/spotify_font"
             android:textColor="@color/spotify_white"
-            android:textSize="9sp"
+            android:textSize="11sp"
             tools:text="Line 1\nLine 2\nLine 3" />
     </LinearLayout>
 </LinearLayout>

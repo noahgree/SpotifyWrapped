@@ -189,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_corners_drawable"
+                    android:background="@drawable/less_rounded_corners_drawable"
                     android:backgroundTint="#e8447b"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
@@ -240,7 +240,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_corners_drawable"
+                    android:background="@drawable/less_rounded_corners_drawable"
                     android:backgroundTint="#e8326f"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
@@ -290,7 +290,7 @@
                     android:layout_width="205dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_corners_drawable"
+                    android:background="@drawable/less_rounded_corners_drawable"
                     android:backgroundTint="#e8447b"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
@@ -341,7 +341,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_corners_drawable"
+                    android:background="@drawable/less_rounded_corners_drawable"
                     android:backgroundTint="#e8326f"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
@@ -392,7 +392,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_corners_drawable"
+                    android:background="@drawable/less_rounded_corners_drawable"
                     android:backgroundTint="#e8447b"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
@@ -544,7 +544,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_corners_drawable"
+                    android:background="@drawable/less_rounded_corners_drawable"
                     android:backgroundTint="#e8447b"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
@@ -595,7 +595,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_corners_drawable"
+                    android:background="@drawable/less_rounded_corners_drawable"
                     android:backgroundTint="#e8326f"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
@@ -645,7 +645,7 @@
                     android:layout_width="205dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_corners_drawable"
+                    android:background="@drawable/less_rounded_corners_drawable"
                     android:backgroundTint="#e8447b"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
@@ -696,7 +696,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_corners_drawable"
+                    android:background="@drawable/less_rounded_corners_drawable"
                     android:backgroundTint="#e8326f"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
@@ -747,7 +747,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_corners_drawable"
+                    android:background="@drawable/less_rounded_corners_drawable"
                     android:backgroundTint="#e8447b"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
