@@ -37,8 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                app:tint="@color/spotify_darker_grey"
-                app:srcCompat="@drawable/logo"/>
+                app:srcCompat="@drawable/new_logo_png"
+                app:tint="@color/spotify_darker_grey" />
 
         </FrameLayout>
 
