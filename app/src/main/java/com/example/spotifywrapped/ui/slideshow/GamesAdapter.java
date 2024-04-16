@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spotifywrapped.R;
@@ -20,7 +21,12 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull GamesAdapter.MyViewHolder holder, int position) {
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_games);
+            }
+        });
     }
 
     @Override
