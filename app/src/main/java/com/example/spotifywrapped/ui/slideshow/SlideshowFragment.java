@@ -9,9 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentGamesHomeBinding;
 
 public class SlideshowFragment extends Fragment {
@@ -28,11 +31,24 @@ public class SlideshowFragment extends Fragment {
         binding = FragmentGamesHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        recyclerView = binding.gamesRecycler;
-        adapter = new GamesAdapter();
+        binding.matchCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.matchingHomeFragment3);
+            }
+        });
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapter);
+        binding.hangCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(v);
+                //navController.navigate(R.id.nav_top5Artists);
+            }
+        });
+
+
+
         return root;
     }
 
