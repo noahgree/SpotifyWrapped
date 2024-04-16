@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -27,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.user.User;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -126,19 +128,56 @@ public class MainActivity extends AppCompatActivity {
 
             if (destId == R.id.nav_home) {
                 currentPageIcon.setImageResource(R.drawable.key);
+                // Set the navigation bar color
+                getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
             } else if (destId == R.id.nav_gallery) {
                 currentPageIcon.setImageResource(R.drawable.rectangle_stack_person_crop_fill);
+                getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
             } else if (destId == R.id.nav_public) {
                 currentPageIcon.setImageResource(R.drawable.people_nearby);
+                getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
             } else if (destId == R.id.nav_games) {
                 currentPageIcon.setImageResource(R.drawable.gameboy_solid);
+                getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
             } else if (destId == R.id.nav_settings) {
                 currentPageIcon.setImageResource(R.drawable.settings);
+                getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
             } else if (destId == R.id.nav_addWrap) {
                 currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill_badge_plus);
+                getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
             }
             else {
                 currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill); // Fallback icon
+
+                if (destId == R.id.nav_topSong) {
+                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.top_song_color));
+                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.top_song_color));
+                } else if (destId == R.id.nav_top5Songs) {
+                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.top_5_songs_color));
+                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.top_5_songs_color));
+                } else if (destId == R.id.nav_topArtist) {
+                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.top_artist_color));
+                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.top_artist_color));
+                } else if (destId == R.id.nav_top5Artists) {
+                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.top_5_artists_color));
+                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.top_5_artists_color));
+                } else if (destId == R.id.nav_topGenre) {
+                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.top_genre_color));
+                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.top_genre_color));
+                } else if (destId == R.id.nav_wrappedSummary) {
+                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.wrap_summary_color));
+                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.wrap_summary_color));
+                }
+                else {
+                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
+                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
+                }
             }
         });
     }
@@ -157,16 +196,20 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(context)
                     .load(R.drawable.christmas_pattern)
                     .into(imageView);
+            imageView.setImageAlpha(100);
         }
         if (theme.equals("Valentines")) {
             Glide.with(context)
                     .load(R.drawable.valentines_pattern)
                     .into(imageView);
+            imageView.setImageAlpha(100);
+
         }
         if (theme.equals("Halloween")) {
             Glide.with(context)
                     .load(R.drawable.halloween_pattern)
                     .into(imageView);
+            imageView.setImageAlpha(100);
         }
     }
 

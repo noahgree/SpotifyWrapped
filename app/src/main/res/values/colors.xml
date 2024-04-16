@@ -25,4 +25,19 @@
     <color name="spotify_darker_grey">#212121</color>
     <!-- Spotify Custom Red -->
     <color name="spotify_red">#FF3333</color>
+
+    <!-- CUSTOM WRAP SLIDE COLORS -->
+    <!-- Top Song Color -->
+    <color name="top_song_color">#c086fc</color>
+    <!-- Top 5 Songs Color -->
+    <color name="top_5_songs_color">#EF540C</color>
+    <!-- Top Artist Color -->
+    <color name="top_artist_color">#f1b51a</color>
+    <!-- Top 5 Artists Color -->
+    <color name="top_5_artists_color">#0062ff</color>
+    <!-- Top Genre Color -->
+    <color name="top_genre_color">#0DECA9</color>
+    <!-- Wrap Summary Color -->
+    <color name="wrap_summary_color">#E91E63</color>
+
 </resources>
