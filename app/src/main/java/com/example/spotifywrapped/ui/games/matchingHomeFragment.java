@@ -200,7 +200,7 @@ public class matchingHomeFragment extends Fragment {
                         // switch to matching game view
                         List<String> images = (List<String>) updatedImages.get("artists");
                         NavController navController = Navigation.findNavController(v);
-                        //navController.navigate(R.id.matchingGameFragment3);
+                        navController.navigate(R.id.matchingGameFragment3);
                     });
                 };
 

@@ -17,12 +17,12 @@
         tools:layout_editor_absoluteY="-183dp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/matchgametext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/spotify_font"
-        android:text="TextView"
+        android:text="Match!"
         android:textColor="@color/spotify_black"
         android:textSize="60sp"
         android:textStyle="bold"
@@ -34,8 +34,8 @@
 
     <GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="409dp"
-        android:layout_height="418dp"
+        android:layout_width="410dp"
+        android:layout_height="410dp"
         android:layout_gravity="center"
         android:alignmentMode="alignMargins"
         android:columnCount="4"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/albumtile11"
+            android:id="@+id/albumtile1"
             android:layout_width="95dp"
             android:layout_height="88dp"
             app:srcCompat="@drawable/tile_back"
@@ -58,11 +58,91 @@
             tools:layout_editor_absoluteY="135dp" />
 
         <ImageView
-            android:id="@+id/albumtile12"
+            android:id="@+id/albumtile2"
             android:layout_width="95dp"
             android:layout_height="88dp"
             app:srcCompat="@drawable/tile_back"
             tools:layout_editor_absoluteX="111dp"
+            tools:layout_editor_absoluteY="243dp" />
+
+        <ImageView
+            android:id="@+id/albumtile3"
+            android:layout_width="95dp"
+            android:layout_height="88dp"
+            app:srcCompat="@drawable/tile_back"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="462dp" />
+
+        <ImageView
+            android:id="@+id/albumtile4"
+            android:layout_width="95dp"
+            android:layout_height="88dp"
+            app:srcCompat="@drawable/tile_back"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="352dp" />
+
+        <ImageView
+            android:id="@+id/albumtile5"
+            android:layout_width="95dp"
+            android:layout_height="88dp"
+            app:srcCompat="@drawable/tile_back"
+            tools:layout_editor_absoluteX="111dp"
+            tools:layout_editor_absoluteY="462dp" />
+
+        <ImageView
+            android:id="@+id/albumtile6"
+            android:layout_width="95dp"
+            android:layout_height="88dp"
+            app:srcCompat="@drawable/tile_back"
+            tools:layout_editor_absoluteX="111dp"
+            tools:layout_editor_absoluteY="352dp" />
+
+        <ImageView
+            android:id="@+id/albumtile7"
+            android:layout_width="95dp"
+            android:layout_height="88dp"
+            app:srcCompat="@drawable/tile_back"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="243dp" />
+
+        <ImageView
+            android:id="@+id/albumtile8"
+            android:layout_width="95dp"
+            android:layout_height="88dp"
+            app:srcCompat="@drawable/tile_back"
+            tools:layout_editor_absoluteX="111dp"
+            tools:layout_editor_absoluteY="135dp" />
+
+        <ImageView
+            android:id="@+id/albumtile9"
+            android:layout_width="95dp"
+            android:layout_height="88dp"
+            app:srcCompat="@drawable/tile_back"
+            tools:layout_editor_absoluteX="301dp"
+            tools:layout_editor_absoluteY="352dp" />
+
+        <ImageView
+            android:id="@+id/albumtile10"
+            android:layout_width="95dp"
+            android:layout_height="88dp"
+            app:srcCompat="@drawable/tile_back"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="135dp" />
+
+        <ImageView
+            android:id="@+id/albumtile11"
+            android:layout_width="95dp"
+            android:layout_height="88dp"
+            app:srcCompat="@drawable/tile_back"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="243dp" />
+
+        <ImageView
+            android:id="@+id/albumtile12"
+            android:layout_width="95dp"
+            android:layout_height="88dp"
+            app:srcCompat="@drawable/tile_back"
+            tools:layout_editor_absoluteX="301dp"
             tools:layout_editor_absoluteY="243dp" />
 
         <ImageView
@@ -70,7 +150,7 @@
             android:layout_width="95dp"
             android:layout_height="88dp"
             app:srcCompat="@drawable/tile_back"
-            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteX="301dp"
             tools:layout_editor_absoluteY="462dp" />
 
         <ImageView
@@ -78,91 +158,11 @@
             android:layout_width="95dp"
             android:layout_height="88dp"
             app:srcCompat="@drawable/tile_back"
-            tools:layout_editor_absoluteX="206dp"
-            tools:layout_editor_absoluteY="352dp" />
-
-        <ImageView
-            android:id="@+id/albumtile21"
-            android:layout_width="95dp"
-            android:layout_height="88dp"
-            app:srcCompat="@drawable/tile_back"
-            tools:layout_editor_absoluteX="111dp"
-            tools:layout_editor_absoluteY="462dp" />
-
-        <ImageView
-            android:id="@+id/albumtile22"
-            android:layout_width="95dp"
-            android:layout_height="88dp"
-            app:srcCompat="@drawable/tile_back"
-            tools:layout_editor_absoluteX="111dp"
-            tools:layout_editor_absoluteY="352dp" />
-
-        <ImageView
-            android:id="@+id/albumtile23"
-            android:layout_width="95dp"
-            android:layout_height="88dp"
-            app:srcCompat="@drawable/tile_back"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="243dp" />
-
-        <ImageView
-            android:id="@+id/albumtile24"
-            android:layout_width="95dp"
-            android:layout_height="88dp"
-            app:srcCompat="@drawable/tile_back"
-            tools:layout_editor_absoluteX="111dp"
-            tools:layout_editor_absoluteY="135dp" />
-
-        <ImageView
-            android:id="@+id/albumtile31"
-            android:layout_width="95dp"
-            android:layout_height="88dp"
-            app:srcCompat="@drawable/tile_back"
-            tools:layout_editor_absoluteX="301dp"
-            tools:layout_editor_absoluteY="352dp" />
-
-        <ImageView
-            android:id="@+id/albumtile32"
-            android:layout_width="95dp"
-            android:layout_height="88dp"
-            app:srcCompat="@drawable/tile_back"
-            tools:layout_editor_absoluteX="206dp"
-            tools:layout_editor_absoluteY="135dp" />
-
-        <ImageView
-            android:id="@+id/albumtile33"
-            android:layout_width="95dp"
-            android:layout_height="88dp"
-            app:srcCompat="@drawable/tile_back"
-            tools:layout_editor_absoluteX="206dp"
-            tools:layout_editor_absoluteY="243dp" />
-
-        <ImageView
-            android:id="@+id/albumtile34"
-            android:layout_width="95dp"
-            android:layout_height="88dp"
-            app:srcCompat="@drawable/tile_back"
-            tools:layout_editor_absoluteX="301dp"
-            tools:layout_editor_absoluteY="243dp" />
-
-        <ImageView
-            android:id="@+id/albumtile41"
-            android:layout_width="95dp"
-            android:layout_height="88dp"
-            app:srcCompat="@drawable/tile_back"
-            tools:layout_editor_absoluteX="301dp"
-            tools:layout_editor_absoluteY="462dp" />
-
-        <ImageView
-            android:id="@+id/albumtile42"
-            android:layout_width="95dp"
-            android:layout_height="88dp"
-            app:srcCompat="@drawable/tile_back"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="462dp" />
 
         <ImageView
-            android:id="@+id/albumtile43"
+            android:id="@+id/albumtile15"
             android:layout_width="95dp"
             android:layout_height="88dp"
             app:srcCompat="@drawable/tile_back"
@@ -170,7 +170,7 @@
             tools:layout_editor_absoluteY="352dp" />
 
         <ImageView
-            android:id="@+id/albumtile44"
+            android:id="@+id/albumtile16"
             android:layout_width="95dp"
             android:layout_height="88dp"
             app:srcCompat="@drawable/tile_back"

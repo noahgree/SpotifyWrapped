@@ -47,6 +47,8 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     int firstTileIndex = -1;
     int secondTileIndex = -1;
 
+    static String url;
+
     public matchingGameFragment() {
         // Required empty public constructor
     }
@@ -144,5 +146,9 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 flipIn.start();
             }
         });
+    }
+
+    private void populateTiles () {
+
     }
 }
