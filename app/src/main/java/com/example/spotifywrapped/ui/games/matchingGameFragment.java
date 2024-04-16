@@ -118,16 +118,15 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         return root;
     }
 
-    public void onClick (View v) {
+    public void onClick(View v) {
         for (int i = 0; i < albumTiles.length; i++) {
             if (v == albumTiles[i]) {
                 if (firstTileIndex == -1) {
                     firstTileIndex = i;
-                    flipTile(albumTiles[i], albumTileIds[i]);
+                    flipTile(albumTiles[i], i);
                 } else if (secondTileIndex == -1) {
                     secondTileIndex = i;
-                    albumTiles[i].setImageResource((albumTileIds[i]));
-                    flipTile(albumTiles[i], albumTileIds[i]);
+                    flipTile(albumTiles[i], i);
                     checkTiles();
                 }
             }
@@ -135,21 +134,33 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     }
 
     private void checkTiles() {
-        if (albumTileIds[firstTileIndex] == albumTileIds[secondTileIndex]) {
+        String firstImageUrl = getImageUrl(firstTileIndex);
+        String secondImageUrl = getImageUrl(secondTileIndex);
+
+        if (firstImageUrl != null && firstImageUrl.equals(secondImageUrl)) {
             Toast.makeText(requireContext(), "Match!", Toast.LENGTH_SHORT).show();
-            firstTileIndex = -1;
-            secondTileIndex = -1;
         } else {
-            albumTiles[firstTileIndex].postDelayed(() -> {
-                albumTiles[firstTileIndex].setImageResource(R.drawable.tile_back);
-                albumTiles[secondTileIndex].setImageResource(R.drawable.tile_back);
-                firstTileIndex = -1;
-                secondTileIndex = -1;
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                flipTile(albumTiles[firstTileIndex], firstTileIndex);
+                flipTile(albumTiles[secondTileIndex], secondTileIndex);
             }, 1000);
         }
+
+        firstTileIndex = -1;
+        secondTileIndex = -1;
     }
 
-    private void flipTile(ImageView imageView, int imageId) {
+    private String getImageUrl(int tileIndex) {
+        if (tileIndex >= 0 && tileIndex < albumTiles.length) {
+            if (albumTileIds[tileIndex] != 0) {
+                return String.valueOf(albumTileIds[tileIndex]);
+            }
+        }
+        return null;
+    }
+
+    private void flipTile(ImageView imageView, int tileIndex) {
         ObjectAnimator flipOut = ObjectAnimator.ofFloat(imageView, "rotationY", 0f, 90f);
         flipOut.setDuration(200);
         flipOut.start();
@@ -157,7 +168,13 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         flipOut.addListener(new AnimatorListenerAdapter() {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                imageView.setImageResource(imageId);
+
+                String imageUrl = getImageUrl(tileIndex);
+                if (imageUrl != null) {
+                    Glide.with(requireContext())
+                            .load(imageUrl)
+                            .into(imageView);
+                }
 
                 ObjectAnimator flipIn = ObjectAnimator.ofFloat(imageView, "rotationY", -90f, 0f);
                 flipIn.setDuration(200);
@@ -176,5 +193,6 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             albumTileIds[i] = imageUrls.get(i).hashCode();
         }
     }
+
 
 }

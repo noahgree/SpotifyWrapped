@@ -176,7 +176,7 @@ public class matchingHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMatchingHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        Button playButton = (Button) root.findViewById(R.id.hangmanstart);
+        Button playButton = (Button) root.findViewById(R.id.matchingstart);
         Spinner spinner = null;//(Spinner) root.findViewById(R.id.timeFrameSpinner);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
