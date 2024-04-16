@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginBottom="15dp"
         android:fontFamily="@font/spotify_font"
         android:text="Debug"
         android:textAlignment="textStart"
@@ -24,8 +23,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginVertical="20dp"
         android:orientation="vertical">
 
         <Button

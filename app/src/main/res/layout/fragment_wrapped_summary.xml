@@ -209,7 +209,7 @@
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1" />
 
                     <TextView
@@ -232,7 +232,7 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="1dp"
                     android:layout_weight="0.7" />
 
                 <LinearLayout
@@ -260,7 +260,7 @@
 
                     <Space
                         android:layout_width="68dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1" />
 
                     <TextView
@@ -310,7 +310,7 @@
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1" />
 
                     <TextView
@@ -361,7 +361,7 @@
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1" />
 
                     <TextView
@@ -412,7 +412,7 @@
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1" />
 
                     <TextView
@@ -564,7 +564,7 @@
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1" />
 
                     <TextView
@@ -615,7 +615,7 @@
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1" />
 
                     <TextView
@@ -665,7 +665,7 @@
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1" />
 
                     <TextView
@@ -716,7 +716,7 @@
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1" />
 
                     <TextView
@@ -767,7 +767,7 @@
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1" />
 
                     <TextView
