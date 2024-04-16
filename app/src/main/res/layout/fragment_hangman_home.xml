@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/matchingHomePattern"
+        android:id="@+id/hangmanHomePattern"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.25"
@@ -19,13 +19,13 @@
         tools:layout_editor_absoluteY="-183dp" />
 
     <TextView
-        android:id="@+id/matchinghometext"
+        android:id="@+id/hangmanhometext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
         android:fontFamily="@font/spotify_font"
-        android:text="@string/matching_game_home"
+        android:text="@string/hangman_game_home"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/spotify_black"
@@ -58,50 +58,13 @@
 
 
             <ImageView
-                android:id="@+id/matchinghomeimage"
-                android:layout_width="338dp"
-                android:layout_height="309dp"
-                app:srcCompat="@drawable/category_fill" />
-
-            <RadioButton
-                android:id="@+id/longTermBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginBottom="20dp"
-                android:buttonTint="@color/spotify_white"
-                android:fontFamily="@font/spotify_font"
-                android:text="Long Term"
-                android:textColor="@color/spotify_white"
-                android:textColorLink="@color/spotify_green"
-                android:textSize="18sp" />
-
-            <RadioButton
-                android:id="@+id/mediumTermBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:buttonTint="@color/spotify_white"
-                android:fontFamily="@font/spotify_font"
-                android:text="Medium Term"
-                android:textColor="@color/spotify_white"
-                android:textColorLink="@color/spotify_green"
-                android:textSize="18sp" />
-
-            <RadioButton
-                android:id="@+id/shortTermBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:buttonTint="@color/spotify_white"
-                android:fontFamily="@font/spotify_font"
-                android:text="Short Term"
-                android:textColor="@color/spotify_white"
-                android:textColorLink="@color/spotify_green"
-                android:textSize="18sp" />
+                android:id="@+id/hangmanhomeimage"
+                android:layout_width="279dp"
+                android:layout_height="274dp"
+                app:srcCompat="@drawable/hangman" />
 
             <Button
-                android:id="@+id/matchingstart"
+                android:id="@+id/hangmanstart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

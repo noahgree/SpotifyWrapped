@@ -22,7 +22,10 @@
     <string name="top_song_placeholder">SONG NAME</string>
     <string name="top_artist_placeholder">ARTIST NAME</string>
 
+
     <string name="matching_game_home">Matching: Your Top Artists</string>
+    <string name="hangman_game_home">Hangman: Guess your music</string>
+
     <string-array name="time_frame_options">
         <item>Short Term</item>
         <item>Medium Term</item>
