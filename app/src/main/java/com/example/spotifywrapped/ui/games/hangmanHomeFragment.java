@@ -5,11 +5,6 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -20,8 +15,14 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
+import com.example.spotifywrapped.databinding.FragmentHangmanHomeBinding;
+import com.example.spotifywrapped.databinding.FragmentHomeBinding;
 import com.example.spotifywrapped.databinding.FragmentMatchingHomeBinding;
 import com.example.spotifywrapped.ui.gallery.AddWrapFragment;
 import com.example.spotifywrapped.user.User;
@@ -46,52 +47,20 @@ import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link matchingHomeFragment#newInstance} factory method to
+ * Use the {@link hangmanHomeFragment#} factory method to
  * create an instance of this fragment.
  */
-public class matchingHomeFragment extends Fragment {
+public class hangmanHomeFragment extends Fragment {
 
+    private FragmentHangmanHomeBinding binding;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private FragmentMatchingHomeBinding binding;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public static Context context;
     private static User currentUser;
-    static final OkHttpClient mOkHttpClient = new OkHttpClient();
+    private static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-
-
-    public matchingHomeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment matchingHomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static matchingHomeFragment newInstance(String param1, String param2) {
-        matchingHomeFragment fragment = new matchingHomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,7 +87,6 @@ public class matchingHomeFragment extends Fragment {
         return sharedPreferences.getString("SpotifyToken", null);
     }
 
-
     public static void onMatchStarted(Context context, View view, OkHttpClient okHttpClient, String term, Map<String, Object> wrap, AddWrapFragment.DataCompletionHandler handler) {
         if (getSpotifyToken() == null) {
             Toast.makeText(context, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
@@ -126,7 +94,7 @@ public class matchingHomeFragment extends Fragment {
         }
 
         final Request request = new Request.Builder()
-                .url("https://api.spotify.com/v1/me/top/artists?time_range=" + term + "_term&limit=8")
+                .url("https://api.spotify.com/v1/me/top/artists?time_range=" + term + "_term&limit=10")
                 .addHeader("Authorization", "Bearer " + getSpotifyToken())
                 .build();
 
@@ -147,11 +115,11 @@ public class matchingHomeFragment extends Fragment {
                     new Handler(Looper.getMainLooper()).post(() -> {
                         try {
                             if (jsonObject.getJSONArray("items").length() > 0) {
-                                List<String> url = new ArrayList<>();
+                                List<String> name = new ArrayList<>();
                                 for (int i = 0; i < 8; i++) {
-                                    url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("images").getJSONObject(0).getString("url"));
+                                    name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
                                 }
-                                wrap.put("artists", url);
+                                wrap.put("artists", name);
 
                                 if (handler != null) {
                                     handler.onDataCompleted(wrap);
@@ -170,11 +138,10 @@ public class matchingHomeFragment extends Fragment {
         });
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentMatchingHomeBinding.inflate(inflater, container, false);
+        binding = FragmentHangmanHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         Button playButton = (Button) root.findViewById(R.id.hangmanstart);
         Spinner spinner = null;//(Spinner) root.findViewById(R.id.timeFrameSpinner);
@@ -191,7 +158,8 @@ public class matchingHomeFragment extends Fragment {
                     getActivity().runOnUiThread(() -> {
                         // switch to matching game view
                         List<String> images = (List<String>) updatedImages.get("artists");
-                        navigateToMatchingGameFragment(images);
+                        NavController navController = Navigation.findNavController(v);
+                        //navController.navigate(R.id.hangmanGame);
                     });
                 };
 
@@ -205,11 +173,5 @@ public class matchingHomeFragment extends Fragment {
 
     }
 
-    public void navigateToMatchingGameFragment(List<String> imageUrls) {
-        NavController navController = Navigation.findNavController(requireView());
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList("imageUrls", (ArrayList<String>) imageUrls);
-        navController.navigate(R.id.matchingGameFragment3, bundle);
-    }
 
 }

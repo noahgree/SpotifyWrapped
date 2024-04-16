@@ -7,7 +7,7 @@
     android:background="#4200ff">
 
     <ImageView
-        android:id="@+id/matchingHomePattern"
+        android:id="@+id/hangmanHomePattern"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.25"

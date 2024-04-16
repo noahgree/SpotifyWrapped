@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1af1b1"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/hangmanHomePattern"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.25"
+        android:scaleType="center"
+        app:srcCompat="@drawable/stripes_image"
+        tools:layout_editor_absoluteX="-4dp"
+        tools:layout_editor_absoluteY="-183dp" />
+
+    <TextView
+        android:id="@+id/hangmanhometext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/spotify_font"
+        android:text="@string/hangman_game_home"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="@color/spotify_black"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/hangmanhomeimage"
+                android:layout_width="279dp"
+                android:layout_height="274dp"
+                app:srcCompat="@drawable/hangman" />
+
+            <Button
+                android:id="@+id/hangmanstart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:text="START!" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
