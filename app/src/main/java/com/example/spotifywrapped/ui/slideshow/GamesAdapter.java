@@ -2,9 +2,13 @@ package com.example.spotifywrapped.ui.slideshow;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.spotifywrapped.R;
 
 public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder>{
 
@@ -26,8 +30,14 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        ImageView gameImage;
+        TextView gameName;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            gameImage = itemView.findViewById(R.id.gameImage);
+            gameName = itemView.findViewById(R.id.gameName);
         }
     }
 }
