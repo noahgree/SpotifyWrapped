@@ -22,7 +22,7 @@
         android:id="@+id/hangmanhometext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="60dp"
         android:fontFamily="@font/spotify_font"
         android:text="@string/hangman_game_home"
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="50dp"
                 android:text="START!" />
 
 
