@@ -5,6 +5,7 @@
     android:id="@+id/top5SongsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="15dp"
     android:background="@drawable/gradient_animation_t5s"
     android:orientation="vertical">
 
