@@ -42,7 +42,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
 
     private ImageView[] albumTiles = new ImageView[16];
 
-    private int[] albumTileIds = new int[16];
+    private String[] albumTileIds = new String[16];
 
     private int firstTileIndex = -1;
     private int secondTileIndex = -1;
@@ -136,7 +136,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
 
     private String getImageUrl(int tileIndex) {
         if (tileIndex >= 0 && tileIndex < albumTiles.length) {
-            if (albumTileIds[tileIndex] != 0) {
+            if (albumTileIds[tileIndex] != null) {
                 return String.valueOf(albumTileIds[tileIndex]);
             }
         }
@@ -176,7 +176,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         Collections.shuffle(pairImageUrls);
 
         for (int i = 0; i < albumTiles.length && i < pairImageUrls.size(); i++) {
-            albumTileIds[i] = pairImageUrls.get(i).hashCode();
+            albumTileIds[i] = pairImageUrls.get(i);
         }
     }
 
