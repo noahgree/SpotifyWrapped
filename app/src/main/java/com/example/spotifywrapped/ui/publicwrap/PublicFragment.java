@@ -7,6 +7,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -18,6 +21,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
@@ -51,6 +56,19 @@ public class PublicFragment extends Fragment {
         currentUser = MainActivity.getCurrentUser();
         setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
         setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+
+        LinearLayout mainLayout = root.findViewById(R.id.mainFP);
+        ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+
+            if (insets.bottom > 0) {
+                mlp.bottomMargin = insets.bottom;
+                v.setLayoutParams(mlp);
+            }
+
+            return WindowInsetsCompat.CONSUMED;
+        });
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference publicRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <fade xmlns:android="http://schemas.android.com/apk/res/android"
     android:slideEdge= "left"
-    android:duration="425">
+    android:duration="300">
 </fade>

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/spotify_black"
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
 
@@ -13,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/spotify_font"
         android:text="Debug"
         android:textAlignment="textStart"

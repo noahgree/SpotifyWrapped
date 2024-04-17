@@ -15,6 +15,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -119,12 +122,19 @@ public class TopGenre extends Fragment {
         context = MainActivity.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // set up animated background
-        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.topGenreLayout);
-        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
-        animDrawable.setEnterFadeDuration(2500);
-        animDrawable.setExitFadeDuration(5000);
-        animDrawable.start();
+        // set insets
+        FrameLayout mainLayout = root.findViewById(R.id.topGenreLayout);
+        ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+
+            if (insets.bottom > 0) {
+                mlp.bottomMargin = insets.bottom;
+                v.setLayoutParams(mlp);
+            }
+
+            return WindowInsetsCompat.CONSUMED;
+        });
 
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
         FirebaseUser user = mAuth.getCurrentUser();

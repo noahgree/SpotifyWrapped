@@ -5,6 +5,9 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,8 +15,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,9 +37,17 @@ import okhttp3.Response;
 
 import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.user.User;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -85,14 +102,42 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        publicID = "vGLXVzArF0OObsE5bJT4jNpdOy33";
-        mAuth = FirebaseAuth.getInstance();
-
         navigationView = findViewById(R.id.nav_view);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         instance = this;
         context = MainActivity.this;
+
+        EdgeToEdge.enable(this);
+
+        CoordinatorLayout appBarLayoutMA = binding.getRoot().findViewById(R.id.main_app_bar);
+        FrameLayout toolbarFrame = appBarLayoutMA.findViewById(R.id.toolbarFrame);
+        NavigationView navView = binding.getRoot().findViewById(R.id.nav_view);
+        applyInsetsListener(toolbarFrame, false, false, true, false);
+        applyInsetsListenerPadding(navView, false, false, true, true);
+
+        // Ensure the content extends into the system bars by adjusting the window.
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );
+
+        // Ensure status bar icons are light
+        WindowInsetsController insetsController = getWindow().getInsetsController();
+        if (insetsController != null) {
+            // This tells the system that your UI is dark and status bar icons should be light.
+            insetsController.setSystemBarsAppearance(
+                    0,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            );
+            insetsController.hide(WindowInsets.Type.navigationBars());
+            insetsController.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        }
+
+
+        publicID = "vGLXVzArF0OObsE5bJT4jNpdOy33";
+        mAuth = FirebaseAuth.getInstance();
 
         currentUser = loadUser();
         checkForHolidays();
@@ -128,6 +173,10 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int destId = destination.getId();
 
+            FrameLayout bgFrame = binding.getRoot().findViewById(R.id.bgFrame);
+            ImageView imageView = binding.getRoot().findViewById(R.id.imageViewBG);
+            imageView.setImageResource(R.drawable.stripes_image);
+
             Animation slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
             Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
 
@@ -135,56 +184,108 @@ public class MainActivity extends AppCompatActivity {
             handler.postDelayed(() -> {
                 currentPageIcon.startAnimation(slideDown);
                 if (destId == R.id.nav_home) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_black));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
                     currentPageIcon.setImageResource(R.drawable.key);
-                    // Set the navigation bar color
-                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
-                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
                 } else if (destId == R.id.nav_gallery) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_black));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
                     currentPageIcon.setImageResource(R.drawable.rectangle_stack_person_crop_fill);
-                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
-                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
                 } else if (destId == R.id.nav_public) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_black));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
                     currentPageIcon.setImageResource(R.drawable.people_nearby);
-                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
-                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
                 } else if (destId == R.id.nav_games) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_black));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
                     currentPageIcon.setImageResource(R.drawable.gameboy_solid);
-                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
-                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
                 } else if (destId == R.id.nav_settings) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_black));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
                     currentPageIcon.setImageResource(R.drawable.settings);
-                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
-                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
                 } else if (destId == R.id.nav_addWrap) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_black));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
                     currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill_badge_plus);
-                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
-                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
                 }
                 else {
                     currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill); // Fallback icon
-//
-//                    if (destId == R.id.nav_topSong) {
-//                        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.top_song_color));
-//                        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.top_song_color));
-//                    } else if (destId == R.id.nav_top5Songs) {
-//                        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.top_5_songs_color));
-//                        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.top_5_songs_color));
-//                    } else if (destId == R.id.nav_topArtist) {
-//                        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.top_artist_color));
-//                        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.top_artist_color));
-//                    } else if (destId == R.id.nav_top5Artists) {
-//                        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.top_5_artists_color));
-//                        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.top_5_artists_color));
-//                    } else if (destId == R.id.nav_topGenre) {
-//                        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.top_genre_color));
-//                        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.top_genre_color));
-//                    } else if (destId == R.id.nav_wrappedSummary) {
-//                        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.wrap_summary_color));
-//                        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.wrap_summary_color));
-//                    } else {
-//                        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.spotify_black));
-//                        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.spotify_black));
-//                    }
+
+                    if (destId == R.id.nav_topSong) {
+                        bgFrame.setBackgroundTintList(null);
+
+                        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.topSongLayout);
+                        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
+                        frameLayout.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                        bgFrame.setBackground(animDrawable);
+                        AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
+                        animDrawable2.setEnterFadeDuration(2500);
+                        animDrawable2.setExitFadeDuration(5000);
+                        animDrawable2.start();
+                    } else if (destId == R.id.nav_top5Songs) {
+                        bgFrame.setBackgroundTintList(null);
+
+                        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.top5SongsLayout);
+                        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
+                        frameLayout.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                        bgFrame.setBackground(animDrawable);
+                        AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
+                        animDrawable2.setEnterFadeDuration(2500);
+                        animDrawable2.setExitFadeDuration(5000);
+                        animDrawable2.start();
+                    } else if (destId == R.id.nav_topArtist) {
+                        bgFrame.setBackgroundTintList(null);
+
+                        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.topArtistLayout);
+                        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
+                        frameLayout.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                        bgFrame.setBackground(animDrawable);
+                        AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
+                        animDrawable2.setEnterFadeDuration(2500);
+                        animDrawable2.setExitFadeDuration(5000);
+                        animDrawable2.start();
+                    } else if (destId == R.id.nav_top5Artists) {
+                        bgFrame.setBackgroundTintList(null);
+
+                        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.top5ArtistsLayout);
+                        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
+                        frameLayout.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                        bgFrame.setBackground(animDrawable);
+                        AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
+                        animDrawable2.setEnterFadeDuration(2500);
+                        animDrawable2.setExitFadeDuration(5000);
+                        animDrawable2.start();
+                    } else if (destId == R.id.nav_topGenre) {
+                        bgFrame.setBackgroundTintList(null);
+
+                        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.topGenreLayout);
+                        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
+                        frameLayout.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                        bgFrame.setBackground(animDrawable);
+                        AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
+                        animDrawable2.setEnterFadeDuration(2500);
+                        animDrawable2.setExitFadeDuration(5000);
+                        animDrawable2.start();
+                    } else if (destId == R.id.nav_wrappedSummary) {
+                        bgFrame.setBackgroundTintList(null);
+
+                        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.wrapSummaryLayout);
+                        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
+                        frameLayout.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                        bgFrame.setBackground(animDrawable);
+                        AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
+                        animDrawable2.setEnterFadeDuration(2500);
+                        animDrawable2.setExitFadeDuration(5000);
+                        animDrawable2.start();
+
+                        imageView.setImageResource(R.drawable.stars_image);
+                    }
                 }
                 Log.d("NavController", "Destination ID: " + destId);
             }, 0);
@@ -236,6 +337,51 @@ public class MainActivity extends AppCompatActivity {
         } else {
             theme = "Default"; // Default theme when it's not a special holiday
         }
+    }
+
+    private void applyInsetsListener(View view, boolean left, boolean right, boolean top, boolean bottom) {
+        ViewCompat.setOnApplyWindowInsetsListener(view, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+
+            if (left) {
+                mlp.leftMargin = insets.left;
+            }
+            if (right) {
+                mlp.rightMargin = insets.right;
+            }
+            if (top) {
+                mlp.topMargin = insets.top;
+            }
+            if (bottom) {
+                mlp.bottomMargin = insets.bottom;
+            }
+
+            v.setLayoutParams(mlp);
+
+            return WindowInsetsCompat.CONSUMED;
+        });
+    }
+
+    private void applyInsetsListenerPadding(View view, boolean left, boolean right, boolean top, boolean bottom) {
+        ViewCompat.setOnApplyWindowInsetsListener(view, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+            if (left) {
+                v.setPadding(insets.left, v.getPaddingTop(), v.getPaddingRight(), v.getPaddingBottom());
+            }
+            if (right) {
+                v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), insets.right, v.getPaddingBottom());
+            }
+            if (top) {
+                v.setPadding(v.getPaddingLeft(), insets.top, v.getPaddingRight(), v.getPaddingBottom());
+            }
+            if (bottom) {
+                v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(),insets.bottom);
+            }
+
+            return WindowInsetsCompat.CONSUMED;
+        });
     }
 
     public static void fetchTrackUriFromSongName(String songName, TrackUriCallback callback) {

@@ -5,8 +5,13 @@ import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -35,6 +40,19 @@ public class GamesHomeFragment extends Fragment {
 
         binding = FragmentGamesHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        FrameLayout mainLayout = root.findViewById(R.id.mainGa);
+        ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+
+            if (insets.bottom > 0) {
+                mlp.bottomMargin = insets.bottom;
+                v.setLayoutParams(mlp);
+            }
+
+            return WindowInsetsCompat.CONSUMED;
+        });
 
         binding.matchCard.setOnClickListener(new View.OnClickListener() {
             @Override

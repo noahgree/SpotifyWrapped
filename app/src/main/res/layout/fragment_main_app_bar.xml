@@ -14,15 +14,19 @@
         app:elevation="0dp">
 
         <FrameLayout
+            android:id="@+id/toolbarFrame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="5dp"
+            android:elevation="5dp">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent"
-                android:elevation="0dp"
+                android:background="@drawable/less_rounded_corners_drawable"
+                android:backgroundTint="@color/spotify_black"
+                android:backgroundTintMode="add"
                 app:popupTheme="@style/Theme.SpotifyWrapped.PopupOverlay"
                 app:title="" />
 

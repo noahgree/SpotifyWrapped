@@ -5,9 +5,26 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/spotify_black"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     tools:openDrawer="start">
+
+    <FrameLayout
+        android:id="@+id/bgFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/spotify_black"
+        android:backgroundTintMode="add">
+
+        <ImageView
+            android:id="@+id/imageViewBG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.7"
+            android:scaleType="centerCrop"
+            android:scaleX="1.4"
+            android:scaleY="1.4"
+            app:srcCompat="@drawable/stripes_image" />
+    </FrameLayout>
 
     <include
         android:id="@+id/main_app_bar"

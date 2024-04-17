@@ -13,6 +13,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -27,7 +30,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -64,15 +69,6 @@ import okhttp3.Response;
  * A simple {@link Fragment} subclass.
  */
 public class AddWrapFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private FragmentAddWrapBinding binding;
     public static Context context;
     private static User currentUser;
@@ -103,36 +99,6 @@ public class AddWrapFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        // Initialize the spinner
-//        Spinner timeFrameSpinner = view.findViewById(R.id.timeFrameSpinner);
-//
-//        // Create an ArrayAdapter using the string array and a default spinner layout
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-//                R.array.time_frame_options, android.R.layout.simple_spinner_item);
-//
-//        // Specify the layout to use when the list of choices appears.
-//        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
-//        // Apply the adapter to the spinner.
-//        timeFrameSpinner.setAdapter(adapter);
-//
-//        // Set the spinner's onItemSelectedListener if you need to handle selection events
-//        timeFrameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                ((TextView) view).setTextColor(ContextCompat.getColor(timeFrameSpinner.getContext(), R.color.spotify_white));
-//                ((TextView) view).setTextSize(18);
-//                // Create a Typeface from the font resource
-//                Typeface spotifyTypeface = ResourcesCompat.getFont(timeFrameSpinner.getContext(), R.font.spotify_font);
-//                Typeface boldSpotifyTypeface = Typeface.create(spotifyTypeface, Typeface.BOLD);
-//                ((TextView) view).setTypeface(spotifyTypeface);
-//                ((TextView) view).setPadding(8, 0, 0, 0);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                //
-//            }
-//        });
     }
 
     public interface DataCompletionHandler {
@@ -230,7 +196,20 @@ public class AddWrapFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentAddWrapBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-//        Spinner spinner = (Spinner) root.findViewById(R.id.timeFrameSpinner);
+
+        FrameLayout mainLayout = root.findViewById(R.id.mainAW);
+        ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+
+            if (insets.bottom > 0) {
+                mlp.bottomMargin = insets.bottom;
+                v.setLayoutParams(mlp);
+            }
+
+            return WindowInsetsCompat.CONSUMED;
+        });
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)

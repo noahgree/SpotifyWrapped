@@ -10,8 +10,8 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/spotify_black</item>
-        <item name="android:navigationBarColor">@color/spotify_black</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -24,7 +24,9 @@
         <item name="colorPrimary">@android:color/transparent</item>
     </style>
 
-    <style name="Theme.SpotifyWrapped.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.SpotifyWrapped.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorPrimary">@android:color/transparent</item>
+    </style>
 
     <style name="ButtonStyle1" parent="android:style/Widget.Button">
         <item name="android:background">#FF0000</item>

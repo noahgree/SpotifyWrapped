@@ -2,84 +2,97 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainS"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/spotify_black"
+    android:layout_marginBottom="15dp"
     android:orientation="vertical"
     tools:context=".ui.settings.SettingsFragment"
     tools:ignore="MissingDefaultResource">
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/spotify_font"
+            android:text="Settings"
+            android:textAlignment="textStart"
+            android:textColor="@color/spotify_green"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_corners_drawable"
+            android:backgroundTint="@color/spotify_black"
+            android:backgroundTintMode="add"
+            android:elevation="5dp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:fontFamily="@font/spotify_font"
-                    android:text="Settings"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/spotify_green"
-                    android:textSize="48sp"
-                    android:textStyle="bold" />
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                        <Space
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center">
 
-                        <TextView
-                            android:id="@+id/textView3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal|center_vertical"
-                            android:fontFamily="@font/spotify_font"
-                            android:text="Change Your Password"
-                            android:textAlignment="center"
-                            android:textColor="@color/spotify_green"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/newEmailInput"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal|center_vertical"
-                            android:layout_margin="15dp"
-                            android:background="@drawable/less_rounded_edit_text"
-                            android:ems="12"
-                            android:fontFamily="@font/spotify_font"
-                            android:hint="New Password"
-                            android:inputType="textEmailAddress"
-                            android:textColor="@color/spotify_black"
-                            android:textSize="18sp" />
+                                        <TextView
+                                            android:id="@+id/textView3"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_horizontal|center_vertical"
+                                            android:layout_marginTop="15dp"
+                                            android:fontFamily="@font/spotify_font"
+                                            android:text="Change Your Password"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/spotify_green"
+                                            android:textSize="24sp"
+                                            android:textStyle="bold" />
 
-                        <Button
-                            android:id="@+id/btnSubmitAccountEmail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal|center_vertical"
-                            android:background="@drawable/rounded_button"
-                            android:text="Submit"
-                            android:textColor="@android:color/white"
-                            android:textSize="18sp"
-                            app:cornerRadius="10sp" />
+                                        <EditText
+                                            android:id="@+id/newEmailInput"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_horizontal|center_vertical"
+                                            android:layout_margin="15dp"
+                                            android:background="@drawable/less_rounded_edit_text"
+                                            android:ems="12"
+                                            android:fontFamily="@font/spotify_font"
+                                            android:hint="New Password"
+                                            android:inputType="textEmailAddress"
+                                            android:textColor="@color/spotify_black"
+                                            android:textSize="18sp" />
 
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                                        <Button
+                                            android:id="@+id/btnSubmitAccountEmail"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_horizontal|center_vertical"
+                                            android:layout_marginBottom="15dp"
+                                            android:background="@drawable/rounded_button"
+                                            android:text="Submit"
+                                            android:textColor="@android:color/white"
+                                            android:textSize="18sp"
+                                            app:cornerRadius="10sp" />
+                                </LinearLayout>
+                        </FrameLayout>
+
                 </LinearLayout>
 
                 <Button

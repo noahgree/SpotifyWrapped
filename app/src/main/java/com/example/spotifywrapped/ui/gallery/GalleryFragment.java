@@ -6,15 +6,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -65,6 +72,22 @@ public class GalleryFragment extends Fragment {
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         context = MainActivity.getInstance();
+
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            LinearLayout mainLayout = root.findViewById(R.id.mainG);
+            ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, windowInsets) -> {
+
+                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+                ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+
+                if (insets.bottom > 0) {
+                    mlp.bottomMargin = insets.bottom;
+                    v.setLayoutParams(mlp);
+                }
+
+                return WindowInsetsCompat.CONSUMED;
+            });
+        }, 100); // Delay in milliseconds
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 

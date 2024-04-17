@@ -5,7 +5,6 @@
     android:id="@+id/ConstrainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/spotify_black"
     tools:context=".ui.login.LogInFragment">
 
     <LinearLayout
@@ -25,9 +24,8 @@
             android:id="@+id/imageView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo"
             android:layout_weight="1"
-            />
+            android:src="@drawable/logo" />
 
         <TextView
             android:id="@+id/loginTitleText"
