@@ -39,8 +39,9 @@
     <color name="top_5_artists_color">#0062ff</color>
     <!-- Top Genre Color -->
     <color name="top_genre_color">#0DECA9</color>
-    <!-- Wrap Summary Color -->
+    <!-- Wrap Summary Colors -->
     <color name="wrap_summary_color">#E91E63</color>
+    <color name="ws_text_background_fill">#72e81e6e</color>
 
     <!-- CUSTOM GRADIENT BACKGROUND COLORS -->
     <!-- Top Song Colors -->
@@ -56,9 +57,9 @@
     <color name="colorGradientCenterTA">#bcf21b</color>
     <color name="colorGradientEndTA">#6bf21b</color>
     <!-- Top 5 Artist Colors -->
-    <color name="colorGradientStartT5A">#007bff</color>
-    <color name="colorGradientCenterT5A">#5700ff</color>
-    <color name="colorGradientEndT5A">#8600e0</color>
+    <color name="colorGradientStartT5A">#2790ff</color>
+    <color name="colorGradientCenterT5A">#915aff</color>
+    <color name="colorGradientEndT5A">#6a14ff</color>
     <!-- Top Genre Colors -->
     <color name="colorGradientStartTG">#00ff49</color>
     <color name="colorGradientCenterTG">#00d7ff</color>

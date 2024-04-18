@@ -111,7 +111,7 @@
                     android:fontFamily="@font/spotify_font"
                     android:text="TOP SONGS"
                     android:textColor="@color/spotify_white"
-                    android:textSize="28sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
             </FrameLayout>
 
@@ -127,8 +127,7 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="25dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_corners_drawable"
-            android:backgroundTint="@color/spotify_green"
+            android:background="@drawable/hollow_rectangle_rounded"
             android:backgroundTintMode="add"
             android:orientation="horizontal"
             android:paddingVertical="15dp">
@@ -202,13 +201,13 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#de4580"
+                    android:backgroundTint="@color/ws_text_background_fill"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/t1"
-                        android:layout_width="30dp"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="3dp"
@@ -219,23 +218,19 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
                     <TextView
                         android:id="@+id/ttext1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:fontFamily="@font/spotify_font"
                         android:maxLines="1"
                         android:text="@string/top_song_placeholder"
-                        android:textAlignment="textStart"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/spotify_black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -253,13 +248,13 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#de4580"
+                    android:backgroundTint="@color/ws_text_background_fill"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/t2"
-                        android:layout_width="30dp"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="3dp"
@@ -270,23 +265,19 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <Space
-                        android:layout_width="68dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
                     <TextView
                         android:id="@+id/ttext2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:fontFamily="@font/spotify_font"
                         android:maxLines="1"
                         android:text="@string/top_song_placeholder"
-                        android:textAlignment="textStart"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/spotify_black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -303,13 +294,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#de4580"
+                    android:backgroundTint="@color/ws_text_background_fill"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/t3"
-                        android:layout_width="30dp"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="3dp"
@@ -320,23 +311,19 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
                     <TextView
                         android:id="@+id/ttext3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:fontFamily="@font/spotify_font"
                         android:maxLines="1"
                         android:text="@string/top_song_placeholder"
-                        android:textAlignment="textStart"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/spotify_black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -354,13 +341,13 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#de4580"
+                    android:backgroundTint="@color/ws_text_background_fill"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/t4"
-                        android:layout_width="30dp"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="3dp"
@@ -371,23 +358,19 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
                     <TextView
                         android:id="@+id/ttext4"
-                        android:layout_width="wrap_content"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:fontFamily="@font/spotify_font"
                         android:maxLines="1"
                         android:text="@string/top_song_placeholder"
-                        android:textAlignment="textStart"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/spotify_black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -405,13 +388,13 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#de4580"
+                    android:backgroundTint="@color/ws_text_background_fill"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/t5"
-                        android:layout_width="30dp"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="3dp"
@@ -422,23 +405,19 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
                     <TextView
                         android:id="@+id/ttext5"
-                        android:layout_width="wrap_content"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:fontFamily="@font/spotify_font"
                         android:maxLines="1"
                         android:text="@string/top_song_placeholder"
-                        android:textAlignment="textStart"
+                        android:textAlignment="viewEnd"
                         android:textColor="@color/spotify_black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -477,7 +456,7 @@
                     android:fontFamily="@font/spotify_font"
                     android:text="TOP ARTISTS"
                     android:textColor="@color/spotify_white"
-                    android:textSize="28sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
             </FrameLayout>
@@ -494,8 +473,7 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="25dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_corners_drawable"
-            android:backgroundTint="@color/spotify_green"
+            android:background="@drawable/hollow_rectangle_rounded"
             android:backgroundTintMode="add"
             android:orientation="horizontal"
             android:paddingVertical="15dp">
@@ -568,13 +546,13 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#de4580"
+                    android:backgroundTint="@color/ws_text_background_fill"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/b1"
-                        android:layout_width="30dp"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="3dp"
@@ -585,23 +563,19 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
                     <TextView
                         android:id="@+id/btext1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:fontFamily="@font/spotify_font"
                         android:maxLines="1"
                         android:text="@string/top_artist_placeholder"
-                        android:textAlignment="textStart"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/spotify_black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -619,13 +593,13 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#de4580"
+                    android:backgroundTint="@color/ws_text_background_fill"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/b2"
-                        android:layout_width="30dp"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="3dp"
@@ -636,23 +610,19 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
                     <TextView
                         android:id="@+id/btext2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:fontFamily="@font/spotify_font"
                         android:maxLines="1"
                         android:text="@string/top_artist_placeholder"
-                        android:textAlignment="textStart"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/spotify_black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -669,13 +639,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#de4580"
+                    android:backgroundTint="@color/ws_text_background_fill"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/b3"
-                        android:layout_width="30dp"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="3dp"
@@ -686,23 +656,19 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
                     <TextView
                         android:id="@+id/btext3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:fontFamily="@font/spotify_font"
                         android:maxLines="1"
                         android:text="@string/top_artist_placeholder"
-                        android:textAlignment="textStart"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/spotify_black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -720,13 +686,13 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#de4580"
+                    android:backgroundTint="@color/ws_text_background_fill"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/b4"
-                        android:layout_width="30dp"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="3dp"
@@ -737,23 +703,19 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
                     <TextView
                         android:id="@+id/btext4"
-                        android:layout_width="wrap_content"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:fontFamily="@font/spotify_font"
                         android:maxLines="1"
                         android:text="@string/top_artist_placeholder"
-                        android:textAlignment="textStart"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/spotify_black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -771,13 +733,13 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/less_rounded_corners_drawable"
-                    android:backgroundTint="#de4580"
+                    android:backgroundTint="@color/ws_text_background_fill"
                     android:backgroundTintMode="add"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/b5"
-                        android:layout_width="30dp"
+                        android:layout_width="24dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="3dp"
@@ -788,23 +750,19 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
                     <TextView
                         android:id="@+id/btext5"
-                        android:layout_width="wrap_content"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:fontFamily="@font/spotify_font"
                         android:maxLines="1"
                         android:text="@string/top_artist_placeholder"
-                        android:textAlignment="textStart"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/spotify_black"
                         android:textSize="14sp"
                         android:textStyle="bold" />

@@ -81,8 +81,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="#41FFFFFF"
+                android:background="@drawable/hollow_rectangle_rounded"
                 android:backgroundTintMode="add"
                 android:orientation="horizontal">
 
@@ -138,8 +137,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="#41FFFFFF"
+                android:background="@drawable/hollow_rectangle_rounded"
                 android:backgroundTintMode="add"
                 android:orientation="horizontal">
 
@@ -193,8 +191,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="#41FFFFFF"
+                android:background="@drawable/hollow_rectangle_rounded"
                 android:backgroundTintMode="add"
                 android:orientation="horizontal">
 
@@ -249,8 +246,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="#41FFFFFF"
+                android:background="@drawable/hollow_rectangle_rounded"
                 android:backgroundTintMode="add"
                 android:orientation="horizontal">
 
@@ -306,8 +302,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="25dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="#41FFFFFF"
+                android:background="@drawable/hollow_rectangle_rounded"
                 android:backgroundTintMode="add"
                 android:orientation="horizontal">
 
