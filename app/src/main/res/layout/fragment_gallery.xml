@@ -44,7 +44,7 @@
             app:elevation="0dp"
             app:fabCustomSize="50dp"
             app:pressedTranslationZ="0dp"
-            app:tint="@color/spotify_white" />
+            app:tint="@color/spotify_black" />
 
 
     </LinearLayout>

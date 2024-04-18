@@ -160,7 +160,7 @@
                     android:fontFamily="@font/spotify_font"
                     android:text="Save"
                     android:textStyle="bold"
-                    app:backgroundTint="@color/spotify_green"
+                    app:backgroundTint="@color/spotify_dark_green"
                     app:borderWidth="0dp"
                     app:cornerRadius="10sp"
                     app:elevation="0dp"

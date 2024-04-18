@@ -213,6 +213,11 @@ public class MainActivity extends AppCompatActivity {
                     bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
 
                     currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill_badge_plus);
+                } else if (destId == R.id.spotifyLoginFragment) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_green));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
+                    currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill_badge_plus);
                 }
                 else {
                     currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill); // Fallback icon
@@ -648,14 +653,14 @@ public class MainActivity extends AppCompatActivity {
         navigateToLoginFragment();
         updateToolbarForLoggedOutUser();
         // Show a message to the user
-        Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Logged Out Successfully", Toast.LENGTH_SHORT).show();
     }
 
     public static void updateUserProfilePhoto() {
         onGetUserProfileClicked(context, binding.navView, currentUser, mOkHttpClient);
     }
 
-    //Loading profile image
+    // Loading profile image
     public static void onGetUserProfileClicked(Context context, NavigationView navigationView, User user, OkHttpClient okHttpClient) {
         View navView = navigationView.getHeaderView(0);
 

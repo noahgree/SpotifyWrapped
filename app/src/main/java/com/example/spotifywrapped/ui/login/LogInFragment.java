@@ -11,6 +11,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -18,13 +21,18 @@ import androidx.navigation.Navigation;
 import android.text.InputType;
 import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.spotifywrapped.MainActivity;
@@ -56,10 +64,6 @@ public class LogInFragment extends Fragment {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         mAuth = FirebaseAuth.getInstance();
-//        if(currentUser != null){
-//            finish();
-//            startActivity(getIntent());
-//        }
     }
 
     @Override
@@ -76,123 +80,121 @@ public class LogInFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         MainActivity mainActivity = (MainActivity) getActivity();
+        binding = FragmentLogInBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
         if (mainActivity != null) {
             mainActivity.setupNavigationAndToolbar();
             hideActionBar();
         }
-        // Inflate the layout for this fragment
-        binding = FragmentLogInBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        //Login Button
+
+        // Initialize the EditTexts
+        FrameLayout mainBox = root.findViewById(R.id.mainLoginLayout);
+        EditText emailInput = root.findViewById(R.id.emailInput);
+        EditText passwordInput = root.findViewById(R.id.passwordInput);
+
+
+        // Login Button
         Button myButton = root.findViewById(R.id.loginButton);
         myButton.setBackgroundResource(R.drawable.rounded_button);
-        //Signup Button
+        // Signup Button
         Button signupButton = root.findViewById(R.id.signupButton);
         signupButton.setBackgroundResource(R.drawable.rounded_button);
 
-        myButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
-                String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
-                if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(root.getContext(), "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener((Activity) root.getContext(), new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Log.d(TAG, "signInWithEmail:success");
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        solidifyNewUser(user, password);
-                                        updateUI(user);
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                        Toast.makeText(root.getContext(), "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
-                                        updateUI(null);
-                                    }
+        myButton.setOnClickListener(v -> {
+            String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
+            String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(root.getContext(), "Authentication failed.",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener((Activity) root.getContext(), new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d(TAG, "signInWithEmail:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    solidifyNewUser(user, password);
+                                    updateUI(user);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                    Toast.makeText(root.getContext(), "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                    updateUI(null);
                                 }
-                            });
-                }
+                            }
+                        });
             }
         });
-        //Sign Up Button
-        signupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
-                String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
-                if(email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(root.getContext(), "Sign up failed.",
-                            Toast.LENGTH_SHORT).show();
-                } else if (password.length() < 6) {
-                    Toast.makeText(root.getContext(), "Password entered is too short. Please use at least 6 characters.",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    // Create an AlertDialog.Builder to get the user's name
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Please enter your full name");
 
-                    // Set up the input fields
-                    final EditText input = new EditText(getActivity());
-                    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
-                    input.setHint("First and Last Name");
-                    builder.setView(input);
+        // Sign Up Button
+        signupButton.setOnClickListener(v -> {
+            String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
+            String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
+            if(email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(root.getContext(), "Sign Up Failed.",
+                        Toast.LENGTH_SHORT).show();
+            } else if (password.length() < 6) {
+                Toast.makeText(root.getContext(), "Password entered is too short. Please use at least 6 characters.",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Create an AlertDialog.Builder to get the user's name
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Please enter your full name");
 
-                    // Set up the buttons
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String fullName = input.getText().toString();
-                            // Splitting the fullName into first and last name parts if needed
-                            // Proceed with the rest of the sign-up process...
-                            String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
-                            String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
+                // Set up the input fields
+                final EditText input = new EditText(getActivity());
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+                input.setHint("First and Last Name");
+                builder.setView(input);
 
-                            mAuth.createUserWithEmailAndPassword(email, password)
-                                    .addOnCompleteListener((Activity) root.getContext(), task -> {
-                                        if (task.isSuccessful()) {
-                                            FirebaseUser user = mAuth.getCurrentUser();
-                                            if (user != null) {
-                                                Map<String, Object> userAccount = new HashMap<>();
-                                                userAccount.put("name", fullName);
-                                                userAccount.put("email", email);
-                                                userAccount.put("wraps", new ArrayList<Map<String, Object>>());
-                                                // Avoid storing plain passwords
-                                                db.collection("Accounts").document(user.getUid())
-                                                        .set(userAccount)
-                                                        .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
-                                                        .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
-                                            }
-                                            solidifyNewUser(user, password);
-                                            updateUI(user);
-                                        } else {
-                                            Toast.makeText(root.getContext(), "Authentication failed.",
-                                                    Toast.LENGTH_SHORT).show();
-                                            updateUI(null);
-                                        }
-                                    });
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+                // Set up the buttons
+                builder.setPositiveButton("OK", (dialog, which) -> {
+                    String fullName = input.getText().toString();
+                    // Splitting the fullName into first and last name parts if needed
+                    // Proceed with the rest of the sign-up process...
+                    String email1 = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
+                    String password1 = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
 
-                    builder.show();
-                }
+                    mAuth.createUserWithEmailAndPassword(email1, password1)
+                            .addOnCompleteListener((Activity) root.getContext(), task -> {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    if (user != null) {
+                                        Map<String, Object> userAccount = new HashMap<>();
+                                        userAccount.put("name", fullName);
+                                        userAccount.put("email", email1);
+                                        userAccount.put("wraps", new ArrayList<Map<String, Object>>());
+                                        // Avoid storing plain passwords
+                                        db.collection("Accounts").document(user.getUid())
+                                                .set(userAccount)
+                                                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                                                .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+                                    }
+                                    solidifyNewUser(user, password1);
+                                    updateUI(user);
+                                } else {
+                                    Toast.makeText(root.getContext(), "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                    updateUI(null);
+                                }
+                            });
+                });
+                builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+                builder.show();
             }
         });
         return root;
     }
 
     private void solidifyNewUser(FirebaseUser user, String password) {
-        //this looks for userdata on firebase, this will only happen if the user exists
+        // this looks for userdata on firebase, this will only happen if the user exists
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String userId = user.getUid(); // The user ID to search for, which matches the document ID
         final User[] currentUser = new User[1];
         db.collection("Accounts").document(userId)

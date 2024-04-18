@@ -8,21 +8,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/spotify_green"
         android:gravity="center"
         android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/titleSLF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="30dp"
-            android:layout_weight="0"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="30dp"
             android:fontFamily="@font/spotify_font"
             android:gravity="center"
-            android:text="Link your\nSpotify acoount!"
+            android:text="Link Your Spotify Account!"
             android:textColor="@color/spotify_white"
-            android:textSize="35sp"
+            android:textSize="48sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -31,11 +35,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="15dp"
-            android:layout_weight="0"
             android:background="@drawable/rounded_button"
             android:backgroundTint="@color/spotify_white"
             android:fontFamily="@font/spotify_font"
-            android:text="Sign In"
-            android:textColor="@color/spotify_black" />
+            android:text="START"
+            android:textColor="@color/spotify_black"
+            android:textSize="14sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
     </LinearLayout>
 </FrameLayout>

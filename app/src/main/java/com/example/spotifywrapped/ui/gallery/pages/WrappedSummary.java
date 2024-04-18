@@ -8,8 +8,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.Bundle;
@@ -17,7 +19,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
@@ -52,6 +57,7 @@ import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentTopGenreBinding;
 import com.example.spotifywrapped.databinding.FragmentWrappedSummaryBinding;
 import com.example.spotifywrapped.user.User;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -425,6 +431,39 @@ public class WrappedSummary extends Fragment {
             values.clear();
             values.put(MediaStore.Images.Media.IS_PENDING, 0);
             context.getContentResolver().update(item, values, null, null);
+
+            ViewGroup rootView = (ViewGroup) ((ViewGroup) binding.getRoot().findViewById(R.id.wrapSummaryLayout)).getChildAt(0);
+
+            Snackbar snackbar = Snackbar.make(rootView, "Image Saved", Snackbar.LENGTH_LONG);
+            View snackbarView = snackbar.getView();
+            Drawable backgroundDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.rounded_corners_drawable);
+            Drawable wrappedDrawable = DrawableCompat.wrap(backgroundDrawable);
+            int tintColor = ContextCompat.getColor(getActivity(), R.color.spotify_black);
+            DrawableCompat.setTint(wrappedDrawable, tintColor);
+            DrawableCompat.setTintMode(wrappedDrawable, PorterDuff.Mode.ADD);
+
+            snackbarView.setBackground(wrappedDrawable);
+            CoordinatorLayout.LayoutParams params =(CoordinatorLayout.LayoutParams)snackbarView.getLayoutParams();
+
+            ViewCompat.setOnApplyWindowInsetsListener(snackbarView, (v, windowInsets) -> {
+                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+                ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+
+                mlp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+
+                mlp.setMargins(15, mlp.topMargin, 15, mlp.bottomMargin);
+
+                if (insets.top > 0) {
+                    mlp.topMargin = insets.top;
+                    v.setLayoutParams(mlp);
+                }
+
+                return WindowInsetsCompat.CONSUMED;
+            });
+
+            params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+            snackbarView.setLayoutParams(params);
+            snackbar.show();
         }
     }
 

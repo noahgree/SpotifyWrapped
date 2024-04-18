@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:ellipsize="end"
                 android:fontFamily="@font/spotify_font"
                 android:maxLines="2"
                 android:paddingStart="15dp"
@@ -46,7 +47,7 @@
                 android:paddingEnd="15dp"
                 android:text="Top Artists"
                 android:textAlignment="textStart"
-                android:textColor="@color/spotify_black"
+                android:textColor="@color/spotify_white"
                 android:textSize="55sp"
                 android:textStyle="bold" />
 
@@ -87,37 +88,38 @@
 
                 <TextView
                     android:id="@+id/ranking1"
-                    android:layout_width="50dp"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="15dp"
                     android:fontFamily="@font/spotify_font"
                     android:text="#1"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/topartistimage1"
                     android:layout_width="95dp"
                     android:layout_height="95dp"
                     android:layout_gravity="center"
-                    android:padding="8dp"
+                    android:padding="10dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/logo" />
+                    app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                    app:srcCompat="@drawable/sample_square_image" />
 
                 <TextView
                     android:id="@+id/topartisttext1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
-                    android:maxLines="3"
+                    android:maxLines="2"
                     android:text="@string/top_artist_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -143,37 +145,38 @@
 
                 <TextView
                     android:id="@+id/ranking2"
-                    android:layout_width="50dp"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="15dp"
                     android:fontFamily="@font/spotify_font"
                     android:text="#2"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/topartistimage2"
                     android:layout_width="95dp"
                     android:layout_height="95dp"
                     android:layout_gravity="center"
-                    android:padding="8dp"
+                    android:padding="10dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/logo" />
+                    app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                    app:srcCompat="@drawable/sample_square_image" />
 
                 <TextView
                     android:id="@+id/topartisttext2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="3"
                     android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
-                    android:maxLines="3"
+                    android:maxLines="2"
                     android:text="@string/top_artist_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -197,37 +200,38 @@
 
                 <TextView
                     android:id="@+id/ranking3"
-                    android:layout_width="50dp"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="15dp"
                     android:fontFamily="@font/spotify_font"
                     android:text="#3"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/topartistimage3"
                     android:layout_width="95dp"
                     android:layout_height="95dp"
                     android:layout_gravity="center"
-                    android:padding="8dp"
+                    android:padding="10dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/logo" />
+                    app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                    app:srcCompat="@drawable/sample_square_image" />
 
                 <TextView
                     android:id="@+id/topartisttext3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="3"
                     android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
-                    android:maxLines="3"
+                    android:maxLines="2"
                     android:text="@string/top_artist_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -252,37 +256,38 @@
 
                 <TextView
                     android:id="@+id/ranking4"
-                    android:layout_width="50dp"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="15dp"
                     android:fontFamily="@font/spotify_font"
                     android:text="#4"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/topartistimage4"
                     android:layout_width="95dp"
                     android:layout_height="95dp"
                     android:layout_gravity="center"
-                    android:padding="8dp"
+                    android:padding="10dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/logo" />
+                    app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                    app:srcCompat="@drawable/sample_square_image" />
 
                 <TextView
                     android:id="@+id/topartisttext4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="3"
                     android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
-                    android:maxLines="3"
+                    android:maxLines="2"
                     android:text="@string/top_artist_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -308,37 +313,38 @@
 
                 <TextView
                     android:id="@+id/ranking5"
-                    android:layout_width="50dp"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="15dp"
                     android:fontFamily="@font/spotify_font"
                     android:text="#5"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/topartistimage5"
                     android:layout_width="95dp"
                     android:layout_height="95dp"
                     android:layout_gravity="center"
-                    android:padding="8dp"
+                    android:padding="10dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/logo" />
+                    app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                    app:srcCompat="@drawable/sample_square_image" />
 
                 <TextView
                     android:id="@+id/topartisttext5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="3"
                     android:ellipsize="end"
                     android:fontFamily="@font/spotify_font"
-                    android:maxLines="3"
+                    android:maxLines="2"
                     android:text="@string/top_artist_placeholder"
                     android:textAlignment="textStart"
                     android:textColor="@color/spotify_black"
@@ -349,7 +355,7 @@
             <View
                 android:id="@+id/T5AHiddenSpacer"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="10dp"
                 android:visibility="gone" />
 
         </LinearLayout>
