@@ -110,6 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="25dp"
+                android:capitalize="words"
                 android:ellipsize="end"
                 android:fontFamily="@font/spotify_font"
                 android:maxLines="2"

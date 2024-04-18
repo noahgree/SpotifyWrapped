@@ -157,11 +157,12 @@ public class TopGenre extends Fragment {
                         if (wrapData != null) {
                             Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
                             Log.d("testW", (wrap).toString());
-                            String genre = (String) ((ArrayList<String>) wrap.get("artistsgenre")).get(0);
-                            String image = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(0);
-                            TextView artistName = (TextView) root.findViewById(R.id.topgenre);
+                            String genre = ((ArrayList<String>) wrap.get("artistsgenre")).get(0);
+                            String image = ((ArrayList<String>) wrap.get("artistsimage")).get(0);
+                            TextView artistName = root.findViewById(R.id.topgenre);
+                            genre = capitalizeWords(genre);
                             artistName.setText(genre);
-                            ImageView topartistimage = (ImageView) root.findViewById(R.id.genreimage);
+                            ImageView topartistimage = root.findViewById(R.id.genreimage);
                             Glide.with(context)
                                     .load(image)
                                     .into(topartistimage);
@@ -182,11 +183,12 @@ public class TopGenre extends Fragment {
                         Map<String, Object> wrapData = wrapList.get(WrappedSummary.getPublicWrapIndex());
                         if (wrapData != null) {
                             Map<String, Object> wrap = wrapList.get(WrappedSummary.getPublicWrapIndex());
-                            String genre = (String) ((ArrayList<String>) wrap.get("artistsgenre")).get(0);
-                            String image = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(0);
-                            TextView artistName = (TextView) root.findViewById(R.id.topgenre);
+                            String genre = ((ArrayList<String>) wrap.get("artistsgenre")).get(0);
+                            String image = ((ArrayList<String>) wrap.get("artistsimage")).get(0);
+                            TextView artistName = root.findViewById(R.id.topgenre);
+                            genre = capitalizeWords(genre);
                             artistName.setText(genre);
-                            ImageView topartistimage = (ImageView) root.findViewById(R.id.genreimage);
+                            ImageView topartistimage = root.findViewById(R.id.genreimage);
                             Glide.with(context)
                                     .load(image)
                                     .into(topartistimage);
@@ -380,6 +382,31 @@ public class TopGenre extends Fragment {
             snackbarView.setLayoutParams(params);
             snackbar.show();
         }
+    }
+
+    public static String capitalizeWords(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
+        StringBuilder capitalized = new StringBuilder();
+        boolean isWordStart = true; // Flag to identify the start of a word
+
+        for (char ch : str.toCharArray()) {
+            if (Character.isLetter(ch) && isWordStart) {
+                capitalized.append(Character.toUpperCase(ch));
+                isWordStart = false;
+            } else {
+                capitalized.append(ch);
+            }
+
+            // Reset flag if current character is not a letter
+            if (!Character.isLetter(ch)) {
+                isWordStart = true;
+            }
+        }
+
+        return capitalized.toString();
     }
 
     private void showActionBar() {
