@@ -92,7 +92,7 @@ public class WrappedSummary extends Fragment {
         return gson.fromJson(userJson, User.class);
     }
 
-    private FragmentWrappedSummaryBinding binding;
+    private static FragmentWrappedSummaryBinding binding;
     public static Context context;
 
     private static User currentUser;
@@ -214,7 +214,8 @@ public class WrappedSummary extends Fragment {
                             Glide.with(context)
                                     .load(Aimage1)
                                     .into(topartistimage);
-                            setNameonTitle();
+                            String username = (String) wrapData.get("username");
+                            setNameonTitle(username);
                         }
                     }
                 } else {
@@ -277,7 +278,8 @@ public class WrappedSummary extends Fragment {
                             Glide.with(context)
                                     .load(Aimage1)
                                     .into(topartistimage);
-                            setDefaultOnTitle();
+                            String username = (String) wrapData.get("username");
+                            setNameonTitle(username);
                         }
                     }
                 } else {
@@ -473,24 +475,15 @@ public class WrappedSummary extends Fragment {
         }
     }
 
-    private void setNameonTitle() {
-        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.wrappedSummaryTitle);
-        String userName = (String) MainActivity.getCurrentUser().getName();
-        if (userName != null && !userName.isEmpty()) {
-            userName = userName.substring(0, userName.indexOf(" "));
+    public static void setNameonTitle(String username) {
+        TextView titlesWithName = binding.getRoot().findViewById(R.id.wrappedSummaryTitle);
+        if (!username.isEmpty()) {
+            username = username.substring(0, username.indexOf(" "));
         } else {
-            userName = "User";
+            username = "User";
         }
-        userName = userName + "'s ";
-        titlesWithName.setText(userName + titlesWithName.getText());
-    }
-
-    private void setDefaultOnTitle() {
-        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.wrappedSummaryTitle);
-        String userName = (String) MainActivity.getCurrentUser().getName();
-        userName = "User";
-        userName = userName + "'s ";
-        titlesWithName.setText(userName + titlesWithName.getText());
+        username = username + "'s ";
+        titlesWithName.setText(username + titlesWithName.getText());
     }
 
     @Override

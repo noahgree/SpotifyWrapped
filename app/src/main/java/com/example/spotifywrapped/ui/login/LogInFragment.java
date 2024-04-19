@@ -228,7 +228,7 @@ public class LogInFragment extends Fragment {
     public void updateUI(FirebaseUser account){
         View root = binding.getRoot();
         if (account != null) {
-            Toast.makeText(getContext(), "You Signed In successfully", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_LONG).show();
             MainActivity mainActivity = (MainActivity) getActivity();
             hideKeyboard(root);
 

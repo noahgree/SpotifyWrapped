@@ -75,7 +75,7 @@ import java.util.Map;
  */
 public class TopArtist extends Fragment {
 
-    private FragmentTopArtistBinding binding;
+    private static FragmentTopArtistBinding binding;
     public static Context context;
 
     private static User currentUser;
@@ -102,26 +102,16 @@ public class TopArtist extends Fragment {
         return gson.fromJson(userJson, User.class);
     }
 
-    private void setNameonTitle() {
-        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
-        String userName = (String) MainActivity.getCurrentUser().getName();
-        if (userName != null && !userName.isEmpty()) {
-            userName = userName.substring(0, userName.indexOf(" "));
+    public static void setNameonTitle(String username) {
+        TextView titlesWithName = binding.getRoot().findViewById(R.id.topSongIntro);
+        if (!username.isEmpty()) {
+            username = username.substring(0, username.indexOf(" "));
         } else {
-            userName = "User";
+            username = "User";
         }
-        userName = userName + "'s ";
-        titlesWithName.setText(userName + titlesWithName.getText());
+        username = username + "'s ";
+        titlesWithName.setText(username + titlesWithName.getText());
     }
-
-    private void setDefaultOnTitle() {
-        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
-        String userName = (String) MainActivity.getCurrentUser().getName();
-        userName = "User";
-        userName = userName + "'s ";
-        titlesWithName.setText(userName + titlesWithName.getText());
-    }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -160,13 +150,14 @@ public class TopArtist extends Fragment {
                             Map<String, Object> wrap = wrapList.get(WrappedSummary.getPrivateWrapIndex());
                             String name = ((ArrayList<String>) wrap.get("artists")).get(0);
                             String image = ((ArrayList<String>) wrap.get("artistsimage")).get(0);
+                            String username = (String) wrapData.get("username");
                             TextView artistName = root.findViewById(R.id.topartist);
                             artistName.setText(name);
                             ImageView topartistimage = root.findViewById(R.id.artistimage);
                             Glide.with(context)
                                     .load(image)
                                     .into(topartistimage);
-                            setNameonTitle();
+                            setNameonTitle(username);
                         }
                     }
                 } else {
@@ -185,13 +176,14 @@ public class TopArtist extends Fragment {
                             Map<String, Object> wrap = wrapList.get(WrappedSummary.getPublicWrapIndex());
                             String name = (String) ((ArrayList<String>) wrap.get("artists")).get(0);
                             String image = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(0);
+                            String username = (String) wrapData.get("username");
                             TextView artistName = (TextView) root.findViewById(R.id.topartist);
                             artistName.setText(name);
                             ImageView topartistimage = (ImageView) root.findViewById(R.id.artistimage);
                             Glide.with(context)
                                     .load(image)
                                     .into(topartistimage);
-                            setDefaultOnTitle();
+                            setNameonTitle(username);
                         }
                     }
                 } else {
@@ -201,66 +193,52 @@ public class TopArtist extends Fragment {
         }
 
         // Set the click listener for the button
-        binding.topartistnext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_top5Artists);
-            }
+        binding.topartistnext.setOnClickListener(v -> {
+            setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_top5Artists);
         });
-        binding.topartistback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_top5Songs);
-            }
+        binding.topartistback.setOnClickListener(v -> {
+            setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_top5Songs);
         });
-        binding.topartistexit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TransitionSet exitTransitionSet = new TransitionSet();
-                exitTransitionSet.addTransition(new Slide(Gravity.END));
-                exitTransitionSet.addTransition(new Fade());
-                exitTransitionSet.setDuration(300);
-                setExitTransition(exitTransitionSet);
+        binding.topartistexit.setOnClickListener(v -> {
+            TransitionSet exitTransitionSet = new TransitionSet();
+            exitTransitionSet.addTransition(new Slide(Gravity.END));
+            exitTransitionSet.addTransition(new Fade());
+            exitTransitionSet.setDuration(300);
+            setExitTransition(exitTransitionSet);
 
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_gallery);
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_gallery);
 
-                // Show the toolbar with animation
-                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.show();
-                    int resId = getResources().getIdentifier("action_bar_container", "id", "android");
+            // Show the toolbar with animation
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.show();
+                int resId = getResources().getIdentifier("action_bar_container", "id", "android");
 
 
-                    // Load the fade-in animation
-                    Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
+                // Load the fade-in animation
+                Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
 
-                    // Get a reference to the ActionBar's container view by its identifier (e.g., "action_bar_container").
-                    // Note: The ID might differ based on the Android version or theme you are using.
-                    View actionBarContainer = getActivity().findViewById(resId);
-                    if (actionBarContainer != null) {
-                        actionBarContainer.startAnimation(fadeIn);
-                    }
-
-                    // Animate the ImageView
-                    ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
-                    imageView.setVisibility(View.VISIBLE);
-                    imageView.startAnimation(fadeIn);
+                // Get a reference to the ActionBar's container view by its identifier (e.g., "action_bar_container").
+                // Note: The ID might differ based on the Android version or theme you are using.
+                View actionBarContainer = getActivity().findViewById(resId);
+                if (actionBarContainer != null) {
+                    actionBarContainer.startAnimation(fadeIn);
                 }
+
+                // Animate the ImageView
+                ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.startAnimation(fadeIn);
             }
         });
 
 
-        binding.TASaveImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takeAndSaveScreenShot();
-            }
-        });
+        binding.TASaveImage.setOnClickListener(v -> takeAndSaveScreenShot());
 
         MainActivity.updateForHoliday(binding);
 

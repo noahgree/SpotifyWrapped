@@ -201,7 +201,6 @@ public class Top5Songs extends Fragment {
                             Glide.with(context)
                                     .load(image5)
                                     .into(topsongimage);
-//                            setNameonTitle();
                         }
                     }
                 } else {
@@ -259,7 +258,6 @@ public class Top5Songs extends Fragment {
                             Glide.with(context)
                                     .load(image5)
                                     .into(topsongimage);
-                            setDefaultOnTitle();
                         }
                     }
                 } else {

@@ -184,7 +184,6 @@ public class Top5Artists extends Fragment {
                             Glide.with(context).load(image4).into(topsongimage);
                             topsongimage = root.findViewById(R.id.topartistimage5);
                             Glide.with(context).load(image5).into(topsongimage);
-//                            setNameonTitle();
                         }
                     }
                 } else {
@@ -242,7 +241,6 @@ public class Top5Artists extends Fragment {
                             Glide.with(context)
                                     .load(image5)
                                     .into(topsongimage);
-                            setDefaultOnTitle();
                         }
                     }
                 } else {

@@ -75,7 +75,7 @@ import java.util.Map;
  */
 public class TopGenre extends Fragment {
 
-    private FragmentTopGenreBinding binding;
+    private static FragmentTopGenreBinding binding;
     public static Context context;
 
     private FirebaseAuth mAuth;
@@ -99,26 +99,16 @@ public class TopGenre extends Fragment {
         return gson.fromJson(userJson, User.class);
     }
 
-    private void setNameonTitle() {
-        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
-        String userName = (String) MainActivity.getCurrentUser().getName();
-        if (userName != null && !userName.isEmpty()) {
-            userName = userName.substring(0, userName.indexOf(" "));
+    public static void setNameonTitle(String username) {
+        TextView titlesWithName = binding.getRoot().findViewById(R.id.topSongIntro);
+        if (!username.isEmpty()) {
+            username = username.substring(0, username.indexOf(" "));
         } else {
-            userName = "User";
+            username = "User";
         }
-        userName = userName + "'s ";
-        titlesWithName.setText(userName + titlesWithName.getText());
+        username = username + "'s ";
+        titlesWithName.setText(username + titlesWithName.getText());
     }
-
-    private void setDefaultOnTitle() {
-        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
-        String userName = (String) MainActivity.getCurrentUser().getName();
-        userName = "User";
-        userName = userName + "'s ";
-        titlesWithName.setText(userName + titlesWithName.getText());
-    }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -159,6 +149,7 @@ public class TopGenre extends Fragment {
                             Log.d("testW", (wrap).toString());
                             String genre = ((ArrayList<String>) wrap.get("artistsgenre")).get(0);
                             String image = ((ArrayList<String>) wrap.get("artistsimage")).get(0);
+                            String username = (String) wrapData.get("username");
                             TextView artistName = root.findViewById(R.id.topgenre);
                             genre = capitalizeWords(genre);
                             artistName.setText(genre);
@@ -166,7 +157,7 @@ public class TopGenre extends Fragment {
                             Glide.with(context)
                                     .load(image)
                                     .into(topartistimage);
-                            setNameonTitle();
+                            setNameonTitle(username);
                         }
                     }
                 } else {
@@ -185,6 +176,7 @@ public class TopGenre extends Fragment {
                             Map<String, Object> wrap = wrapList.get(WrappedSummary.getPublicWrapIndex());
                             String genre = ((ArrayList<String>) wrap.get("artistsgenre")).get(0);
                             String image = ((ArrayList<String>) wrap.get("artistsimage")).get(0);
+                            String username = (String) wrapData.get("username");
                             TextView artistName = root.findViewById(R.id.topgenre);
                             genre = capitalizeWords(genre);
                             artistName.setText(genre);
@@ -192,7 +184,7 @@ public class TopGenre extends Fragment {
                             Glide.with(context)
                                     .load(image)
                                     .into(topartistimage);
-                            setDefaultOnTitle();
+                            setNameonTitle(username);
                         }
                     }
                 } else {
