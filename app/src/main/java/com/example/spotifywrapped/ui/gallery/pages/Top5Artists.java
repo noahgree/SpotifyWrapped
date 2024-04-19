@@ -141,7 +141,6 @@ public class Top5Artists extends Fragment {
             return WindowInsetsCompat.CONSUMED;
         });
 
-        // Assuming you have the current user's ID stored (e.g., as a field in the User object)
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (!WrappedSummary.isPublicWrap()) {
@@ -152,49 +151,39 @@ public class Top5Artists extends Fragment {
                 if (documentSnapshot.exists()) {
                     List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
                     if (wrapList != null) {
-                        Map<String, Object> wrapData = wrapList.get(wrapList.size() - 1);
+                        Map<String, Object> wrapData = wrapList.get(WrappedSummary.getPrivateWrapIndex());
                         if (wrapData != null) {
-                            Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
-                            String name1 = (String) ((ArrayList<String>) wrap.get("artists")).get(0);
-                            String image1 = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(0);
-                            String name2 = (String) ((ArrayList<String>) wrap.get("artists")).get(1);
-                            String image2 = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(1);
-                            String name3 = (String) ((ArrayList<String>) wrap.get("artists")).get(2);
-                            String image3 = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(2);
-                            String name4 = (String) ((ArrayList<String>) wrap.get("artists")).get(3);
-                            String image4 = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(3);
-                            String name5 = (String) ((ArrayList<String>) wrap.get("artists")).get(4);
-                            String image5 = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(4);
-                            TextView songName = (TextView) root.findViewById(R.id.topartisttext1);
+                            Map<String, Object> wrap = wrapList.get(WrappedSummary.getPrivateWrapIndex());
+                            String name1 = ((ArrayList<String>) wrap.get("artists")).get(0);
+                            String image1 = ((ArrayList<String>) wrap.get("artistsimage")).get(0);
+                            String name2 = ((ArrayList<String>) wrap.get("artists")).get(1);
+                            String image2 = ((ArrayList<String>) wrap.get("artistsimage")).get(1);
+                            String name3 = ((ArrayList<String>) wrap.get("artists")).get(2);
+                            String image3 = ((ArrayList<String>) wrap.get("artistsimage")).get(2);
+                            String name4 = ((ArrayList<String>) wrap.get("artists")).get(3);
+                            String image4 = ((ArrayList<String>) wrap.get("artistsimage")).get(3);
+                            String name5 = ((ArrayList<String>) wrap.get("artists")).get(4);
+                            String image5 = ((ArrayList<String>) wrap.get("artistsimage")).get(4);
+                            TextView songName = root.findViewById(R.id.topartisttext1);
                             songName.setText(name1);
-                            songName = (TextView) root.findViewById(R.id.topartisttext2);
+                            songName = root.findViewById(R.id.topartisttext2);
                             songName.setText(name2);
-                            songName = (TextView) root.findViewById(R.id.topartisttext3);
+                            songName = root.findViewById(R.id.topartisttext3);
                             songName.setText(name3);
-                            songName = (TextView) root.findViewById(R.id.topartisttext4);
+                            songName = root.findViewById(R.id.topartisttext4);
                             songName.setText(name4);
-                            songName = (TextView) root.findViewById(R.id.topartisttext5);
+                            songName = root.findViewById(R.id.topartisttext5);
                             songName.setText(name5);
-                            ImageView topsongimage = (ImageView) root.findViewById(R.id.topartistimage1);
-                            Glide.with(context)
-                                    .load(image1)
-                                    .into(topsongimage);
-                            topsongimage = (ImageView) root.findViewById(R.id.topartistimage2);
-                            Glide.with(context)
-                                    .load(image2)
-                                    .into(topsongimage);
-                            topsongimage = (ImageView) root.findViewById(R.id.topartistimage3);
-                            Glide.with(context)
-                                    .load(image3)
-                                    .into(topsongimage);
-                            topsongimage = (ImageView) root.findViewById(R.id.topartistimage4);
-                            Glide.with(context)
-                                    .load(image4)
-                                    .into(topsongimage);
-                            topsongimage = (ImageView) root.findViewById(R.id.topartistimage5);
-                            Glide.with(context)
-                                    .load(image5)
-                                    .into(topsongimage);
+                            ImageView topsongimage = root.findViewById(R.id.topartistimage1);
+                            Glide.with(context).load(image1).into(topsongimage);
+                            topsongimage = root.findViewById(R.id.topartistimage2);
+                            Glide.with(context).load(image2).into(topsongimage);
+                            topsongimage = root.findViewById(R.id.topartistimage3);
+                            Glide.with(context).load(image3).into(topsongimage);
+                            topsongimage = root.findViewById(R.id.topartistimage4);
+                            Glide.with(context).load(image4).into(topsongimage);
+                            topsongimage = root.findViewById(R.id.topartistimage5);
+                            Glide.with(context).load(image5).into(topsongimage);
 //                            setNameonTitle();
                         }
                     }
@@ -213,43 +202,43 @@ public class Top5Artists extends Fragment {
                         Map<String, Object> wrapData = wrapList.get(WrappedSummary.getPublicWrapIndex());
                         if (wrapData != null) {
                             Map<String, Object> wrap = wrapList.get(WrappedSummary.getPublicWrapIndex());
-                            String name1 = (String) ((ArrayList<String>) wrap.get("artists")).get(0);
-                            String image1 = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(0);
-                            String name2 = (String) ((ArrayList<String>) wrap.get("artists")).get(1);
-                            String image2 = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(1);
-                            String name3 = (String) ((ArrayList<String>) wrap.get("artists")).get(2);
-                            String image3 = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(2);
-                            String name4 = (String) ((ArrayList<String>) wrap.get("artists")).get(3);
-                            String image4 = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(3);
-                            String name5 = (String) ((ArrayList<String>) wrap.get("artists")).get(4);
-                            String image5 = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(4);
-                            TextView songName = (TextView) root.findViewById(R.id.topartisttext1);
+                            String image1 = ((ArrayList<String>) wrap.get("artistsimage")).get(0);
+                            String name2 = ((ArrayList<String>) wrap.get("artists")).get(1);
+                            String name1 = ((ArrayList<String>) wrap.get("artists")).get(0);
+                            String image2 = ((ArrayList<String>) wrap.get("artistsimage")).get(1);
+                            String name3 = ((ArrayList<String>) wrap.get("artists")).get(2);
+                            String image3 = ((ArrayList<String>) wrap.get("artistsimage")).get(2);
+                            String name4 = ((ArrayList<String>) wrap.get("artists")).get(3);
+                            String image4 = ((ArrayList<String>) wrap.get("artistsimage")).get(3);
+                            String name5 = ((ArrayList<String>) wrap.get("artists")).get(4);
+                            String image5 = ((ArrayList<String>) wrap.get("artistsimage")).get(4);
+                            TextView songName = root.findViewById(R.id.topartisttext1);
                             songName.setText(name1);
-                            songName = (TextView) root.findViewById(R.id.topartisttext2);
+                            songName = root.findViewById(R.id.topartisttext2);
                             songName.setText(name2);
-                            songName = (TextView) root.findViewById(R.id.topartisttext3);
+                            songName = root.findViewById(R.id.topartisttext3);
                             songName.setText(name3);
-                            songName = (TextView) root.findViewById(R.id.topartisttext4);
+                            songName = root.findViewById(R.id.topartisttext4);
                             songName.setText(name4);
-                            songName = (TextView) root.findViewById(R.id.topartisttext5);
+                            songName = root.findViewById(R.id.topartisttext5);
                             songName.setText(name5);
-                            ImageView topsongimage = (ImageView) root.findViewById(R.id.topartistimage1);
+                            ImageView topsongimage = root.findViewById(R.id.topartistimage1);
                             Glide.with(context)
                                     .load(image1)
                                     .into(topsongimage);
-                            topsongimage = (ImageView) root.findViewById(R.id.topartistimage2);
+                            topsongimage = root.findViewById(R.id.topartistimage2);
                             Glide.with(context)
                                     .load(image2)
                                     .into(topsongimage);
-                            topsongimage = (ImageView) root.findViewById(R.id.topartistimage3);
+                            topsongimage = root.findViewById(R.id.topartistimage3);
                             Glide.with(context)
                                     .load(image3)
                                     .into(topsongimage);
-                            topsongimage = (ImageView) root.findViewById(R.id.topartistimage4);
+                            topsongimage = root.findViewById(R.id.topartistimage4);
                             Glide.with(context)
                                     .load(image4)
                                     .into(topsongimage);
-                            topsongimage = (ImageView) root.findViewById(R.id.topartistimage5);
+                            topsongimage = root.findViewById(R.id.topartistimage5);
                             Glide.with(context)
                                     .load(image5)
                                     .into(topsongimage);
@@ -263,65 +252,51 @@ public class Top5Artists extends Fragment {
         }
 
         // Set the click listener for the button
-        binding.top5artistsnext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_topGenre);
-            }
+        binding.top5artistsnext.setOnClickListener(v -> {
+            setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_topGenre);
         });
-        binding.top5artistsback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_topArtist);
-            }
+        binding.top5artistsback.setOnClickListener(v -> {
+            setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_topArtist);
         });
-        binding.top5artistsexit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TransitionSet exitTransitionSet = new TransitionSet();
-                exitTransitionSet.addTransition(new Slide(Gravity.END));
-                exitTransitionSet.addTransition(new Fade());
-                exitTransitionSet.setDuration(300);
-                setExitTransition(exitTransitionSet);
+        binding.top5artistsexit.setOnClickListener(v -> {
+            TransitionSet exitTransitionSet = new TransitionSet();
+            exitTransitionSet.addTransition(new Slide(Gravity.END));
+            exitTransitionSet.addTransition(new Fade());
+            exitTransitionSet.setDuration(300);
+            setExitTransition(exitTransitionSet);
 
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_gallery);
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_gallery);
 
-                // Show the toolbar with animation
-                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.show();
-                    int resId = getResources().getIdentifier("action_bar_container", "id", "android");
+            // Show the toolbar with animation
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.show();
+                int resId = getResources().getIdentifier("action_bar_container", "id", "android");
 
 
-                    // Load the fade-in animation
-                    Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
+                // Load the fade-in animation
+                Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
 
-                    // Get a reference to the ActionBar's container view by its identifier (e.g., "action_bar_container").
-                    // Note: The ID might differ based on the Android version or theme you are using.
-                    View actionBarContainer = getActivity().findViewById(resId);
-                    if (actionBarContainer != null) {
-                        actionBarContainer.startAnimation(fadeIn);
-                    }
-
-                    // Animate the ImageView
-                    ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
-                    imageView.setVisibility(View.VISIBLE);
-                    imageView.startAnimation(fadeIn);
+                // Get a reference to the ActionBar's container view by its identifier (e.g., "action_bar_container").
+                // Note: The ID might differ based on the Android version or theme you are using.
+                View actionBarContainer = getActivity().findViewById(resId);
+                if (actionBarContainer != null) {
+                    actionBarContainer.startAnimation(fadeIn);
                 }
+
+                // Animate the ImageView
+                ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.startAnimation(fadeIn);
             }
         });
 
-        binding.T5ASaveImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takeAndSaveScreenShot();
-            }
-        });
+        binding.T5ASaveImage.setOnClickListener(v -> takeAndSaveScreenShot());
 
         MainActivity.updateForHoliday(binding);
 

@@ -155,9 +155,9 @@ public class TopArtist extends Fragment {
                 if (documentSnapshot.exists()) {
                     List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
                     if (wrapList != null) {
-                        Map<String, Object> wrapData = wrapList.get(wrapList.size() - 1);
+                        Map<String, Object> wrapData = wrapList.get(WrappedSummary.getPrivateWrapIndex());
                         if (wrapData != null) {
-                            Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
+                            Map<String, Object> wrap = wrapList.get(WrappedSummary.getPrivateWrapIndex());
                             String name = ((ArrayList<String>) wrap.get("artists")).get(0);
                             String image = ((ArrayList<String>) wrap.get("artistsimage")).get(0);
                             TextView artistName = root.findViewById(R.id.topartist);

@@ -156,9 +156,9 @@ public class TopSong extends Fragment {
                 if (documentSnapshot.exists()) {
                     List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
                     if (wrapList != null) {
-                        Map<String, Object> wrapData = wrapList.get(wrapList.size() - 1);
+                        Map<String, Object> wrapData = wrapList.get(WrappedSummary.getPrivateWrapIndex());
                         if (wrapData != null) {
-                            Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
+                            Map<String, Object> wrap = wrapList.get(WrappedSummary.getPrivateWrapIndex());
                             String name = ((ArrayList<String>) wrap.get("tracks")).get(0);
                             String image = ((ArrayList<String>) wrap.get("tracksimage")).get(0);
                             TextView songName = root.findViewById(R.id.topsong);

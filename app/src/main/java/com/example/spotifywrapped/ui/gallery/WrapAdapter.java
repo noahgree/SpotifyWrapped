@@ -65,6 +65,7 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
                 WrappedSummary.setPublicWrap(true);
                 WrappedSummary.setPublicWrapIndex(position);
             } else {
+                WrappedSummary.setPrivateWrapIndex(position);
                 WrappedSummary.setPublicWrap(false);
             }
         });

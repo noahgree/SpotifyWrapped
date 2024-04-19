@@ -101,11 +101,11 @@ public class WrappedSummary extends Fragment {
 
     public static boolean publicWrap = false;
     public static int publicWrapIndex = 0;
+    public static int privateWrapIndex = 0;
 
     public static boolean isPublicWrap() {
         return publicWrap;
     }
-
     public static void setPublicWrap(boolean publicWrap) {
         WrappedSummary.publicWrap = publicWrap;
     }
@@ -113,9 +113,15 @@ public class WrappedSummary extends Fragment {
     public static int getPublicWrapIndex() {
         return publicWrapIndex;
     }
-
     public static void setPublicWrapIndex(int publicWrapIndex) {
         WrappedSummary.publicWrapIndex = publicWrapIndex;
+    }
+
+    public static int getPrivateWrapIndex() {
+        return privateWrapIndex;
+    }
+    public static void setPrivateWrapIndex(int privateWrapIndex) {
+        WrappedSummary.privateWrapIndex = privateWrapIndex;
     }
 
     @Override
@@ -160,9 +166,9 @@ public class WrappedSummary extends Fragment {
                 if (documentSnapshot.exists()) {
                     List<Map<String, Object>> wrapList = (List<Map<String, Object>>) documentSnapshot.get("wraps");
                     if (wrapList != null) {
-                        Map<String, Object> wrapData = wrapList.get(wrapList.size() - 1);
+                        Map<String, Object> wrapData = wrapList.get(WrappedSummary.getPrivateWrapIndex());
                         if (wrapData != null) {
-                            Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
+                            Map<String, Object> wrap = wrapList.get(WrappedSummary.getPrivateWrapIndex());
 
                             // top song stuff
                             String name1 = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
