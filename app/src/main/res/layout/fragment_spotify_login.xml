@@ -40,7 +40,7 @@
             android:fontFamily="@font/spotify_font"
             android:text="START"
             android:textColor="@color/spotify_black"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <Space
             android:layout_width="match_parent"

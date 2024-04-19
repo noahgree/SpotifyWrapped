@@ -13,8 +13,10 @@
     <color name="spotify_light_green">#24de65</color>
     <!-- Spotify Lighter Green -->
     <color name="spotify_lighter_green">#94ffb9</color>
-    <!-- Spotify Dark Greene -->
+    <!-- Spotify Dark Green -->
     <color name="spotify_dark_green">#19a149</color>
+    <!-- Spotify Darker Green -->
+    <color name="spotify_darker_green">#0a7a31</color>
     <!-- Spotify Black -->
     <color name="spotify_black">#191414</color>
     <!-- Spotify White -->

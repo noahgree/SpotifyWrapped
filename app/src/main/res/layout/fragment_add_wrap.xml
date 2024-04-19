@@ -87,7 +87,7 @@
                     android:layout_marginStart="30dp"
                     android:buttonTint="@color/spotify_white"
                     android:fontFamily="@font/spotify_font"
-                    android:text="Short Term"
+                    android:text="4 Weeks"
                     android:textColor="@color/spotify_white"
                     android:textColorLink="@color/spotify_green"
                     android:textSize="18sp" />
@@ -99,7 +99,7 @@
                     android:layout_marginStart="30dp"
                     android:buttonTint="@color/spotify_white"
                     android:fontFamily="@font/spotify_font"
-                    android:text="Medium Term"
+                    android:text="6 Months"
                     android:textColor="@color/spotify_white"
                     android:textColorLink="@color/spotify_green"
                     android:textSize="18sp" />
@@ -112,7 +112,7 @@
                     android:layout_marginBottom="15dp"
                     android:buttonTint="@color/spotify_white"
                     android:fontFamily="@font/spotify_font"
-                    android:text="Long Term"
+                    android:text="1 Year"
                     android:textColor="@color/spotify_white"
                     android:textColorLink="@color/spotify_green"
                     android:textSize="18sp" />

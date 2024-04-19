@@ -4,241 +4,285 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/classCard"
     android:layout_width="match_parent"
-    android:layout_height="175dp"
+    android:layout_height="180dp"
     android:layout_marginBottom="15dp"
     android:backgroundTint="@color/spotify_green"
     app:cardCornerRadius="15dp"
     app:cardElevation="4dp">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/wrapName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/spotify_font"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Wrap Name"
+            android:textAllCaps="true"
+            android:textColor="@color/spotify_white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/imagesContainerH"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/rightContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1">
+
+                    <FrameLayout
+                        android:id="@+id/rightImageF"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/less_rounded_corners_drawable">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/album2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/sample_square_image"
+                            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bottom_text_gradient">
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/leftGradientF"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="bottom"
+                                android:layout_marginRight="5dp"
+                                android:paddingLeft="3dp"
+                                android:paddingTop="4dp"
+                                android:paddingRight="3dp"
+                                android:paddingBottom="3dp">
+
+                                <ImageView
+                                    android:id="@+id/imageView9"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:srcCompat="@drawable/disc"
+                                    app:tint="#A2FFFFFF" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_marginRight="5dp">
+
+                                <TextView
+                                    android:id="@+id/albumName2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/spotify_font"
+                                    android:maxLines="2"
+                                    android:text="Top Song"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#A2FFFFFF"
+                                    android:textSize="13sp"
+                                    android:textStyle="normal" />
+                            </FrameLayout>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/leftContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1">
+
+                    <FrameLayout
+                        android:id="@+id/leftImageF"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_corners_drawable">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/album1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/sample_square_image"
+                            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bottom_text_gradient">
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="bottom"
+                                android:layout_marginRight="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imageView8"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:translationY="2dp"
+                                    app:srcCompat="@drawable/artist"
+                                    app:tint="#A2FFFFFF" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_marginRight="5dp">
+
+                                <TextView
+                                    android:id="@+id/albumName1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/spotify_font"
+                                    android:maxLines="2"
+                                    android:text="Top Artist"
+                                    android:textAlignment="center"
+                                    android:textAllCaps="false"
+                                    android:textColor="#A2FFFFFF"
+                                    android:textSize="13sp"
+                                    android:textStyle="normal" />
+                            </FrameLayout>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="2.5dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/wrapName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="15dp"
+                android:id="@+id/usernameText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:ellipsize="end"
                 android:fontFamily="@font/spotify_font"
                 android:maxLines="1"
-                android:singleLine="true"
-                android:text="Wrap Name"
+                android:text="Username"
+                android:textAlignment="textStart"
                 android:textAllCaps="true"
-                android:textColor="@color/spotify_white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textColor="@color/spotify_darker_green"
+                android:textSize="13sp" />
 
-
-            <FrameLayout
+            <TextView
+                android:id="@+id/dateCreatedText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/spotify_font"
+                android:maxLines="1"
+                android:text="12.12.24"
+                android:textAlignment="center"
+                android:textColor="@color/spotify_darker_green"
+                android:textSize="13sp" />
 
-                <LinearLayout
-                    android:id="@+id/imagesContainerH"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <FrameLayout
-                        android:id="@+id/rightContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="5dp"
-                        android:layout_weight="1">
-
-                        <FrameLayout
-                            android:id="@+id/rightImageF"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/less_rounded_corners_drawable">
-
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/album2"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/sample_square_image"
-                                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound" />
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/bottom_text_gradient">
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:id="@+id/leftGradientF"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom" />
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginHorizontal="5dp"
-                                android:layout_marginBottom="5dp"
-                                android:orientation="horizontal">
-
-                                <FrameLayout
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    android:layout_gravity="bottom"
-                                    android:layout_marginRight="5dp"
-                                    android:paddingLeft="3dp"
-                                    android:paddingTop="4dp"
-                                    android:paddingRight="3dp"
-                                    android:paddingBottom="3dp">
-
-                                    <ImageView
-                                        android:id="@+id/imageView9"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        app:srcCompat="@drawable/disc"
-                                        app:tint="#A2FFFFFF" />
-                                </FrameLayout>
-
-                                <FrameLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="bottom"
-                                    android:layout_marginRight="5dp">
-
-                                    <TextView
-                                        android:id="@+id/albumName2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:ellipsize="end"
-                                        android:fontFamily="@font/spotify_font"
-                                        android:maxLines="2"
-                                        android:text="Top Song"
-                                        android:textAlignment="center"
-                                        android:textAllCaps="false"
-                                        android:textColor="#A2FFFFFF"
-                                        android:textSize="13sp"
-                                        android:textStyle="normal" />
-                                </FrameLayout>
-
-                            </LinearLayout>
-
-                        </FrameLayout>
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/leftContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="1">
-
-                        <FrameLayout
-                            android:id="@+id/leftImageF"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/rounded_corners_drawable">
-
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/album1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/sample_square_image"
-                                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound" />
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/bottom_text_gradient">
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginHorizontal="5dp"
-                                android:layout_marginBottom="5dp"
-                                android:orientation="horizontal">
-
-                                <FrameLayout
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    android:layout_gravity="bottom"
-                                    android:layout_marginRight="5dp">
-
-                                    <ImageView
-                                        android:id="@+id/imageView8"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="bottom"
-                                        android:translationY="2dp"
-                                        app:srcCompat="@drawable/artist"
-                                        app:tint="#A2FFFFFF" />
-                                </FrameLayout>
-
-                                <FrameLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="bottom"
-                                    android:layout_marginRight="5dp">
-
-                                    <TextView
-                                        android:id="@+id/albumName1"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:ellipsize="end"
-                                        android:fontFamily="@font/spotify_font"
-                                        android:maxLines="2"
-                                        android:text="Top Artist"
-                                        android:textAlignment="center"
-                                        android:textAllCaps="false"
-                                        android:textColor="#A2FFFFFF"
-                                        android:textSize="13sp"
-                                        android:textStyle="normal" />
-                                </FrameLayout>
-
-                            </LinearLayout>
-
-                        </FrameLayout>
-
-                    </FrameLayout>
-
-                </LinearLayout>
-
-            </FrameLayout>
-
+            <TextView
+                android:id="@+id/timeFrameText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/spotify_font"
+                android:maxLines="1"
+                android:text="Medium Term"
+                android:textAlignment="textEnd"
+                android:textAllCaps="true"
+                android:textColor="@color/spotify_darker_green"
+                android:textSize="13sp" />
         </LinearLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

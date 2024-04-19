@@ -209,7 +209,7 @@ public class Top5Songs extends Fragment {
                 }
             }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
         } else {
-            // Reference to the user's document in Firestore
+            // Reference to the public wraps document in Firestore
             DocumentReference userRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");
 
             userRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -267,6 +267,7 @@ public class Top5Songs extends Fragment {
                 }
             }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
         }
+
         // Set the click listener for the button
         binding.top5songsnext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,6 +286,7 @@ public class Top5Songs extends Fragment {
                 navController.navigate(R.id.nav_topSong);
             }
         });
+
         binding.top5songsexit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -321,8 +323,6 @@ public class Top5Songs extends Fragment {
                 }
             }
         });
-
-
 
         binding.T5SSaveImage.setOnClickListener(new View.OnClickListener() {
             @Override

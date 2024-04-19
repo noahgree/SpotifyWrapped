@@ -158,11 +158,11 @@ public class TopArtist extends Fragment {
                         Map<String, Object> wrapData = wrapList.get(wrapList.size() - 1);
                         if (wrapData != null) {
                             Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
-                            String name = (String) ((ArrayList<String>) wrap.get("artists")).get(0);
-                            String image = (String) ((ArrayList<String>) wrap.get("artistsimage")).get(0);
-                            TextView artistName = (TextView) root.findViewById(R.id.topartist);
+                            String name = ((ArrayList<String>) wrap.get("artists")).get(0);
+                            String image = ((ArrayList<String>) wrap.get("artistsimage")).get(0);
+                            TextView artistName = root.findViewById(R.id.topartist);
                             artistName.setText(name);
-                            ImageView topartistimage = (ImageView) root.findViewById(R.id.artistimage);
+                            ImageView topartistimage = root.findViewById(R.id.artistimage);
                             Glide.with(context)
                                     .load(image)
                                     .into(topartistimage);

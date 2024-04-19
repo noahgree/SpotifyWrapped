@@ -1,4 +1,5 @@
 package com.example.spotifywrapped.ui.gallery;
+import java.util.Date;
 import java.util.UUID;
 
 //This is for any event created. Subclasses include: Class, Exam, Assignment, & Other
@@ -23,20 +24,44 @@ public class WrapObject{
         return songName;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getTimeFrame() {
+        return timeFrame;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
     private String songImage;
     private String artistName;
     private String songName;
+    private String timeFrame;
+    private String username;
+    private String creationDate;
     private int num;
 
     private boolean publicWrap;
 
-    public WrapObject(int num, String name, String artistImage, String songImage, String artistName, String songName) {
+    public WrapObject(int num, String name, String artistImage, String songImage, String artistName, String songName, String timeFrame, String username, String creationDate) {
         this.name = name;
         this.artistImage = artistImage;
         this.songImage = songImage;
         this.artistName = artistName;
         this.songName = songName;
         this.num = num;
+        if (timeFrame.equals("short")) {
+            this.timeFrame = "4 Weeks";
+        } else if (timeFrame.equals("medium")) {
+            this.timeFrame = "6 Months";
+        } else {
+            this.timeFrame = "1 Year";
+        }
+        this.username = username;
+        this.creationDate = creationDate;
         this.publicWrap = false;
     }
 

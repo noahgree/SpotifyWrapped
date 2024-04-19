@@ -97,7 +97,7 @@
                 android:fontFamily="@font/spotify_font"
                 android:text="Log In"
                 android:textColor="@color/spotify_black"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/signupButton"
@@ -111,7 +111,7 @@
                 android:fontFamily="@font/spotify_font"
                 android:text="Sign Up"
                 android:textColor="@color/spotify_black"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
     </LinearLayout>
