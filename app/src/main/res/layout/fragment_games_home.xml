@@ -131,8 +131,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="25dp"
                     android:layout_weight="1.7"
-                    android:background="@drawable/rounded_corners_flat_top_drawable"
-                    android:backgroundTint="@color/spotify_dark_grey"
+                    android:background="@drawable/hollow_rectangle_rounded_flattop"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -300,7 +299,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="25dp">
+                android:layout_height="20dp">
 
             </Space>
 
@@ -369,8 +368,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="25dp"
                     android:layout_weight="1.7"
-                    android:background="@drawable/rounded_corners_flat_top_drawable"
-                    android:backgroundTint="@color/spotify_dark_grey"
+                    android:background="@drawable/hollow_rectangle_rounded_flattop"
                     android:orientation="vertical">
 
                     <LinearLayout

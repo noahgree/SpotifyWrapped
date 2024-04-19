@@ -58,7 +58,7 @@ public class SwipeItem extends ItemTouchHelper.SimpleCallback {
         } else if (direction == ItemTouchHelper.RIGHT) {
             mItemAdapter.moveItemToTop(position);
         }
-        mItemAdapter.notifyItemChanged(position);
+        mItemAdapter.notifyItemRangeChanged(0, mItemAdapter.getItemCount() - 1);
     }
 
     @Override
