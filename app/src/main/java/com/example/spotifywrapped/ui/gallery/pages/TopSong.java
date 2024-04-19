@@ -159,14 +159,12 @@ public class TopSong extends Fragment {
                         Map<String, Object> wrapData = wrapList.get(wrapList.size() - 1);
                         if (wrapData != null) {
                             Map<String, Object> wrap = wrapList.get(wrapList.size() - 1);
-                            String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
-                            String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
-                            TextView songName = (TextView) root.findViewById(R.id.topsong);
+                            String name = ((ArrayList<String>) wrap.get("tracks")).get(0);
+                            String image = ((ArrayList<String>) wrap.get("tracksimage")).get(0);
+                            TextView songName = root.findViewById(R.id.topsong);
                             songName.setText(name);
-                            ImageView topartistimage = (ImageView) root.findViewById(R.id.topsongimage);
-                            Glide.with(context)
-                                    .load(image)
-                                    .into(topartistimage);
+                            ImageView topartistimage = root.findViewById(R.id.topsongimage);
+                            Glide.with(context).load(image).into(topartistimage);
                             setNameonTitle();
                         }
                     }
@@ -175,7 +173,7 @@ public class TopSong extends Fragment {
                 }
             }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
         } else {
-            //Public wrap
+            // Public wrap
             DocumentReference userRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");
             userRef.get().addOnSuccessListener(documentSnapshot -> {
                 if (documentSnapshot.exists()) {
@@ -185,14 +183,12 @@ public class TopSong extends Fragment {
                         Map<String, Object> wrapData = wrapList.get(WrappedSummary.getPublicWrapIndex());
                         if (wrapData != null) {
                             Map<String, Object> wrap = wrapList.get(WrappedSummary.getPublicWrapIndex());
-                            String name = (String) ((ArrayList<String>) wrap.get("tracks")).get(0);
-                            String image = (String) ((ArrayList<String>) wrap.get("tracksimage")).get(0);
-                            TextView songName = (TextView) root.findViewById(R.id.topsong);
+                            String name = ((ArrayList<String>) wrap.get("tracks")).get(0);
+                            String image = ((ArrayList<String>) wrap.get("tracksimage")).get(0);
+                            TextView songName = root.findViewById(R.id.topsong);
                             songName.setText(name);
-                            ImageView topartistimage = (ImageView) root.findViewById(R.id.topsongimage);
-                            Glide.with(context)
-                                    .load(image)
-                                    .into(topartistimage);
+                            ImageView topartistimage = root.findViewById(R.id.topsongimage);
+                            Glide.with(context).load(image).into(topartistimage);
                             setDefaultOnTitle();
                         }
                     }
@@ -201,49 +197,39 @@ public class TopSong extends Fragment {
                 }
             }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
         }
+
         // Set the click listener for the button
-        binding.topsongnext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_top5Songs);
-            }
+        binding.topsongnext.setOnClickListener(v -> {
+            setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_top5Songs);
         });
-        binding.topsongexit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TransitionSet exitTransitionSet = new TransitionSet();
-                exitTransitionSet.addTransition(new Slide(Gravity.END));
-                exitTransitionSet.addTransition(new Fade());
-                exitTransitionSet.setDuration(300);
-                setExitTransition(exitTransitionSet);
+        binding.topsongexit.setOnClickListener(v -> {
+            TransitionSet exitTransitionSet = new TransitionSet();
+            exitTransitionSet.addTransition(new Slide(Gravity.END));
+            exitTransitionSet.addTransition(new Fade());
+            exitTransitionSet.setDuration(300);
+            setExitTransition(exitTransitionSet);
 
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_gallery);
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_gallery);
 
-                // Show the toolbar with animation
-                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.show();
+            // Show the toolbar with animation
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.show();
 
-                    // Load the fade-in animation
-                    Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
+                // Load the fade-in animation
+                Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
 
-                    // Animate the ImageView
-                    ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
-                    imageView.setVisibility(View.VISIBLE);
-                    imageView.startAnimation(fadeIn);
-                }
+                // Animate the ImageView
+                ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.startAnimation(fadeIn);
             }
         });
 
-        binding.TSSaveImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takeAndSaveScreenShot();
-            }
-        });
+        binding.TSSaveImage.setOnClickListener(v -> takeAndSaveScreenShot());
 
         MainActivity.updateForHoliday(binding);
 

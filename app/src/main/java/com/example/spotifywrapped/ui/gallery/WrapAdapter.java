@@ -34,12 +34,7 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
     @Override
     public WrapViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_wrap, parent, false);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("WRAP", "Existing wrapped clicked");
-            }
-        });
+        itemView.setOnClickListener(view -> Log.d("WRAP", "Existing wrapped clicked"));
         return new WrapViewHolder(itemView);
     }
 
@@ -76,7 +71,6 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
 
         Glide.with(context).load(wrap.getArtistImage()).into(holder.artistImageView);
         Glide.with(context).load(wrap.getSongImage()).into(holder.songImageView);
-        // Assume images are loaded somehow, possibly with an image loading library
     }
 
 
