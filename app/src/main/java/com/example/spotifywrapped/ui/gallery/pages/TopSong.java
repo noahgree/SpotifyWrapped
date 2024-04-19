@@ -161,11 +161,12 @@ public class TopSong extends Fragment {
                             Map<String, Object> wrap = wrapList.get(WrappedSummary.getPrivateWrapIndex());
                             String name = ((ArrayList<String>) wrap.get("tracks")).get(0);
                             String image = ((ArrayList<String>) wrap.get("tracksimage")).get(0);
+                            String username = (String) wrapData.get("username");
                             TextView songName = root.findViewById(R.id.topsong);
                             songName.setText(name);
                             ImageView topartistimage = root.findViewById(R.id.topsongimage);
                             Glide.with(context).load(image).into(topartistimage);
-                            setNameonTitle();
+                            setNameonTitle(username);
                         }
                     }
                 } else {
@@ -185,11 +186,12 @@ public class TopSong extends Fragment {
                             Map<String, Object> wrap = wrapList.get(WrappedSummary.getPublicWrapIndex());
                             String name = ((ArrayList<String>) wrap.get("tracks")).get(0);
                             String image = ((ArrayList<String>) wrap.get("tracksimage")).get(0);
+                            String username = (String) wrapData.get("username");
                             TextView songName = root.findViewById(R.id.topsong);
                             songName.setText(name);
                             ImageView topartistimage = root.findViewById(R.id.topsongimage);
                             Glide.with(context).load(image).into(topartistimage);
-                            setDefaultOnTitle();
+                            setNameonTitle(username);
                         }
                     }
                 } else {
@@ -357,26 +359,16 @@ public class TopSong extends Fragment {
         }
     }
 
-    public static void setNameonTitle() {
-        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
-        String userName = (String) MainActivity.getCurrentUser().getName();
-        if (userName != null && !userName.isEmpty()) {
-            userName = userName.substring(0, userName.indexOf(" "));
+    public static void setNameonTitle(String username) {
+        TextView titlesWithName = binding.getRoot().findViewById(R.id.topSongIntro);
+        if (!username.isEmpty()) {
+            username = username.substring(0, username.indexOf(" "));
         } else {
-            userName = "User";
+            username = "User";
         }
-        userName = userName + "'s ";
-        titlesWithName.setText(userName + titlesWithName.getText());
+        username = username + "'s ";
+        titlesWithName.setText(username + titlesWithName.getText());
     }
-
-    public static void setDefaultOnTitle() {
-        TextView titlesWithName = (TextView) binding.getRoot().findViewById(R.id.topSongIntro);
-        String userName = (String) MainActivity.getCurrentUser().getName();
-        userName = "User";
-        userName = userName + "'s ";
-        titlesWithName.setText(userName + titlesWithName.getText());
-    }
-
 
     @Override
     public void onDestroyView() {

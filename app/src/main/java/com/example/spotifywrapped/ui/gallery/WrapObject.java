@@ -36,17 +36,22 @@ public class WrapObject{
         return creationDate;
     }
 
+    public String getAlsoPublic() {
+        return alsoPublic;
+    }
+
     private String songImage;
     private String artistName;
     private String songName;
     private String timeFrame;
     private String username;
     private String creationDate;
+    private String alsoPublic;
     private int num;
 
     private boolean publicWrap;
 
-    public WrapObject(int num, String name, String artistImage, String songImage, String artistName, String songName, String timeFrame, String username, String creationDate) {
+    public WrapObject(int num, String name, String artistImage, String songImage, String artistName, String songName, String timeFrame, String username, String creationDate, String alsoPublic) {
         this.name = name;
         this.artistImage = artistImage;
         this.songImage = songImage;
@@ -62,6 +67,7 @@ public class WrapObject{
         }
         this.username = username;
         this.creationDate = creationDate;
+        this.alsoPublic = alsoPublic;
         this.publicWrap = false;
     }
 

@@ -28,6 +28,7 @@ import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentGalleryBinding;
 import com.example.spotifywrapped.databinding.FragmentPublicBinding;
+import com.example.spotifywrapped.ui.gallery.AddWrapFragment;
 import com.example.spotifywrapped.ui.gallery.WrapAdapter;
 import com.example.spotifywrapped.ui.gallery.WrapObject;
 import com.example.spotifywrapped.user.User;
@@ -94,7 +95,8 @@ public class PublicFragment extends Fragment {
                                 ((ArrayList<String>) wrapData.get("tracks")).get(0),
                                 (String)wrapData.get("timeframe"),
                                 (String)wrapData.get("username"),
-                                (String)wrapData.get("creationdate"));
+                                (String)wrapData.get("creationdate"),
+                                (String)wrapData.get("alsopublic"));
                         wrap.setPublicWrap(true);
                         wraps.add(wrap);
                     }
@@ -104,6 +106,13 @@ public class PublicFragment extends Fragment {
                 Log.d("FIRESTORE", "No such document");
             }
         }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
+
+        // Set the click listener for the button
+        binding.addButtonPublicTask.setOnClickListener(v -> {
+            AddWrapFragment.setVisibilityOrigin("Public");
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_addWrap);
+        });
 
         return root;
     }

@@ -13,13 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/PWtitletext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:fontFamily="@font/spotify_font"
             android:text="Public Wraps"
@@ -31,6 +31,20 @@
             app:autoSizeMinTextSize="12sp"
             app:autoSizeStepGranularity="2sp"
             app:autoSizeTextType="uniform" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addButtonPublic_task"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@android:drawable/ic_input_add"
+            app:backgroundTint="@color/spotify_green"
+            app:elevation="0dp"
+            app:fabCustomSize="50dp"
+            app:pressedTranslationZ="0dp"
+            app:tint="@color/spotify_black" />
 
 
     </LinearLayout>

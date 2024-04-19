@@ -76,6 +76,8 @@ public class AddWrapFragment extends Fragment {
     private static User currentUser;
     private static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
+    public static String visibilityOrigin = "Private";
+
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private String term = "short";
@@ -118,6 +120,16 @@ public class AddWrapFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        RadioButton publicBtn = getActivity().findViewById(R.id.radioButtonPub);
+        RadioButton privateBtn = getActivity().findViewById(R.id.radioButtonPriv);
+        if (AddWrapFragment.getVisibilityOrigin().equals("Private")) {
+            privateBtn.setChecked(true);
+            publicBtn.setChecked(false);
+        } else {
+            privateBtn.setChecked(false);
+            publicBtn.setChecked(true);
+        }
     }
 
     public interface DataCompletionHandler {
@@ -166,7 +178,7 @@ public class AddWrapFragment extends Fragment {
                                     List<String> name = new ArrayList<>();
                                     List<String> url = new ArrayList<>();
                                     List<String> genre = new ArrayList<>();
-//                                    List<String> uniqueness = new ArrayList<>();
+                                    List<String> uniqueness = new ArrayList<>();
                                     for (int i = 0; i < 5; i++) {
                                         if (thing.equals("artists")) {
                                             name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
@@ -175,7 +187,7 @@ public class AddWrapFragment extends Fragment {
                                             if (jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").length() != 0) {
                                                 genre.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").getString(0));
                                             }
-//                                            uniqueness.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("popularity"));
+                                            uniqueness.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("popularity"));
                                         } else {
                                             name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
                                             url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url"));
@@ -188,6 +200,7 @@ public class AddWrapFragment extends Fragment {
                                     wrap.put(thing + "image", url);
                                     if (thing.equals("artists")) {
                                         wrap.put(thing + "genre", genre);
+                                        wrap.put(thing + "popularity", uniqueness);
                                     }
 
                                     if (handler != null && completionCounter.incrementAndGet() == 2) {
@@ -251,6 +264,10 @@ public class AddWrapFragment extends Fragment {
 
             wrap.put("username", currentUser.getName());
 
+            RadioButton publicBtn = getActivity().findViewById(R.id.radioButtonPub);
+            boolean publicBool = publicBtn.isChecked();
+            wrap.put("alsopublic", String.valueOf(publicBool));
+
             DataCompletionHandler handler = updatedWrap -> {
                 // This block will be called once data fetching is complete.
                 getActivity().runOnUiThread(() -> {
@@ -263,7 +280,7 @@ public class AddWrapFragment extends Fragment {
                     Log.d("Firestore CHECK", user.getUid());
                     currentUser.addWrap(updatedWrap);
 
-                    RadioButton pub = root.findViewById(R.id.radioButton2);
+                    RadioButton pub = root.findViewById(R.id.radioButtonPub);
                     if (pub.isChecked()) {
 
                         publicRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
@@ -293,5 +310,12 @@ public class AddWrapFragment extends Fragment {
 
 
         return root;
+    }
+
+    public static void setVisibilityOrigin(String origin) {
+        AddWrapFragment.visibilityOrigin = origin;
+    }
+    public static String getVisibilityOrigin() {
+        return visibilityOrigin;
     }
 }

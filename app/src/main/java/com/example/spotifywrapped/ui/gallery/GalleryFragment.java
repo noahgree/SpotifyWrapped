@@ -125,7 +125,8 @@ public class GalleryFragment extends Fragment {
                                         ((ArrayList<String>) wrapData.get("tracks")).get(0),
                                         (String)wrapData.get("timeframe"),
                                         (String)wrapData.get("username"),
-                                        (String)wrapData.get("creationdate"));
+                                        (String)wrapData.get("creationdate"),
+                                        (String)wrapData.get("alsopublic"));
                                 wraps.add(wrap);
                             }
                         }
@@ -141,6 +142,7 @@ public class GalleryFragment extends Fragment {
 
         // Set the click listener for the button
         binding.addButtonTask.setOnClickListener(v -> {
+            AddWrapFragment.setVisibilityOrigin("Private");
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.nav_addWrap);
         });

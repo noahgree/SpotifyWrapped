@@ -63,6 +63,11 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
         holder.usernameTextView.setText("@" + wrap.getUsername());
         holder.timeFrameTextView.setText(wrap.getTimeFrame());
         holder.creationDateTextView.setText(wrap.getCreationDate());
+        if ((wrap.getAlsoPublic()).equals("false")) {
+            holder.publicIndicator.setVisibility(View.INVISIBLE);
+        } else {
+            holder.publicIndicator.setVisibility(View.VISIBLE);
+        }
 
         ArrayList<Map<String, Object>> wraps = MainActivity.getCurrentUser().getwraps();
 
@@ -187,7 +192,7 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
     public static class WrapViewHolder extends RecyclerView.ViewHolder {
         public View cardView;
         public TextView nameTextView, artistTextView, songTextView, usernameTextView, creationDateTextView, timeFrameTextView;
-        public ImageView artistImageView, songImageView;
+        public ImageView artistImageView, songImageView, publicIndicator;
 
         public WrapViewHolder(View itemView) {
             super(itemView);
@@ -200,6 +205,7 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
             usernameTextView = itemView.findViewById(R.id.usernameText);
             creationDateTextView = itemView.findViewById(R.id.dateCreatedText);
             timeFrameTextView = itemView.findViewById(R.id.timeFrameText);
+            publicIndicator = itemView.findViewById(R.id.publicIndicator);
         }
     }
 }
