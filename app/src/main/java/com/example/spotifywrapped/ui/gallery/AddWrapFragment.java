@@ -52,8 +52,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +78,7 @@ public class AddWrapFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private String term = "short";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,22 @@ public class AddWrapFragment extends Fragment {
         String userJson = sharedPreferences.getString("CurrentUser", null);
         Log.d("SharedPreferences", "Loaded token: " + userJson);
         return gson.fromJson(userJson, User.class);
+    }
+
+    private String getTimeFrame() {
+        // determine time frame of wrap
+        RadioButton shortTerm = getActivity().findViewById(R.id.shortTermBtn);
+        RadioButton mediumTerm = getActivity().findViewById(R.id.mediumTermBtn);
+        RadioButton longTerm = getActivity().findViewById(R.id.longTermBtn);
+        if (shortTerm.isChecked()) {
+            term = "short";
+        } else if (mediumTerm.isChecked()) {
+            term = "medium";
+        } else if (longTerm.isChecked()) {
+            term = "long";
+        }
+
+        return term;
     }
 
     @Override
@@ -220,70 +239,59 @@ public class AddWrapFragment extends Fragment {
         DocumentReference userRef = db.collection("Accounts").document(user.getUid());
         DocumentReference publicRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");
 
-        binding.generateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.generateButton.setOnClickListener(v -> {
 
-                // determine time frame of wrap
-                RadioButton shortTerm = root.findViewById(R.id.shortTermBtn);
-                RadioButton mediumTerm = root.findViewById(R.id.mediumTermBtn);
-                RadioButton longTerm = root.findViewById(R.id.longTermBtn);
-                String term = "short";
-                if (shortTerm.isChecked()) {
-                    term = "short";
-                } else if (mediumTerm.isChecked()) {
-                    term = "medium";
-                } else if (longTerm.isChecked()) {
-                    term = "long";
-                }
+            EditText name = root.findViewById(R.id.editTextName);
+            Map<String, Object> wrap = new HashMap<>();
+            wrap.put("Name", name.getText().toString());
 
-                EditText name = (EditText) root.findViewById(R.id.editTextName);
-                Map<String, Object> wrap = new HashMap<>();
-                wrap.put("Name", name.getText().toString());
+            wrap.put("timeframe", getTimeFrame());
 
-                DataCompletionHandler handler = updatedWrap -> {
-                    // This block will be called once data fetching is complete.
-                    getActivity().runOnUiThread(() -> {
-//                        TextView testText = (TextView) root.findViewById(R.id.testText);
-//                        testText.setText(updatedWrap.toString());
-                        Map<String, Object> dataToUpdate = new HashMap<>();
+            SimpleDateFormat sdf = new SimpleDateFormat("MM.dd.yy");
+            Date currentDate = new Date();
+            String formattedDate = sdf.format(currentDate);
+            wrap.put("creationdate", formattedDate);
 
-                        userRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
+            wrap.put("username", currentUser.getName());
+
+            DataCompletionHandler handler = updatedWrap -> {
+                // This block will be called once data fetching is complete.
+                getActivity().runOnUiThread(() -> {
+                    Map<String, Object> dataToUpdate = new HashMap<>();
+
+                    userRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
+                            .addOnSuccessListener(aVoid -> Log.d(TAG, "Public wrap added to array successfully"))
+                            .addOnFailureListener(e -> Log.e(TAG, "Error adding public wrap to array", e));
+
+                    Log.d("Firestore CHECK", user.getUid());
+                    currentUser.addWrap(updatedWrap);
+
+                    RadioButton pub = root.findViewById(R.id.radioButton2);
+                    if (pub.isChecked()) {
+
+                        publicRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
                                 .addOnSuccessListener(aVoid -> Log.d(TAG, "Public wrap added to array successfully"))
                                 .addOnFailureListener(e -> Log.e(TAG, "Error adding public wrap to array", e));
 
                         Log.d("Firestore CHECK", user.getUid());
-                        //int count = GalleryFragment.wrapAdapterP.getItemCount();
-                        //GalleryFragment.wrapAdapterP.addWrap(new WrapObject(count, "Wrap #" + (count + 1), ((List<String>) updatedWrap.get("artistsimage")).get(0), ((List<String>) updatedWrap.get("tracksimage")).get(0), ((List<String>) updatedWrap.get("artists")).get(0), ((List<String>) updatedWrap.get("tracks")).get(0)));
-                        currentUser.addWrap(updatedWrap);
-                        RadioButton pub = root.findViewById(R.id.radioButton2);
-                        if (pub.isChecked()) {
+                    }
 
-                            publicRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
-                                    .addOnSuccessListener(aVoid -> Log.d(TAG, "Public wrap added to array successfully"))
-                                    .addOnFailureListener(e -> Log.e(TAG, "Error adding public wrap to array", e));
+                    // switch to slideshow view
+                    NavController navController = Navigation.findNavController(v);
+                    navController.navigate(R.id.nav_topSong);
 
-                            Log.d("Firestore CHECK", user.getUid());
-                            //count = PublicFragment.wrapAdapter.getItemCount();
-                            //PublicFragment.wrapAdapter.addWrap(new WrapObject(count, "Wrap #" + (count + 1), ((List<String>) updatedWrap.get("artistsimage")).get(0), ((List<String>) updatedWrap.get("tracksimage")).get(0), ((List<String>) updatedWrap.get("artists")).get(0), ((List<String>) updatedWrap.get("tracks")).get(0)));
-                        }
-                        // switch to slideshow view
-                        NavController navController = Navigation.findNavController(v);
-                        navController.navigate(R.id.nav_topSong);
+                    // hide action bar up top
+                    ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                    if (actionBar != null) {
+                        actionBar.hide();
+                        ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                        imageView.setVisibility(View.GONE);
+                    }
+                });
+            };
 
-                        // hide action bar up top
-                        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                        if (actionBar != null) {
-                            actionBar.hide();
-                            ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
-                            imageView.setVisibility(View.GONE);
-                        }
-                    });
-                };
+            onWrapMade(context, root, mOkHttpClient, term, wrap, handler);
 
-                onWrapMade(context, root, mOkHttpClient, term, wrap, handler);
-
-            }
         });
 
 

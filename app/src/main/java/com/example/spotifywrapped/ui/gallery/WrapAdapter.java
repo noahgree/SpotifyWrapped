@@ -1,34 +1,25 @@
 package com.example.spotifywrapped.ui.gallery;
 
-import android.content.Intent;
-import android.transition.TransitionInflater;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-import android.content.Context;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
-import com.example.spotifywrapped.databinding.FragmentTopSongBinding;
-import com.example.spotifywrapped.ui.gallery.pages.TopSong;
 import com.example.spotifywrapped.ui.gallery.pages.WrappedSummary;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder> {
@@ -59,6 +50,10 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
         holder.nameTextView.setText(wrap.getName());
         holder.artistTextView.setText(wrap.getArtistName());
         holder.songTextView.setText(wrap.getSongName());
+        holder.usernameTextView.setText("@" + wrap.getUsername());
+        holder.timeFrameTextView.setText(wrap.getTimeFrame());
+        holder.creationDateTextView.setText(wrap.getCreationDate());
+
         ArrayList<Map<String, Object>> wraps = MainActivity.getCurrentUser().getwraps();
 
         holder.cardView.setOnClickListener(v -> {
@@ -97,7 +92,7 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
 
     public static class WrapViewHolder extends RecyclerView.ViewHolder {
         public View cardView;
-        public TextView nameTextView, artistTextView, songTextView;
+        public TextView nameTextView, artistTextView, songTextView, usernameTextView, creationDateTextView, timeFrameTextView;
         public ImageView artistImageView, songImageView;
 
         public WrapViewHolder(View itemView) {
@@ -108,6 +103,9 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
             songImageView = itemView.findViewById(R.id.album2);
             artistTextView = itemView.findViewById(R.id.albumName1);
             songTextView = itemView.findViewById(R.id.albumName2);
+            usernameTextView = itemView.findViewById(R.id.usernameText);
+            creationDateTextView = itemView.findViewById(R.id.dateCreatedText);
+            timeFrameTextView = itemView.findViewById(R.id.timeFrameText);
         }
     }
 }
