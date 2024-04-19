@@ -230,10 +230,7 @@ public class AddWrapFragment extends Fragment {
         });
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // Assuming you have the current user's ID stored (e.g., as a field in the User object)
         FirebaseUser user = mAuth.getCurrentUser();
-
 
         // Reference to the user's document in Firestore
         DocumentReference userRef = db.collection("Accounts").document(user.getUid());

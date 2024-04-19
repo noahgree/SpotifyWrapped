@@ -26,11 +26,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
+import com.example.spotifywrapped.SwipeItem;
 import com.example.spotifywrapped.databinding.FragmentGalleryBinding;
 import com.example.spotifywrapped.user.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -103,6 +105,9 @@ public class GalleryFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             wrapAdapterP = new WrapAdapter(getContext(), wraps);
             recyclerView.setAdapter(wrapAdapterP);
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeItem(wrapAdapterP));
+            itemTouchHelper.attachToRecyclerView(recyclerView);
+
             wrapAdapterP.notifyDataSetChanged();
 
             userRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -135,12 +140,9 @@ public class GalleryFragment extends Fragment {
         }
 
         // Set the click listener for the button
-        binding.addButtonTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_addWrap);
-            }
+        binding.addButtonTask.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_addWrap);
         });
 
         return root;

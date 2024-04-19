@@ -54,6 +54,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.viewbinding.ViewBinding;
 
 import com.example.spotifywrapped.databinding.ActivityMainBinding;
@@ -494,7 +495,6 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //    }
 
-
     public static MainActivity getInstance() {
         return instance;
     }
@@ -710,7 +710,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public static User getCurrentUser() {
         return currentUser;
