@@ -3,46 +3,29 @@ package com.example.spotifywrapped.ui.login;
 import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.text.InputType;
 import android.transition.TransitionInflater;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowInsets;
-import android.view.WindowInsetsController;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentLogInBinding;
+import com.example.spotifywrapped.databinding.FragmentSignUpBinding;
 import com.example.spotifywrapped.user.User;
-import com.example.spotifywrapped.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -52,45 +35,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class SignUpFragment extends Fragment {
 
-public class LogInFragment extends Fragment {
-
-    private static FragmentLogInBinding binding;
+    private static FragmentSignUpBinding binding;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-    public static String passedBackEmail = "";
-    public static String passedBackPW = "";
+    public static String passedEmail = "";
+    public static String passedPW = "";
 
-    public static void setPassedBackEmail(String incomingEmail) {
-        passedBackEmail = incomingEmail;
+    public static void setPassedEmail(String incomingEmail) {
+        passedEmail = incomingEmail;
     }
-    public static void setPassedBackPW(String incomingPW) {
-        passedBackPW = incomingPW;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        mAuth = FirebaseAuth.getInstance();
+    public static void setPassedPW(String incomingPW) {
+        passedPW = incomingPW;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        // Check if user is signed in (non-null) and update UI accordingly.
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
-        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         MainActivity mainActivity = (MainActivity) getActivity();
-        binding = FragmentLogInBinding.inflate(inflater, container, false);
+        binding = FragmentSignUpBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         if (mainActivity != null) {
@@ -98,55 +73,61 @@ public class LogInFragment extends Fragment {
             hideActionBar();
         }
 
-        EditText emailInput = root.findViewById(R.id.emailInput);
-        EditText passwordInput = root.findViewById(R.id.passwordInput);
-        emailInput.setText(passedBackEmail);
-        passwordInput.setText(passedBackPW);
-        passedBackPW = "";
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
 
-        // Login Button
-        Button myButton = root.findViewById(R.id.loginButton);
-        myButton.setBackgroundResource(R.drawable.rounded_button);
+        EditText emailInput = root.findViewById(R.id.emailInputSU);
+        EditText passwordInput = root.findViewById(R.id.passwordInputSU);
+        emailInput.setText(passedEmail);
+        passwordInput.setText(passedPW);
+        passedPW = "";
 
-        // Signup Button
-        Button signupButton = root.findViewById(R.id.signupButton);
-        signupButton.setBackgroundResource(R.drawable.rounded_button);
+        // Back to login screen
+        binding.backToLoginBtn.setOnClickListener(v -> {
+            setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_login);
+            String email = String.valueOf(((EditText) root.findViewById(R.id.emailInputSU)).getText());
+            String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInputSU)).getText());
+            LogInFragment.setPassedBackEmail(email);
+            LogInFragment.setPassedBackPW(password);
+        });
 
-        // Login button response
-        myButton.setOnClickListener(v -> {
-            String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
-            String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(root.getContext(), "Authentication Failed",
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                mAuth.signInWithEmailAndPassword(email, password)
+        // Confirm sign up
+        binding.finishSignUpBtn.setOnClickListener(v -> {
+            setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
+            EditText firstNameInput = root.findViewById(R.id.firstNameInputSU);
+            EditText lastNameInput = root.findViewById(R.id.lastNameInputSU);
+
+            if (firstNameInput.getText().length() == 0 || lastNameInput.getText().length() == 0) {
+                Toast.makeText(root.getContext(), "First & Last Name Cannot Be Empty", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            mAuth.createUserWithEmailAndPassword(emailInput.getText().toString(), passwordInput.getText().toString())
                     .addOnCompleteListener((Activity) root.getContext(), task -> {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            solidifyNewUser(user, password);
+                            if (user != null) {
+                                Map<String, Object> userAccount = new HashMap<>();
+                                userAccount.put("name", firstNameInput.getText().toString() + " " + lastNameInput.getText().toString());
+                                userAccount.put("email", emailInput.getText().toString());
+                                userAccount.put("wraps", new ArrayList<Map<String, Object>>());
+                                // Avoid storing plain passwords
+                                db.collection("Accounts").document(user.getUid())
+                                        .set(userAccount)
+                                        .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                                        .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+                            }
+                            solidifyNewUser(user, passwordInput.getText().toString());
                             updateUI(user);
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(root.getContext(), "Authentication Failed",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(root.getContext(), "Authentication Failed", Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                     });
-            }
-        });
-
-        // Sign Up Button
-        signupButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.nav_signup);
-            String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
-            String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
-            SignUpFragment.setPassedEmail(email);
-            SignUpFragment.setPassedPW(password);
         });
 
         return root;
@@ -186,17 +167,11 @@ public class LogInFragment extends Fragment {
         MainActivity.setCurrentUser(currentUser[0]);
     }
 
-    // When the user logs in the keyboard will auto close.
-    private void hideKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
     // Changes to the gallery screen of the app when logging in
     public void updateUI(FirebaseUser account){
         View root = binding.getRoot();
         if (account != null) {
-            Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Signup Successful", Toast.LENGTH_LONG).show();
             MainActivity mainActivity = (MainActivity) getActivity();
             hideKeyboard(root);
 
@@ -221,6 +196,12 @@ public class LogInFragment extends Fragment {
                 imageView.setVisibility(View.GONE);
             }
         }
+    }
+
+    // When the user logs in the keyboard will auto close.
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override

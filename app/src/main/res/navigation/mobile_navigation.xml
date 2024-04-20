@@ -75,5 +75,10 @@
         android:id="@+id/matchingGameFragment3"
         android:name="com.example.spotifywrapped.ui.games.matchingGameFragment"
         android:label="matchingGameFragment" />
+    <fragment
+        android:id="@+id/nav_signup"
+        android:name="com.example.spotifywrapped.ui.login.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
 
 </navigation>

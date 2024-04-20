@@ -218,7 +218,17 @@ public class MainActivity extends AppCompatActivity {
                     bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_green));
                     bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
 
-                    currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill_badge_plus);
+                    currentPageIcon.setImageResource(R.drawable.rectangle_stack_person_crop_fill);
+                } else if (destId == R.id.nav_login) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_black));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
+                    currentPageIcon.setImageResource(R.drawable.rectangle_stack_person_crop_fill);
+                } else if (destId == R.id.nav_signup) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_green));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
+                    currentPageIcon.setImageResource(R.drawable.rectangle_stack_person_crop_fill);
                 }
                 else {
                     currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill); // Fallback icon

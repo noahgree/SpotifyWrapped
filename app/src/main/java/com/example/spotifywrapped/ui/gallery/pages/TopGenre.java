@@ -194,66 +194,50 @@ public class TopGenre extends Fragment {
         }
 
         // Set the click listener for the button
-        binding.topgenrenext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_wrappedSummary);
-            }
+        binding.topgenrenext.setOnClickListener(v -> {
+            setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_wrappedSummary);
         });
-        binding.topgenreback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_top5Artists);
-            }
+        binding.topgenreback.setOnClickListener(v -> {
+            setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_top5Artists);
         });
-        binding.topgenreexit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TransitionSet exitTransitionSet = new TransitionSet();
-                exitTransitionSet.addTransition(new Slide(Gravity.END));
-                exitTransitionSet.addTransition(new Fade());
-                exitTransitionSet.setDuration(300);
-                setExitTransition(exitTransitionSet);
+        binding.topgenreexit.setOnClickListener(v -> {
+            TransitionSet exitTransitionSet = new TransitionSet();
+            exitTransitionSet.addTransition(new Slide(Gravity.END));
+            exitTransitionSet.addTransition(new Fade());
+            exitTransitionSet.setDuration(300);
+            setExitTransition(exitTransitionSet);
 
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_gallery);
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_gallery);
 
-                // Show the toolbar with animation
-                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.show();
-                    int resId = getResources().getIdentifier("action_bar_container", "id", "android");
+            // Show the toolbar with animation
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.show();
+                int resId = getResources().getIdentifier("action_bar_container", "id", "android");
 
 
-                    // Load the fade-in animation
-                    Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
+                // Load the fade-in animation
+                Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
 
-                    // Get a reference to the ActionBar's container view by its identifier (e.g., "action_bar_container").
-                    // Note: The ID might differ based on the Android version or theme you are using.
-                    View actionBarContainer = getActivity().findViewById(resId);
-                    if (actionBarContainer != null) {
-                        actionBarContainer.startAnimation(fadeIn);
-                    }
-
-                    // Animate the ImageView
-                    ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
-                    imageView.setVisibility(View.VISIBLE);
-                    imageView.startAnimation(fadeIn);
+                View actionBarContainer = getActivity().findViewById(resId);
+                if (actionBarContainer != null) {
+                    actionBarContainer.startAnimation(fadeIn);
                 }
+
+                // Animate the ImageView
+                ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.startAnimation(fadeIn);
             }
         });
 
 
-        binding.TGSaveImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takeAndSaveScreenShot();
-            }
-        });
+        binding.TGSaveImage.setOnClickListener(v -> takeAndSaveScreenShot());
 
         MainActivity.updateForHoliday(binding);
 

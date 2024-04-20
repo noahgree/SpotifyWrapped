@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/mainBoxLogin"
         android:layout_width="318dp"
-        android:layout_height="491dp"
+        android:layout_height="500dp"
 
         android:layout_gravity="center|center_horizontal"
         android:layout_marginTop="30dp"
@@ -24,8 +24,9 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="30dp"
             android:layout_weight="1"
