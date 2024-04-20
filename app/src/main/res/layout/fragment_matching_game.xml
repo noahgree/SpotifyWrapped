@@ -9,7 +9,7 @@
     tools:layout_editor_absoluteY="8dp">
 
     <ImageView
-        android:id="@+id/hangmanHomePattern"
+        android:id="@+id/matchingHomePattern"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.25"
