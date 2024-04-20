@@ -63,40 +63,51 @@
                 android:layout_height="309dp"
                 app:srcCompat="@drawable/category_fill" />
 
+            <TextView
+                android:id="@+id/matchingTimeFrameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spotify_font"
+                android:text="Select your tile timeframe:"
+                android:textAlignment="center"
+                android:textColor="@color/spotify_black"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
             <RadioButton
-                android:id="@+id/longTermBtn"
+                android:id="@+id/matchingLongTermBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginBottom="20dp"
-                android:buttonTint="@color/spotify_white"
+                android:buttonTint="@color/spotify_black"
                 android:fontFamily="@font/spotify_font"
                 android:text="Long Term"
-                android:textColor="@color/spotify_white"
+                android:textColor="@color/spotify_black"
                 android:textColorLink="@color/spotify_green"
                 android:textSize="18sp" />
 
             <RadioButton
-                android:id="@+id/mediumTermBtn"
+                android:id="@+id/matchingMediumTermBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:buttonTint="@color/spotify_white"
+                android:buttonTint="@color/spotify_black"
                 android:fontFamily="@font/spotify_font"
                 android:text="Medium Term"
-                android:textColor="@color/spotify_white"
+                android:textColor="@color/spotify_black"
                 android:textColorLink="@color/spotify_green"
                 android:textSize="18sp" />
 
             <RadioButton
-                android:id="@+id/shortTermBtn"
+                android:id="@+id/matchingShortTermBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:buttonTint="@color/spotify_white"
+                android:buttonTint="@color/spotify_black"
                 android:fontFamily="@font/spotify_font"
                 android:text="Short Term"
-                android:textColor="@color/spotify_white"
+                android:textColor="@color/spotify_black"
                 android:textColorLink="@color/spotify_green"
                 android:textSize="18sp" />
 

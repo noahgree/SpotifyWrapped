@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -71,6 +72,8 @@ public class matchingHomeFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
+    private String term = "short";
+
 
     public matchingHomeFragment() {
         // Required empty public constructor
@@ -111,6 +114,22 @@ public class matchingHomeFragment extends Fragment {
         String userJson = sharedPreferences.getString("CurrentUser", null);
         Log.d("SharedPreferences", "Loaded token: " + userJson);
         return gson.fromJson(userJson, User.class);
+    }
+
+    private String getTimeFrame() {
+        // determine time frame of wrap
+        RadioButton shortTerm = getActivity().findViewById(R.id.matchingShortTermBtn);
+        RadioButton mediumTerm = getActivity().findViewById(R.id.matchingMediumTermBtn);
+        RadioButton longTerm = getActivity().findViewById(R.id.matchingLongTermBtn);
+        if (shortTerm.isChecked()) {
+            term = "short";
+        } else if (mediumTerm.isChecked()) {
+            term = "medium";
+        } else if (longTerm.isChecked()) {
+            term = "long";
+        }
+
+        return term;
     }
 
 
@@ -185,7 +204,7 @@ public class matchingHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String term = "long";//spinner.getSelectedItem().toString().split(" ")[0].toLowerCase();
+                term = getTimeFrame();
                 Map<String, Object> wrap = new HashMap<>();
 
 
