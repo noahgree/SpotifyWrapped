@@ -4,7 +4,9 @@ import static android.content.ContentValues.TAG;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -114,6 +117,12 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
 
             if (firstImageUrl != null && firstImageUrl.equals(secondImageUrl)) {
                 Toast.makeText(requireContext(), "Match!", Toast.LENGTH_SHORT).show();
+
+                pulsateTile(albumTiles[firstTileIndex]);
+                pulsateTile(albumTiles[secondTileIndex]);
+                albumTiles[firstTileIndex].setBackgroundResource(R.drawable.highlighted_tile);
+                albumTiles[secondTileIndex].setBackgroundResource(R.drawable.highlighted_tile);
+
             } else {
                 Toast.makeText(requireContext(), "No match!", Toast.LENGTH_SHORT).show();
 
@@ -185,6 +194,25 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 flipIn.start();
             }
         });
+    }
+
+    private void pulsateTile(View view) {
+        // Scale up and down animation for pulsating effect
+        ObjectAnimator scaleUp = ObjectAnimator.ofPropertyValuesHolder(view,
+                PropertyValuesHolder.ofFloat("scaleX", 1.0f, 1.1f),
+                PropertyValuesHolder.ofFloat("scaleY", 1.0f, 1.1f));
+        scaleUp.setDuration(500);
+        scaleUp.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(view,
+                PropertyValuesHolder.ofFloat("scaleX", 1.1f, 1.0f),
+                PropertyValuesHolder.ofFloat("scaleY", 1.1f, 1.0f));
+        scaleDown.setDuration(500);
+        scaleDown.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        AnimatorSet pulse = new AnimatorSet();
+        pulse.playSequentially(scaleUp, scaleDown);
+        pulse.start();
     }
 
     public void setTileIds(List<String> imageUrls) {

@@ -1,0 +1,9 @@
+<!-- res/drawable/highlighted_tile.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#1DB954"/>
+    <corners android:radius="8dp" /> <!-- Set the corner radius -->
+    <stroke
+        android:width="8dp"
+        android:color="#e9ff32"/>
+</shape>
