@@ -333,7 +333,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     }
 
     private void gameCompletion() {
-        Toast.makeText(requireContext(), "Congratulations! You've matched all tiles!", Toast.LENGTH_LONG).show();
+        Toast.makeText(requireContext(), "Congratulations! You've matched all the tiles!", Toast.LENGTH_LONG).show();
 
         new CountDownTimer(5500, 1000) {
             public void onTick(long millisUntilFinished) {
@@ -343,7 +343,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             public void onFinish() {
                 NavController navController = Navigation.findNavController(requireView());
                 navController.popBackStack(R.id.matchingHomeFragment3, false);
-                Toast.makeText(requireContext(), "You finished with a score of: " + score + "!", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Finished with a score of: " + score, Toast.LENGTH_LONG).show();
             }
         }.start();
     }
