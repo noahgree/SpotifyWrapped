@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainS"
@@ -7,106 +7,224 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="15dp"
     android:orientation="vertical"
-    tools:context=".ui.settings.SettingsFragment"
-    tools:ignore="MissingDefaultResource">
+    tools:context=".ui.settings.SettingsFragment">
 
-        <TextView
-            android:id="@+id/textView2"
+        <FrameLayout
+            android:id="@+id/mainSInner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/spotify_font"
-            android:text="Settings"
-            android:textAlignment="textStart"
-            android:textColor="@color/spotify_green"
-            android:textSize="48sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent">
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/rounded_corners_drawable"
-            android:backgroundTint="@color/spotify_black"
-            android:backgroundTintMode="add"
-            android:elevation="5dp"
-            android:gravity="center_horizontal"
             android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="Settings"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/spotify_green"
+                    android:textSize="48sp"
+                    android:textStyle="bold" />
+
                 <LinearLayout
+                    android:id="@+id/settingsInnerBox"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rounded_corners_drawable"
+                    android:backgroundTint="@color/spotify_black"
+                    android:backgroundTintMode="add"
+                    android:elevation="5dp"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                        <FrameLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center">
+                            android:orientation="vertical">
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_gravity="center"
+                                    android:layout_weight="1"
                                     android:orientation="vertical">
 
-                                        <TextView
-                                            android:id="@+id/textView3"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center_horizontal|center_vertical"
-                                            android:layout_marginTop="15dp"
-                                            android:fontFamily="@font/spotify_font"
-                                            android:text="Change Your Password"
-                                            android:textAlignment="center"
-                                            android:textColor="@color/spotify_green"
-                                            android:textSize="24sp"
-                                            android:textStyle="bold" />
+                                        <Space
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1" />
 
-                                        <EditText
-                                            android:id="@+id/newEmailInput"
+                                        <LinearLayout
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_gravity="center_horizontal|center_vertical"
-                                            android:layout_margin="15dp"
-                                            android:background="@drawable/less_rounded_edit_text"
-                                            android:ems="12"
-                                            android:fontFamily="@font/spotify_font"
-                                            android:hint="New Password"
-                                            android:inputType="textEmailAddress"
-                                            android:textColor="@color/spotify_black"
-                                            android:textSize="18sp" />
+                                            android:layout_gravity="center"
+                                            android:orientation="vertical">
+
+                                                <TextView
+                                                    android:id="@+id/textView3"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center_horizontal|center_vertical"
+                                                    android:layout_marginTop="15dp"
+                                                    android:fontFamily="@font/spotify_font"
+                                                    android:text="Update Credentials"
+                                                    android:textAlignment="center"
+                                                    android:textColor="@color/spotify_green"
+                                                    android:textSize="24sp"
+                                                    android:textStyle="bold" />
+
+                                                <EditText
+                                                    android:id="@+id/newNameInput"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center_horizontal|center_vertical"
+                                                    android:layout_marginHorizontal="15dp"
+                                                    android:layout_marginTop="15dp"
+                                                    android:background="@drawable/less_rounded_edit_text"
+                                                    android:ems="12"
+                                                    android:fontFamily="@font/spotify_font"
+                                                    android:hint="New Full Name"
+                                                    android:inputType="textEmailAddress"
+                                                    android:textColor="@color/spotify_black"
+                                                    android:textSize="18sp" />
+
+                                                <TextView
+                                                    android:id="@+id/updatedNameConfirm"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginHorizontal="15dp"
+                                                    android:fontFamily="@font/spotify_font"
+                                                    android:maxLines="1"
+                                                    android:text="TextView"
+                                                    android:textAlignment="center"
+                                                    android:textAllCaps="true"
+                                                    android:textColor="@color/spotify_blue"
+                                                    android:textSize="14sp"
+                                                    android:textStyle="bold" />
+
+                                                <View
+                                                    android:id="@+id/view2"
+                                                    android:layout_width="200dp"
+                                                    android:layout_height="2dp"
+                                                    android:layout_gravity="center_horizontal"
+                                                    android:layout_marginVertical="7dp"
+                                                    android:layout_weight="1"
+                                                    android:background="@drawable/rounded_corners_drawable"
+                                                    android:backgroundTint="@color/spotify_dark_green"
+                                                    android:backgroundTintMode="add"
+                                                    android:visibility="invisible" />
+
+                                                <EditText
+                                                    android:id="@+id/newPWInput"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center_horizontal|center_vertical"
+                                                    android:layout_marginHorizontal="15dp"
+                                                    android:background="@drawable/less_rounded_edit_text"
+                                                    android:ems="12"
+                                                    android:fontFamily="@font/spotify_font"
+                                                    android:hint="New Password"
+                                                    android:inputType="textVisiblePassword"
+                                                    android:textColor="@color/spotify_black"
+                                                    android:textSize="18sp" />
+
+                                                <TextView
+                                                    android:id="@+id/updatedPWConfirm"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginHorizontal="15dp"
+                                                    android:fontFamily="@font/spotify_font"
+                                                    android:maxLines="2"
+                                                    android:text="TextView"
+                                                    android:textAlignment="center"
+                                                    android:textAllCaps="true"
+                                                    android:textColor="@color/spotify_blue"
+                                                    android:textSize="14sp"
+                                                    android:textStyle="bold" />
+
+                                                <EditText
+                                                    android:id="@+id/oldPWForVerification"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center_horizontal|center_vertical"
+                                                    android:layout_marginHorizontal="15dp"
+                                                    android:layout_marginTop="30dp"
+                                                    android:background="@drawable/less_rounded_edit_text"
+                                                    android:ems="12"
+                                                    android:fontFamily="@font/spotify_font"
+                                                    android:hint="Old Password"
+                                                    android:inputType="textVisiblePassword"
+                                                    android:textColor="@color/spotify_black"
+                                                    android:textSize="18sp" />
+
+                                                <TextView
+                                                    android:id="@+id/oldPWCheckerText"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginHorizontal="15dp"
+                                                    android:fontFamily="@font/spotify_font"
+                                                    android:maxLines="2"
+                                                    android:text="TextView"
+                                                    android:textAlignment="center"
+                                                    android:textAllCaps="true"
+                                                    android:textColor="@color/spotify_red"
+                                                    android:textSize="14sp"
+                                                    android:textStyle="bold" />
+
+                                                <Button
+                                                    android:id="@+id/btnNewPW"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center_horizontal|center_vertical"
+                                                    android:layout_marginTop="15dp"
+                                                    android:layout_marginBottom="15dp"
+                                                    android:background="@drawable/rounded_button"
+                                                    android:fontFamily="@font/spotify_font"
+                                                    android:text="Submit"
+                                                    android:textColor="@android:color/white"
+                                                    android:textSize="18sp"
+                                                    app:cornerRadius="10sp" />
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1" />
+                                </LinearLayout>
+
+                                <FrameLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center">
 
                                         <Button
-                                            android:id="@+id/btnSubmitAccountEmail"
+                                            android:id="@+id/btnDeleteAccount"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_gravity="center_horizontal|center_vertical"
-                                            android:layout_marginBottom="15dp"
+                                            android:layout_marginVertical="50dp"
                                             android:background="@drawable/rounded_button"
-                                            android:text="Submit"
+                                            android:backgroundTintMode="add"
+                                            android:fontFamily="@font/spotify_font"
+                                            android:gravity="center"
+                                            android:text="Delete account"
                                             android:textColor="@android:color/white"
                                             android:textSize="18sp"
+                                            app:backgroundTint="@color/spotify_red"
                                             app:cornerRadius="10sp" />
-                                </LinearLayout>
-                        </FrameLayout>
+                                </FrameLayout>
+                        </LinearLayout>
 
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnDeleteAccount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="60dp"
-                    android:background="@drawable/rounded_button"
-                    android:backgroundTintMode="add"
-                    android:text="Delete account"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    app:backgroundTint="@color/spotify_red"
-                    app:cornerRadius="10sp" />
         </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

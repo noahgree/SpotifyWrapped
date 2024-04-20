@@ -56,6 +56,7 @@ import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentTopGenreBinding;
 import com.example.spotifywrapped.databinding.FragmentWrappedSummaryBinding;
+import com.example.spotifywrapped.ui.CustomSnackbar;
 import com.example.spotifywrapped.user.User;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -155,7 +156,6 @@ public class WrappedSummary extends Fragment {
             return WindowInsetsCompat.CONSUMED;
         });
 
-        // Assuming you have the current user's ID stored (e.g., as a field in the User object)
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (!isPublicWrap()) {
@@ -287,57 +287,45 @@ public class WrappedSummary extends Fragment {
                 }
             }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
         }
-        binding.wrappedsummaryback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_topGenre);
-            }
+        binding.wrappedsummaryback.setOnClickListener(v -> {
+            setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_topGenre);
         });
-        binding.wrappedsummaryexit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TransitionSet exitTransitionSet = new TransitionSet();
-                exitTransitionSet.addTransition(new Slide(Gravity.END));
-                exitTransitionSet.addTransition(new Fade());
-                exitTransitionSet.setDuration(300);
-                setExitTransition(exitTransitionSet);
+        binding.wrappedsummaryexit.setOnClickListener(v -> {
+            TransitionSet exitTransitionSet = new TransitionSet();
+            exitTransitionSet.addTransition(new Slide(Gravity.END));
+            exitTransitionSet.addTransition(new Fade());
+            exitTransitionSet.setDuration(300);
+            setExitTransition(exitTransitionSet);
 
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_gallery);
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_gallery);
 
-                // Show the toolbar with animation
-                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.show();
-                    int resId = getResources().getIdentifier("action_bar_container", "id", "android");
+            // Show the toolbar with animation
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.show();
+                int resId = getResources().getIdentifier("action_bar_container", "id", "android");
 
 
-                    // Load the fade-in animation
-                    Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
+                // Load the fade-in animation
+                Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
 
-                    // Get a reference to the ActionBar's container view by its identifier (e.g., "action_bar_container").
-                    // Note: The ID might differ based on the Android version or theme you are using.
-                    View actionBarContainer = getActivity().findViewById(resId);
-                    if (actionBarContainer != null) {
-                        actionBarContainer.startAnimation(fadeIn);
-                    }
-
-                    // Animate the ImageView
-                    ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
-                    imageView.setVisibility(View.VISIBLE);
-                    imageView.startAnimation(fadeIn);
+                // Get a reference to the ActionBar's container view by its identifier
+                View actionBarContainer = getActivity().findViewById(resId);
+                if (actionBarContainer != null) {
+                    actionBarContainer.startAnimation(fadeIn);
                 }
+
+                // Animate the ImageView
+                ImageView imageView = getActivity().findViewById(R.id.currentPageIcon);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.startAnimation(fadeIn);
             }
         });
 
-        binding.wrappedSaveImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takeAndSaveScreenShot();
-            }
-        });
+        binding.wrappedSaveImage.setOnClickListener(v -> takeAndSaveScreenShot());
 
         MainActivity.updateForHoliday(binding);
 
@@ -442,36 +430,7 @@ public class WrappedSummary extends Fragment {
 
             ViewGroup rootView = (ViewGroup) ((ViewGroup) binding.getRoot().findViewById(R.id.wrapSummaryLayout)).getChildAt(0);
 
-            Snackbar snackbar = Snackbar.make(rootView, "Image Saved", Snackbar.LENGTH_LONG);
-            View snackbarView = snackbar.getView();
-            Drawable backgroundDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.rounded_corners_drawable);
-            Drawable wrappedDrawable = DrawableCompat.wrap(backgroundDrawable);
-            int tintColor = ContextCompat.getColor(getActivity(), R.color.spotify_black);
-            DrawableCompat.setTint(wrappedDrawable, tintColor);
-            DrawableCompat.setTintMode(wrappedDrawable, PorterDuff.Mode.ADD);
-
-            snackbarView.setBackground(wrappedDrawable);
-            CoordinatorLayout.LayoutParams params =(CoordinatorLayout.LayoutParams)snackbarView.getLayoutParams();
-
-            ViewCompat.setOnApplyWindowInsetsListener(snackbarView, (v, windowInsets) -> {
-                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-                ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-
-                mlp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-
-                mlp.setMargins(15, mlp.topMargin, 15, mlp.bottomMargin);
-
-                if (insets.top > 0) {
-                    mlp.topMargin = insets.top;
-                    v.setLayoutParams(mlp);
-                }
-
-                return WindowInsetsCompat.CONSUMED;
-            });
-
-            params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
-            snackbarView.setLayoutParams(params);
-            snackbar.show();
+            CustomSnackbar.showCustomSnackbar(getActivity(), rootView, "Image Saved");
         }
     }
 

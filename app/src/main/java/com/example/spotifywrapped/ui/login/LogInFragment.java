@@ -141,12 +141,25 @@ public class LogInFragment extends Fragment {
 
         // Sign Up Button
         signupButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.nav_signup);
             String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
             String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
-            SignUpFragment.setPassedEmail(email);
-            SignUpFragment.setPassedPW(password);
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener((Activity) root.getContext(), task -> {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            solidifyNewUser(user, password);
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            NavController navController = Navigation.findNavController(v);
+                            navController.navigate(R.id.nav_signup);
+                            SignUpFragment.setPassedEmail(email);
+                            SignUpFragment.setPassedPW(password);
+                        }
+                    });
+
         });
 
         return root;

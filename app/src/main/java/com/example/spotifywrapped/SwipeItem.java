@@ -106,7 +106,7 @@ public class SwipeItem extends ItemTouchHelper.SimpleCallback {
                 c.drawRoundRect(background, 50, 50, paint);
             } else if (dX > 0) { // Swiping to the right
                 icon = ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.top_top);
-                paint.setColor(Color.CYAN);
+                paint.setColor(ContextCompat.getColor(recyclerView.getContext(), R.color.spotify_blue));
                 int iconLeft = itemView.getLeft() + iconMargin;
                 int iconRight = itemView.getLeft() + iconMargin + iconWidth;
                 icon.setBounds(iconLeft, iconTop, iconRight, iconBottom);

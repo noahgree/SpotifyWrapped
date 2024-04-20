@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
         currentUser = loadUser();
         checkForHolidays();
-        //Deals with if user needs to log in or refresh the spotify token.
+        // Deals with if user needs to log in or refresh the spotify token.
         if (mAuth.getCurrentUser() != null && currentUser != null) {
             // User is still logged in with Firebase, load the user profile
             onLoginSuccess(currentUser.getName(), currentUser.getEmail());
@@ -630,7 +630,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_logout) {
-            logoutUser();
+            logoutUser(true);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -640,16 +640,14 @@ public class MainActivity extends AppCompatActivity {
     public static void onLoginSuccess(String name, String email) {
         NavigationView navigationView = (NavigationView) binding.navView;
         View navView = navigationView.getHeaderView(0);
-        //Side Navigation
+        // Side Navigation
         TextView navName = navView.findViewById(R.id.navName);
-
         TextView navEmail = navView.findViewById(R.id.navEmail);
         navName.setText(name);
         navEmail.setText(email);
-        //Wrapped Fragment
     }
 
-    private void logoutUser() {
+    public void logoutUser(boolean displayToast) {
         // Sign out from Firebase
         FirebaseAuth.getInstance().signOut();
 
@@ -662,8 +660,10 @@ public class MainActivity extends AppCompatActivity {
         // Optional: Navigate the user to the login screen
         navigateToLoginFragment();
         updateToolbarForLoggedOutUser();
-        // Show a message to the user
-        Toast.makeText(this, "Logged Out Successfully", Toast.LENGTH_SHORT).show();
+
+        if (displayToast) {
+            Toast.makeText(this, "Logged Out Successfully", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static void updateUserProfilePhoto() {
@@ -735,7 +735,7 @@ public class MainActivity extends AppCompatActivity {
         saveUser(currentUser);
     }
 
-    private void saveUser(User user) {
+    public void saveUser(User user) {
         SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();

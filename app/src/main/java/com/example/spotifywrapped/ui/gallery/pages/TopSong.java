@@ -56,6 +56,7 @@ import com.bumptech.glide.Glide;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentTopSongBinding;
+import com.example.spotifywrapped.ui.CustomSnackbar;
 import com.example.spotifywrapped.ui.gallery.WrapObject;
 import com.example.spotifywrapped.user.User;
 import com.google.android.material.snackbar.Snackbar;
@@ -320,42 +321,9 @@ public class TopSong extends Fragment {
             values.clear();
             values.put(MediaStore.Images.Media.IS_PENDING, 0);
             context.getContentResolver().update(item, values, null, null);
-//            Toast toast = Toast.makeText(binding.getRoot().getContext(), "Image Saved", Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 100);
-//            toast.show();
 
-            ViewGroup rootView = (ViewGroup) ((ViewGroup) binding.getRoot().findViewById(R.id.topSongLayout)).getChildAt(0);
-
-            Snackbar snackbar = Snackbar.make(rootView, "Image Saved", Snackbar.LENGTH_LONG);
-            View snackbarView = snackbar.getView();
-            Drawable backgroundDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.rounded_corners_drawable);
-            Drawable wrappedDrawable = DrawableCompat.wrap(backgroundDrawable);
-            int tintColor = ContextCompat.getColor(getActivity(), R.color.spotify_black);
-            DrawableCompat.setTint(wrappedDrawable, tintColor);
-            DrawableCompat.setTintMode(wrappedDrawable, PorterDuff.Mode.ADD);
-
-            snackbarView.setBackground(wrappedDrawable);
-            CoordinatorLayout.LayoutParams params =(CoordinatorLayout.LayoutParams)snackbarView.getLayoutParams();
-
-            ViewCompat.setOnApplyWindowInsetsListener(snackbarView, (v, windowInsets) -> {
-                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-                ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-
-                mlp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-
-                mlp.setMargins(15, mlp.topMargin, 15, mlp.bottomMargin);
-
-                if (insets.top > 0) {
-                    mlp.topMargin = insets.top;
-                    v.setLayoutParams(mlp);
-                }
-
-                return WindowInsetsCompat.CONSUMED;
-            });
-
-            params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
-            snackbarView.setLayoutParams(params);
-            snackbar.show();
+            FrameLayout rootView = binding.getRoot().findViewById(R.id.topSongLayout);
+            CustomSnackbar.showCustomSnackbar(getActivity(), rootView, "Image Saved");
         }
     }
 
