@@ -1,40 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp">
 
-    <TableLayout
+    <!-- Hangman image -->
+
+    <!-- Word to guess -->
+    <ImageView
+        android:id="@+id/imageViewHangman"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#4200ff"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/hangman" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewWordToGuess"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hangman" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="Word to Guess"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
+    <!-- Input field for guessing -->
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/editTextGuess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:hint="Enter your guess"
+        android:inputType="text" />
+
+    <!-- Button to submit guess -->
+    <Button
+        android:id="@+id/buttonSubmitGuess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Name" />
+        android:text="Submit"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
+        android:onClick="submitGuess"/>
 
-</TableLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
