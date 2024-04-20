@@ -124,7 +124,7 @@ public class LogInFragment extends Fragment {
 
         // Sign Up Button
         signupButton.setOnClickListener(v -> {
-            String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
+            /*String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
             String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
             if(email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(root.getContext(), "Sign Up Failed.",
@@ -132,24 +132,41 @@ public class LogInFragment extends Fragment {
             } else if (password.length() < 6) {
                 Toast.makeText(root.getContext(), "Password entered is too short. Please use at least 6 characters.",
                         Toast.LENGTH_SHORT).show();
-            } else {
+            } else {*/
                 // Create an AlertDialog.Builder to get the user's name
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Please enter your full name");
 
                 // Set up the input fields
+                LinearLayout holder = new LinearLayout(getContext());
+                holder.setOrientation(LinearLayout.VERTICAL);
                 final EditText input = new EditText(getActivity());
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
                 input.setHint("First and Last Name");
-                builder.setView(input);
+                holder.addView(input);
+                final EditText email = new EditText(getActivity());
+                email.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                email.setHint("Email");
+                holder.addView(email);
+                final EditText password = new EditText(getActivity());
+                password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                password.setHint("Password");
+                if (password.toString().length() < 6) {
+                    Toast.makeText(root.getContext(), "Password entered is too short. Please use at least 6 characters.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                holder.addView(password);
+                builder.setView(holder);
 
-                // Set up the buttons
+
+
+            // Set up the buttons
                 builder.setPositiveButton("OK", (dialog, which) -> {
                     String fullName = input.getText().toString();
                     // Splitting the fullName into first and last name parts if needed
                     // Proceed with the rest of the sign-up process...
-                    String email1 = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
-                    String password1 = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
+                    String email1 = email.getText().toString();
+                    String password1 = password.getText().toString();
 
                     mAuth.createUserWithEmailAndPassword(email1, password1)
                             .addOnCompleteListener((Activity) root.getContext(), task -> {
@@ -178,7 +195,7 @@ public class LogInFragment extends Fragment {
                 builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
                 builder.show();
-            }
+            //}
         });
         return root;
     }
