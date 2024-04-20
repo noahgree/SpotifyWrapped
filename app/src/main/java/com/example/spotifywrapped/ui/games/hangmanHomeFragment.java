@@ -159,7 +159,7 @@ public class hangmanHomeFragment extends Fragment {
                         // switch to matching game view
                         List<String> images = (List<String>) updatedImages.get("artists");
                         NavController navController = Navigation.findNavController(v);
-                        //navController.navigate(R.id.hangmanGame);
+                        navController.navigate(R.id.navHangmanGame);
                     });
                 };
 
