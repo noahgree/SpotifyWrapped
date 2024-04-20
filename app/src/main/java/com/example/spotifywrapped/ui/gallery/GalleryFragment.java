@@ -105,8 +105,7 @@ public class GalleryFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeItem(wrapAdapterP));
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        // Assuming you have the current user's ID stored (e.g., as a field in the User object)
-        //FirebaseUser user = mAuth.getCurrentUser();
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             // Reference to the user's document in Firestore
@@ -131,6 +130,7 @@ public class GalleryFragment extends Fragment {
                                         (String)wrapData.get("username"),
                                         (String)wrapData.get("creationdate"),
                                         (String)wrapData.get("alsopublic"));
+                                wrap.setPublicWrap(false);
                                 wraps.add(wrap);
                             }
                         }

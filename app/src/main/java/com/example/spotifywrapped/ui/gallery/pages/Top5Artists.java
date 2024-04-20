@@ -25,6 +25,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
@@ -272,7 +273,10 @@ public class Top5Artists extends Fragment {
             if (WrappedSummary.getReturnToPrivate()) {
                 navController.navigate(R.id.nav_gallery);
             } else {
-                navController.navigate(R.id.nav_public);
+                NavOptions options = new NavOptions.Builder()
+                        .setPopUpTo(R.id.nav_gallery, true)
+                        .build();
+                navController.navigate(R.id.nav_public, null, options);
             }
 
             // Show the toolbar with animation

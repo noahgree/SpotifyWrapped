@@ -170,9 +170,16 @@ public class MainActivity extends AppCompatActivity {
 
         // For swapping toolbar icon depending on current layout
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(item -> {
+                    int id = item.getItemId();
+            Log.d("navCHANGEPICKED", getResources().getResourceName(id));
+            return true;
+                });
         ImageView currentPageIcon = binding.getRoot().findViewById(R.id.currentPageIcon);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int destId = destination.getId();
+            Log.d("navCHANGE", getResources().getResourceName(destId));
 
             FrameLayout bgFrame = binding.getRoot().findViewById(R.id.bgFrame);
             ImageView imageView = binding.getRoot().findViewById(R.id.imageViewBG);
@@ -601,7 +608,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_public, R.id.nav_games, R.id.nav_settings) // Add or remove IDs as needed
+                R.id.nav_gallery, R.id.nav_public, R.id.nav_games, R.id.nav_settings) // Add or remove IDs as needed
                 .setOpenableLayout(drawer)
                 .build();
 
