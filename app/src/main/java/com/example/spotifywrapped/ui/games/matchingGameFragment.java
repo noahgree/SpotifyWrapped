@@ -9,8 +9,10 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -54,10 +57,13 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
 
     private String[] albumTileIds = new String[16];
 
+    private TextView scoreTextView;
+
     private int firstTileIndex = -1;
     private int secondTileIndex = -1;
 
     private int matchedPairs = 0;
+    private int score = 0;
 
     public matchingGameFragment() {
         // Required empty public constructor
@@ -91,6 +97,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         View root = binding.getRoot();
 
         List<String> imageUrls = getArguments().getStringArrayList("imageUrls");
+        scoreTextView = root.findViewById(R.id.scoreValue);
 
         for (int i = 0; i < albumTiles.length; i++) {
             String imageViewId = "albumtile" + (i + 1);
@@ -100,6 +107,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         }
 
         setTileIds(imageUrls);
+        scoreTextView.setText(String.valueOf(score));
 
         // Inflate the layout for this fragment
         return root;
@@ -126,13 +134,18 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             String secondImageUrl = getImageUrl(secondTileIndex);
 
             if (firstImageUrl != null && firstImageUrl.equals(secondImageUrl)) {
-                showShortToast(requireContext(), "Match!", 250);
+                showShortToast(requireContext(), "Match! +150", 250);
 
                 //animations
                 pulsateTile(albumTiles[firstTileIndex]);
                 pulsateTile(albumTiles[secondTileIndex]);
                 albumTiles[firstTileIndex].setBackgroundResource(R.drawable.highlighted_tile);
                 albumTiles[secondTileIndex].setBackgroundResource(R.drawable.highlighted_tile);
+
+                //score update
+                score += 150;
+                scoreTextView.setText(String.valueOf(score));
+                animatePointsAdded();
 
                 //prevent clicking on tiles after matched
                 albumTiles[firstTileIndex].setOnClickListener(null);
@@ -148,7 +161,15 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 firstTileIndex = -1;
                 secondTileIndex = -1;
             } else {
-                showShortToast(requireContext(), "No Match!", 250);
+                if (score > 0) {
+                    showShortToast(requireContext(), "No Match! -50", 250);
+                    score -= 50;
+                    scoreTextView.setText(String.valueOf(score));
+                    animatePointsDeducted();
+                } else {
+                    showShortToast(requireContext(), "No Match!", 250);
+                }
+
 
                 new CountDownTimer(750, 750) {
                     public void onTick(long millisUntilFinished) {
@@ -237,6 +258,60 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         AnimatorSet pulse = new AnimatorSet();
         pulse.playSequentially(scaleUp, scaleDown);
         pulse.start();
+    }
+
+    private void animatePointsAdded() {
+
+        int originalColor = scoreTextView.getCurrentTextColor();
+
+        if (scoreTextView != null) {
+            scoreTextView.setTextColor(Color.parseColor("#1DB954"));
+
+            ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(scoreTextView, "scaleX", 1.2f);
+            ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(scoreTextView, "scaleY", 1.2f);
+            AnimatorSet scaleUp = new AnimatorSet();
+            scaleUp.playTogether(scaleUpX, scaleUpY);
+            scaleUp.setDuration(300);
+
+            ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(scoreTextView, "scaleX", 1.0f);
+            ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(scoreTextView, "scaleY", 1.0f);
+            AnimatorSet scaleDown = new AnimatorSet();
+            scaleDown.playTogether(scaleDownX, scaleDownY);
+            scaleDown.setDuration(300);
+            scaleDown.setStartDelay(300);
+
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.playSequentially(scaleUp, scaleDown);
+            animatorSet.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    scoreTextView.setTextColor(originalColor);
+                }
+            });
+            animatorSet.start();
+        }
+    }
+
+    private void animatePointsDeducted() {
+        if (scoreTextView != null) {
+            scoreTextView.setTextColor(Color.parseColor("#D70040"));
+
+            ObjectAnimator shakeX = ObjectAnimator.ofFloat(scoreTextView, "translationX", -10, 10);
+            shakeX.setRepeatCount(5);
+            shakeX.setDuration(100);
+
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.play(shakeX);
+            animatorSet.start();
+
+            shakeX.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    scoreTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+                }
+            });
+        }
     }
 
     private void showShortToast(Context context, String message, int duration) {
