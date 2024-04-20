@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -116,21 +117,22 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             } else {
                 Toast.makeText(requireContext(), "No match!", Toast.LENGTH_SHORT).show();
 
-                Handler handler = new Handler();
-                handler.postDelayed(() -> {
-                    if (firstTileIndex >= 0 && firstTileIndex < albumTiles.length &&
-                            secondTileIndex >= 0 && secondTileIndex < albumTiles.length) {
+                new CountDownTimer(750, 750) {
+                    public void onTick(long millisUntilFinished) {
+                        //Not used but required
+                    }
+
+                    public void onFinish() {
                         flipTileBack(albumTiles[firstTileIndex]);
                         flipTileBack(albumTiles[secondTileIndex]);
-                    }
-                }, 1000);
-            }
 
-            firstTileIndex = -1;
-            secondTileIndex = -1;
+                        firstTileIndex = -1;
+                        secondTileIndex = -1;
+                    }
+                }.start();
+            }
         }
     }
-
 
 
 
@@ -167,8 +169,8 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         });
     }
 
-    private void flipTileBack(ImageView imageView) {
-        ObjectAnimator flipOut = ObjectAnimator.ofFloat(imageView, "rotationY", 0f, 90f);
+    private void flipTileBack(ImageView tile) {
+        ObjectAnimator flipOut = ObjectAnimator.ofFloat(tile, "rotationY", 0f, 90f);
         flipOut.setDuration(200);
         flipOut.start();
 
@@ -176,14 +178,13 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
 
-                imageView.setImageResource(R.drawable.tile_back);
+                tile.setImageResource(R.drawable.tile_back);
 
-                ObjectAnimator flipIn = ObjectAnimator.ofFloat(imageView, "rotationY", -90f, 0f);
+                ObjectAnimator flipIn = ObjectAnimator.ofFloat(tile, "rotationY", -90f, 0f);
                 flipIn.setDuration(200);
                 flipIn.start();
             }
         });
-
     }
 
     public void setTileIds(List<String> imageUrls) {
