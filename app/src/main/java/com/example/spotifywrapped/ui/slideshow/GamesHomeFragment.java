@@ -66,7 +66,7 @@ public class GamesHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
-                //navController.navigate(R.id.nav_top5Artists);
+                navController.navigate(R.id.navHangmanHome);
             }
         });
 

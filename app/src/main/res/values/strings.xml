@@ -25,6 +25,7 @@
 
     <string name="matching_game_home">Matching: Your Top Artists</string>
     <string name="hangman_game_home">Hangman: Guess your music</string>
+    <string name="hangman">Hangman</string>
 
     <string-array name="time_frame_options">
         <item>Short Term</item>
