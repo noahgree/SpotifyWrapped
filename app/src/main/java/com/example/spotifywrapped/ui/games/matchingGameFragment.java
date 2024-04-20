@@ -8,12 +8,18 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +57,8 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     private int firstTileIndex = -1;
     private int secondTileIndex = -1;
 
+    private int matchedPairs = 0;
+
     public matchingGameFragment() {
         // Required empty public constructor
     }
@@ -71,6 +79,8 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
         context = MainActivity.getInstance();
     }
 
@@ -101,7 +111,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 if (firstTileIndex == -1) {
                     firstTileIndex = i;
                     flipTile(albumTiles[i], i);
-                } else if (secondTileIndex == -1) {
+                } else if (secondTileIndex == -1 && i != firstTileIndex) {
                     secondTileIndex = i;
                     flipTile(albumTiles[i], i);
                     checkTiles();
@@ -116,15 +126,29 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             String secondImageUrl = getImageUrl(secondTileIndex);
 
             if (firstImageUrl != null && firstImageUrl.equals(secondImageUrl)) {
-                Toast.makeText(requireContext(), "Match!", Toast.LENGTH_SHORT).show();
+                showShortToast(requireContext(), "Match!", 250);
 
+                //animations
                 pulsateTile(albumTiles[firstTileIndex]);
                 pulsateTile(albumTiles[secondTileIndex]);
                 albumTiles[firstTileIndex].setBackgroundResource(R.drawable.highlighted_tile);
                 albumTiles[secondTileIndex].setBackgroundResource(R.drawable.highlighted_tile);
 
+                //prevent clicking on tiles after matched
+                albumTiles[firstTileIndex].setOnClickListener(null);
+                albumTiles[secondTileIndex].setOnClickListener(null);
+
+                matchedPairs++;
+
+                if (matchedPairs == albumTiles.length / 2) {
+                    gameCompletion();
+                }
+
+                //reset indices
+                firstTileIndex = -1;
+                secondTileIndex = -1;
             } else {
-                Toast.makeText(requireContext(), "No match!", Toast.LENGTH_SHORT).show();
+                showShortToast(requireContext(), "No Match!", 250);
 
                 new CountDownTimer(750, 750) {
                     public void onTick(long millisUntilFinished) {
@@ -215,6 +239,11 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         pulse.start();
     }
 
+    private void showShortToast(Context context, String message, int duration) {
+        Toast toast = Toast.makeText(context, message, duration);
+        toast.show();
+    }
+
     public void setTileIds(List<String> imageUrls) {
         Collections.shuffle(imageUrls);
 
@@ -226,6 +255,21 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         for (int i = 0; i < albumTiles.length && i < pairImageUrls.size(); i++) {
             albumTileIds[i] = pairImageUrls.get(i);
         }
+    }
+
+    private void gameCompletion() {
+        Toast.makeText(requireContext(), "Congratulations! You've matched all tiles!", Toast.LENGTH_LONG).show();
+
+        new CountDownTimer(5500, 1000) {
+            public void onTick(long millisUntilFinished) {
+                //required
+            }
+
+            public void onFinish() {
+                NavController navController = Navigation.findNavController(requireView());
+                navController.popBackStack(R.id.matchingHomeFragment3, false);
+            }
+        }.start();
     }
 
 }
