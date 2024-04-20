@@ -5,6 +5,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -78,15 +81,18 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
                 imageView.setVisibility(View.GONE);
             }
 
-            if (wrap.isPublicWrap()) {
-                WrappedSummary.setPublicWrap(true);
+            NavController navController = Navigation.findNavController(v);
+
+            WrappedSummary.setPublicWrap(wrap.isPublicWrap());
+
+            if (navController.getCurrentDestination().getId() == R.id.nav_public) {
+                WrappedSummary.setReturnToPrivate(false);
                 WrappedSummary.setPublicWrapIndex(position);
             } else {
                 WrappedSummary.setPrivateWrapIndex(position);
-                WrappedSummary.setPublicWrap(false);
+                WrappedSummary.setReturnToPrivate(true);
             }
 
-            NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.nav_topSong);
         });
 
@@ -133,7 +139,9 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
                         wrapList.add(0, itemToMove);
 
                         userRef.update("wraps", wrapList)
-                                .addOnSuccessListener(aVoid -> Log.d("moving", "Wrap moved to top successfully"))
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d("moving", "Wrap moved to top successfully");
+                                })
                                 .addOnFailureListener(e -> Log.e("moving", "Error moving wrap to top", e));
                     } else {
                         Log.d("moving", "Position out of bounds or empty wraps array");

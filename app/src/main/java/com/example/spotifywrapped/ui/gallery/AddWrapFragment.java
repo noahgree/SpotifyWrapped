@@ -78,6 +78,7 @@ public class AddWrapFragment extends Fragment {
     private static User currentUser;
     private static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
+    // for auto setting the radio button on entering the add wrap fragment
     public static String visibilityOrigin = "Private";
 
     private FirebaseAuth mAuth;
@@ -272,6 +273,7 @@ public class AddWrapFragment extends Fragment {
 
             Log.d("private", String.valueOf(GalleryFragment.getAdapterSize()));
             WrappedSummary.setPrivateWrapIndex(GalleryFragment.getAdapterSize());
+            WrappedSummary.setPublicWrap(false);
 
             DataCompletionHandler handler = updatedWrap -> {
                 // This block will be called once data fetching is complete.
@@ -292,6 +294,9 @@ public class AddWrapFragment extends Fragment {
                                 .addOnFailureListener(e -> Log.e(TAG, "Error adding public wrap to array", e));
 
                         Log.d("Firestore CHECK", user.getUid());
+                        WrappedSummary.setReturnToPrivate(false);
+                    } else {
+                        WrappedSummary.setReturnToPrivate(true);
                     }
 
                     // switch to slideshow view

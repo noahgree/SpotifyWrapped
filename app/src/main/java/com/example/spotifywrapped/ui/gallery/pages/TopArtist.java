@@ -212,11 +212,10 @@ public class TopArtist extends Fragment {
             setExitTransition(exitTransitionSet);
 
             NavController navController = Navigation.findNavController(v);
-            if (WrappedSummary.isPublicWrap()) {
-                navController.navigate(R.id.nav_public);
-
-            } else {
+            if (WrappedSummary.getReturnToPrivate()) {
                 navController.navigate(R.id.nav_gallery);
+            } else {
+                navController.navigate(R.id.nav_public);
             }
 
             // Show the toolbar with animation

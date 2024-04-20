@@ -164,8 +164,8 @@ public class SettingsFragment extends Fragment {
                                 }
                                 // Check valid password (formatting)
                                 if (!(newPassword.length() >= 6) && !(newPassword.isEmpty())) {
-                                    updatedNameConfirmText.setText("NEW PASSWORD MUST BE AT LEAST 6 CHARACTERS");
-                                    updatedNameConfirmText.setVisibility(View.VISIBLE);
+                                    updatedPWConfirmText.setText("NEW PASSWORD MUST BE AT LEAST 6 CHARACTERS");
+                                    updatedPWConfirmText.setVisibility(View.VISIBLE);
                                     return;
                                 } else if (newPassword.isEmpty()) {
                                     return;

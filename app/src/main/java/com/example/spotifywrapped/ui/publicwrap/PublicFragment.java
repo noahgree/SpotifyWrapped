@@ -28,9 +28,11 @@ import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentGalleryBinding;
 import com.example.spotifywrapped.databinding.FragmentPublicBinding;
+import com.example.spotifywrapped.ui.CustomLinearLayoutManager;
 import com.example.spotifywrapped.ui.gallery.AddWrapFragment;
 import com.example.spotifywrapped.ui.gallery.WrapAdapter;
 import com.example.spotifywrapped.ui.gallery.WrapObject;
+import com.example.spotifywrapped.ui.gallery.pages.WrappedSummary;
 import com.example.spotifywrapped.user.User;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,6 +47,7 @@ public class PublicFragment extends Fragment {
 
     private RecyclerView recyclerView;
     public static WrapAdapter wrapAdapter;
+    public static CustomLinearLayoutManager layoutManager;
     private User currentUser; // Assume this is obtained correctly
 
     private Context context;
@@ -74,7 +77,8 @@ public class PublicFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference publicRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");
         recyclerView = root.findViewById(R.id.publicWrapRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        layoutManager = new CustomLinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
         ArrayList<WrapObject> wraps = new ArrayList<>();
         wrapAdapter = new WrapAdapter(getContext(), wraps);
@@ -110,6 +114,7 @@ public class PublicFragment extends Fragment {
         // Set the click listener for the button
         binding.addButtonPublicTask.setOnClickListener(v -> {
             AddWrapFragment.setVisibilityOrigin("Public");
+            WrappedSummary.setReturnToPrivate(false);
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.nav_addWrap);
         });

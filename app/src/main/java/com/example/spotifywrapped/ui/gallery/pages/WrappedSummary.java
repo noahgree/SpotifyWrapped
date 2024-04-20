@@ -101,6 +101,7 @@ public class WrappedSummary extends Fragment {
     private FirebaseFirestore db;
 
     public static boolean publicWrap = false;
+    public static boolean returnToPrivate = true;
     public static int publicWrapIndex = 0;
     public static int privateWrapIndex = 0;
 
@@ -123,6 +124,13 @@ public class WrappedSummary extends Fragment {
     }
     public static void setPrivateWrapIndex(int privateWrapIndex) {
         WrappedSummary.privateWrapIndex = privateWrapIndex;
+    }
+
+    public static boolean getReturnToPrivate() {
+        return returnToPrivate;
+    }
+    public static void setReturnToPrivate(boolean returnToPrivate) {
+        WrappedSummary.returnToPrivate = returnToPrivate;
     }
 
     @Override
@@ -300,11 +308,10 @@ public class WrappedSummary extends Fragment {
             setExitTransition(exitTransitionSet);
 
             NavController navController = Navigation.findNavController(v);
-            if (WrappedSummary.isPublicWrap()) {
-                navController.navigate(R.id.nav_public);
-
-            } else {
+            if (WrappedSummary.getReturnToPrivate()) {
                 navController.navigate(R.id.nav_gallery);
+            } else {
+                navController.navigate(R.id.nav_public);
             }
 
             // Show the toolbar with animation

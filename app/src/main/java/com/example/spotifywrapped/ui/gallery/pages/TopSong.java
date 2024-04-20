@@ -57,6 +57,7 @@ import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentTopSongBinding;
 import com.example.spotifywrapped.ui.CustomSnackbar;
+import com.example.spotifywrapped.ui.gallery.AddWrapFragment;
 import com.example.spotifywrapped.ui.gallery.WrapObject;
 import com.example.spotifywrapped.user.User;
 import com.google.android.material.snackbar.Snackbar;
@@ -217,11 +218,10 @@ public class TopSong extends Fragment {
             setExitTransition(exitTransitionSet);
 
             NavController navController = Navigation.findNavController(v);
-            if (WrappedSummary.isPublicWrap()) {
-                navController.navigate(R.id.nav_public);
-
-            } else {
+            if (WrappedSummary.getReturnToPrivate()) {
                 navController.navigate(R.id.nav_gallery);
+            } else {
+                navController.navigate(R.id.nav_public);
             }
 
             // Show the toolbar with animation

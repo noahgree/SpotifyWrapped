@@ -34,6 +34,8 @@ import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.SwipeItem;
 import com.example.spotifywrapped.databinding.FragmentGalleryBinding;
+import com.example.spotifywrapped.ui.CustomLinearLayoutManager;
+import com.example.spotifywrapped.ui.gallery.pages.WrappedSummary;
 import com.example.spotifywrapped.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,8 +51,9 @@ import java.util.Map;
 
 public class GalleryFragment extends Fragment {
     private FragmentGalleryBinding binding;
-    private RecyclerView recyclerView;
+    public static RecyclerView recyclerView;
     public static WrapAdapter wrapAdapterP;
+    public static CustomLinearLayoutManager layoutManager;
     private User currentUser; // Assume this is obtained correctly
 
     private Context context;
@@ -94,8 +97,9 @@ public class GalleryFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         ArrayList<WrapObject> wraps = new ArrayList<>();
+        layoutManager = new CustomLinearLayoutManager(getContext());
         recyclerView = root.findViewById(R.id.wrapRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(layoutManager);
         wrapAdapterP = new WrapAdapter(getContext(), wraps);
         recyclerView.setAdapter(wrapAdapterP);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeItem(wrapAdapterP));
@@ -143,6 +147,7 @@ public class GalleryFragment extends Fragment {
         // Set the click listener for the button
         binding.addButtonTask.setOnClickListener(v -> {
             AddWrapFragment.setVisibilityOrigin("Private");
+            WrappedSummary.setReturnToPrivate(true);
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.nav_addWrap);
         });
