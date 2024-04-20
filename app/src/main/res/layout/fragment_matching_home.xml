@@ -74,42 +74,48 @@
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
-            <RadioButton
-                android:id="@+id/matchingLongTermBtn"
+            <RadioGroup
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginBottom="20dp"
-                android:buttonTint="@color/spotify_black"
-                android:fontFamily="@font/spotify_font"
-                android:text="Long Term"
-                android:textColor="@color/spotify_black"
-                android:textColorLink="@color/spotify_green"
-                android:textSize="18sp" />
+                android:layout_height="wrap_content">
 
-            <RadioButton
-                android:id="@+id/matchingMediumTermBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:buttonTint="@color/spotify_black"
-                android:fontFamily="@font/spotify_font"
-                android:text="Medium Term"
-                android:textColor="@color/spotify_black"
-                android:textColorLink="@color/spotify_green"
-                android:textSize="18sp" />
+                <RadioButton
+                    android:id="@+id/matchingLongTermBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:buttonTint="@color/spotify_black"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="Long Term"
+                    android:textColor="@color/spotify_black"
+                    android:textColorLink="@color/spotify_green"
+                    android:textSize="18sp" />
 
-            <RadioButton
-                android:id="@+id/matchingShortTermBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:buttonTint="@color/spotify_black"
-                android:fontFamily="@font/spotify_font"
-                android:text="Short Term"
-                android:textColor="@color/spotify_black"
-                android:textColorLink="@color/spotify_green"
-                android:textSize="18sp" />
+                <RadioButton
+                    android:id="@+id/matchingMediumTermBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:buttonTint="@color/spotify_black"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="Medium Term"
+                    android:textColor="@color/spotify_black"
+                    android:textColorLink="@color/spotify_green"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/matchingShortTermBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:buttonTint="@color/spotify_black"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="Short Term"
+                    android:textColor="@color/spotify_black"
+                    android:textColorLink="@color/spotify_green"
+                    android:textSize="18sp" />
+
+            </RadioGroup>
 
             <Button
                 android:id="@+id/matchingstart"
