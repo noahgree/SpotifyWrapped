@@ -343,7 +343,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             public void onFinish() {
                 NavController navController = Navigation.findNavController(requireView());
                 navController.popBackStack(R.id.matchingHomeFragment3, false);
-                Toast.makeText(requireContext(), "Finished with a score of: " + score, Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "You finished with a score of: " + score + "!", Toast.LENGTH_LONG).show();
             }
         }.start();
     }
