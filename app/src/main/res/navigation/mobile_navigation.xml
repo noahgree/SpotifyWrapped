@@ -81,4 +81,9 @@
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
 
+    <fragment
+        android:id="@+id/navHangmanHome"
+        android:name="com.example.spotifywrapped.ui.games.hangmanHomeFragment"
+        tools:layout="@layout/fragment_hangman_home" />
+
 </navigation>
