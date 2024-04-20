@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,6 +97,8 @@ public class matchingHomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
         context = MainActivity.getInstance();
         currentUser = loadUser();
         mAuth = FirebaseAuth.getInstance();

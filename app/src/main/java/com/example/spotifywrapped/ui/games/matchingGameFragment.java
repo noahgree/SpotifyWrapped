@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,6 +79,8 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
         context = MainActivity.getInstance();
     }
 
