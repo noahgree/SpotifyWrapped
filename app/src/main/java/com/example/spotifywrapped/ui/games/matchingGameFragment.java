@@ -120,8 +120,8 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 handler.postDelayed(() -> {
                     if (firstTileIndex >= 0 && firstTileIndex < albumTiles.length &&
                             secondTileIndex >= 0 && secondTileIndex < albumTiles.length) {
-                        flipTile(albumTiles[firstTileIndex], firstTileIndex);
-                        flipTile(albumTiles[secondTileIndex], secondTileIndex);
+                        flipTileBack(albumTiles[firstTileIndex]);
+                        flipTileBack(albumTiles[secondTileIndex]);
                     }
                 }, 1000);
             }
@@ -165,6 +165,25 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 flipIn.start();
             }
         });
+    }
+
+    private void flipTileBack(ImageView imageView) {
+        ObjectAnimator flipOut = ObjectAnimator.ofFloat(imageView, "rotationY", 0f, 90f);
+        flipOut.setDuration(200);
+        flipOut.start();
+
+        flipOut.addListener(new AnimatorListenerAdapter() {
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                imageView.setImageResource(R.drawable.tile_back);
+
+                ObjectAnimator flipIn = ObjectAnimator.ofFloat(imageView, "rotationY", -90f, 0f);
+                flipIn.setDuration(200);
+                flipIn.start();
+            }
+        });
+
     }
 
     public void setTileIds(List<String> imageUrls) {
