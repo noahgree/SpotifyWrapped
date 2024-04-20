@@ -1,51 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:orientation="vertical"
+    android:background="#1af1b1"
     android:padding="16dp">
 
-    <!-- Hangman image -->
-
-    <!-- Word to guess -->
-    <ImageView
-        android:id="@+id/imageViewHangman"
+    <TextView
+        android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:layout_marginTop="16dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/hangman" />
+        android:text="Hangman Game"
+        android:textColor="@color/spotify_black"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="32dp" />
 
     <TextView
         android:id="@+id/textViewWordToGuess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
         android:text="Word to Guess"
-        android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textColor="@color/spotify_black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
 
-    <!-- Input field for guessing -->
+    <TextView
+        android:id="@+id/textViewHangman"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wrong guesses: "
+        android:textColor="@color/spotify_black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
     <EditText
         android:id="@+id/editTextGuess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
         android:hint="Enter your guess"
-        android:inputType="text" />
+        android:textColor="@color/spotify_black"
+        android:textSize="24sp"
+        android:padding="12dp"
+        android:gravity="center" />
 
-    <!-- Button to submit guess -->
     <Button
         android:id="@+id/buttonSubmitGuess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center_horizontal"
-        android:onClick="submitGuess"/>
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp" />
 
-</FrameLayout>
+</LinearLayout>

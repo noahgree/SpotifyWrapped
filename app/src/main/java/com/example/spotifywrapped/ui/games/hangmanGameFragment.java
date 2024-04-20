@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -17,14 +16,16 @@ import com.example.spotifywrapped.R;
 
 public class hangmanGameFragment extends Fragment {
 
-    private ImageView imageViewHangman;
     private TextView textViewWordToGuess;
+    private TextView textViewHangman;
     private EditText editTextGuess;
     private Button buttonSubmitGuess;
 
     private String[] words = {"ANDROID", "STUDIO", "GRADLE", "HANGMAN", "SPOTIFY"};
     private String wordToGuess;
     private StringBuilder guessedWord;
+    private StringBuilder wrongGuesses;
+
     private int maxWrongGuesses = 6;
     private int wrongGuessCount = 0;
 
@@ -33,18 +34,24 @@ public class hangmanGameFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hangman_game, container, false);
 
-        imageViewHangman = view.findViewById(R.id.imageViewHangman);
         textViewWordToGuess = view.findViewById(R.id.textViewWordToGuess);
+        textViewHangman = view.findViewById(R.id.textViewHangman);
         editTextGuess = view.findViewById(R.id.editTextGuess);
         buttonSubmitGuess = view.findViewById(R.id.buttonSubmitGuess);
 
-        // Initialize the game or restore saved state
+        buttonSubmitGuess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitGuess();
+            }
+        });
+
         if (savedInstanceState != null) {
             wordToGuess = savedInstanceState.getString("wordToGuess");
             guessedWord = new StringBuilder(savedInstanceState.getString("guessedWord"));
+            wrongGuesses = new StringBuilder(savedInstanceState.getString("wrongGuesses"));
             wrongGuessCount = savedInstanceState.getInt("wrongGuessCount");
             updateGameUI();
-            updateHangmanImage();
         } else {
             initializeGame();
         }
@@ -57,10 +64,11 @@ public class hangmanGameFragment extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putString("wordToGuess", wordToGuess);
         outState.putString("guessedWord", guessedWord.toString());
+        outState.putString("wrongGuesses", wrongGuesses.toString());
         outState.putInt("wrongGuessCount", wrongGuessCount);
     }
 
-    public void submitGuess(View view) {
+    private void submitGuess() {
         String guess = editTextGuess.getText().toString().toUpperCase();
 
         if (guess.length() != 1 || !Character.isLetter(guess.charAt(0))) {
@@ -68,32 +76,35 @@ public class hangmanGameFragment extends Fragment {
             return;
         }
 
-        boolean correctGuess = false;
-        for (int i = 0; i < wordToGuess.length(); i++) {
-            if (wordToGuess.charAt(i) == guess.charAt(0)) {
-                guessedWord.setCharAt(i, guess.charAt(0));
-                correctGuess = true;
-            }
-        }
-
-        updateGameUI();
-
-        if (guessedWord.toString().equals(wordToGuess)) {
-            Toast.makeText(getActivity(), "Congratulations! You've won!", Toast.LENGTH_SHORT).show();
-            initializeGame();
+        if (guessedWord.indexOf(guess) >= 0 || wrongGuesses.indexOf(guess) >= 0) {
+            Toast.makeText(getActivity(), "You've already guessed this letter.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (!correctGuess) {
+        if (wordToGuess.contains(guess)) {
+            for (int i = 0; i < wordToGuess.length(); i++) {
+                if (wordToGuess.charAt(i) == guess.charAt(0)) {
+                    guessedWord.setCharAt(i, guess.charAt(0));
+                }
+            }
+            if (guessedWord.toString().equals(wordToGuess)) {
+                Toast.makeText(getActivity(), "Congratulations! You've won!", Toast.LENGTH_SHORT).show();
+                initializeGame();
+                return;
+            }
+        } else {
+            wrongGuesses.append(guess);
             wrongGuessCount++;
             updateHangmanImage();
             if (wrongGuessCount == maxWrongGuesses) {
                 Toast.makeText(getActivity(), "Game Over! The word was: " + wordToGuess, Toast.LENGTH_SHORT).show();
                 initializeGame();
+                return;
             }
         }
 
         editTextGuess.getText().clear();
+        updateGameUI();
     }
 
     private void initializeGame() {
@@ -101,20 +112,20 @@ public class hangmanGameFragment extends Fragment {
         int randomIndex = random.nextInt(words.length);
         wordToGuess = words[randomIndex];
         guessedWord = new StringBuilder();
+        wrongGuesses = new StringBuilder();
         for (int i = 0; i < wordToGuess.length(); i++) {
-            guessedWord.append("-");
+            guessedWord.append("_");
         }
         updateGameUI();
     }
 
     private void updateGameUI() {
         textViewWordToGuess.setText(guessedWord.toString());
+        textViewHangman.setText("Wrong guesses: " + wrongGuesses.toString());
     }
 
     private void updateHangmanImage() {
-        int drawableId = getResources().getIdentifier("hangman_" + wrongGuessCount, "drawable", getActivity().getPackageName());
-        if (drawableId != 0) {
-            imageViewHangman.setImageResource(drawableId);
-        }
+        // Here you can update the hangman image or representation based on wrongGuessCount
+        // Since you don't have hangman images, you can customize this method as needed
     }
 }
