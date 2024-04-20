@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                     bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_black));
                     bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
 
-                    currentPageIcon.setImageResource(R.drawable.people_nearby);
+                    currentPageIcon.setImageResource(R.drawable.resource_public);
                 } else if (destId == R.id.nav_games) {
                     bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_black));
                     bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
