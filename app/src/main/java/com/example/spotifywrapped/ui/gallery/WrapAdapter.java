@@ -69,8 +69,6 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
             holder.publicIndicator.setVisibility(View.VISIBLE);
         }
 
-        ArrayList<Map<String, Object>> wraps = MainActivity.getCurrentUser().getwraps();
-
         holder.cardView.setOnClickListener(v -> {
             ActionBar actionBar = MainActivity.getInstance().getSupportActionBar();
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
@@ -79,8 +77,7 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
                 ImageView imageView = activity.findViewById(R.id.currentPageIcon);
                 imageView.setVisibility(View.GONE);
             }
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.nav_topSong);
+
             if (wrap.isPublicWrap()) {
                 WrappedSummary.setPublicWrap(true);
                 WrappedSummary.setPublicWrapIndex(position);
@@ -88,6 +85,9 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
                 WrappedSummary.setPrivateWrapIndex(position);
                 WrappedSummary.setPublicWrap(false);
             }
+
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.nav_topSong);
         });
 
         Glide.with(context).load(wrap.getArtistImage()).into(holder.artistImageView);

@@ -93,20 +93,20 @@ public class GalleryFragment extends Fragment {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        ArrayList<WrapObject> wraps = new ArrayList<>();
+        recyclerView = root.findViewById(R.id.wrapRecycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        wrapAdapterP = new WrapAdapter(getContext(), wraps);
+        recyclerView.setAdapter(wrapAdapterP);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeItem(wrapAdapterP));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
         //FirebaseUser user = mAuth.getCurrentUser();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             // Reference to the user's document in Firestore
             DocumentReference userRef = db.collection("Accounts").document(user.getUid());
-
-            ArrayList<WrapObject> wraps = new ArrayList<>();
-            recyclerView = root.findViewById(R.id.wrapRecycler);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            wrapAdapterP = new WrapAdapter(getContext(), wraps);
-            recyclerView.setAdapter(wrapAdapterP);
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeItem(wrapAdapterP));
-            itemTouchHelper.attachToRecyclerView(recyclerView);
 
             wrapAdapterP.notifyDataSetChanged();
 
@@ -158,93 +158,9 @@ public class GalleryFragment extends Fragment {
         return gson.fromJson(userJson, User.class);
     }
 
-
-//    private User loadUser() {
-//        SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
-//        Gson gson = new Gson();
-//        String userJson = sharedPreferences.getString("CurrentUser", null);
-//        Log.d("SharedPreferences", "Loaded token: " + userJson);
-//        return gson.fromJson(userJson, User.class);
-//    }
-
-//    private FragmentGalleryBinding binding;
-//    private RecyclerView recyclerView;
-//    private static ArrayList<WrapObject> WrapArrayList = new ArrayList<>();
-//    private static WrapListAdapter myAdapter;
-//
-//    private WrapAdapter wrapAdapter;
-//    private List<WrapObject> wrapList; // Assume this list will be populated accordingly
-//
-//    public static Context context;
-//
-//    private static User currentUser;
-
-
-
-
-//    public View onCreateView(@NonNull LayoutInflater inflater,
-//                             ViewGroup container, Bundle savedInstanceState) {
-//        GalleryViewModel galleryViewModel =
-//                new ViewModelProvider(this).get(GalleryViewModel.class);
-//
-//        binding = FragmentGalleryBinding.inflate(inflater, container, false);
-//        View root = binding.getRoot();
-//        context = MainActivity.getInstance();
-//
-//        initializeUserAndWraps();
-//
-//        recyclerView = root.findViewById(R.id.wrapRecycler); // Ensure this is the correct ID from your layout
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerView.setAdapter(wrapAdapter);
-//
-//    // Set the click listener for the button
-//        binding.addButtonTask.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                NavController navController = Navigation.findNavController(v);
-//                navController.navigate(R.id.nav_addWrap);
-//            }
-//        });
-
-
-//        //ISSUE
-//        if (MainActivity.getInstance() != null) {
-//            currentUser = loadUser();
-//            ArrayList<Map<String, Object>> wraps = currentUser.getwraps();
-//            for (int i = 0; i < wraps.size(); i++) {
-//                Map<String, Object> wrap = wraps.get(i);
-//                wrapList.add(new WrapObject(i, (String) wrap.get("name"), ((ArrayList<String>) wrap.get("artistsimage")).get(0), ((ArrayList<String>) wrap.get("tracksimage")).get(0), ((ArrayList<String>) wrap.get("artists")).get(0), ((ArrayList<String>) wrap.get("tracks")).get(0)));
-//            }
-//        }
-//
-//
-//        recyclerView = root.findViewById(R.id.wrapRecycler); // make sure recyclerView is in your FragmentGalleryBinding
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-////        myAdapter = new WrapListAdapter(getContext(), WrapArrayList);
-////        //recyclerView.setAdapter(myAdapter);
-////        myAdapter.notifyDataSetChanged();
-//
-//        // Initialize the list and adapter here (assuming list is pre-populated or will be fetched)
-//        if (wrapList != null || wrapList.isEmpty()) {
-//            wrapList = new ArrayList<>(); // Or fetch from a source
-//        }
-//        wrapAdapter = new WrapAdapter(getActivity(), wrapList);
-//
-//        recyclerView.setAdapter(wrapAdapter);
-//
-//        // Set the click listener for the button
-//        binding.addButtonTask.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                NavController navController = Navigation.findNavController(v);
-//                navController.navigate(R.id.nav_addWrap);
-//            }
-//        });
-
-//        final TextView textView = binding.textGallery;
-//        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-//        return root;
-//    }
+    public static int getAdapterSize() {
+        return wrapAdapterP.getItemCount();
+    }
 
     @Override
     public void onDestroyView() {

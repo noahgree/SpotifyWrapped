@@ -19,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -41,6 +42,7 @@ import android.widget.Toast;
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
 import com.example.spotifywrapped.databinding.FragmentAddWrapBinding;
+import com.example.spotifywrapped.ui.gallery.pages.WrappedSummary;
 import com.example.spotifywrapped.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -268,6 +270,9 @@ public class AddWrapFragment extends Fragment {
             boolean publicBool = publicBtn.isChecked();
             wrap.put("alsopublic", String.valueOf(publicBool));
 
+            Log.d("private", String.valueOf(GalleryFragment.getAdapterSize()));
+            WrappedSummary.setPrivateWrapIndex(GalleryFragment.getAdapterSize());
+
             DataCompletionHandler handler = updatedWrap -> {
                 // This block will be called once data fetching is complete.
                 getActivity().runOnUiThread(() -> {
@@ -282,7 +287,6 @@ public class AddWrapFragment extends Fragment {
 
                     RadioButton pub = root.findViewById(R.id.radioButtonPub);
                     if (pub.isChecked()) {
-
                         publicRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
                                 .addOnSuccessListener(aVoid -> Log.d(TAG, "Public wrap added to array successfully"))
                                 .addOnFailureListener(e -> Log.e(TAG, "Error adding public wrap to array", e));

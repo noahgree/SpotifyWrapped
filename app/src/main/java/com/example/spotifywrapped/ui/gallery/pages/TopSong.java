@@ -151,6 +151,7 @@ public class TopSong extends Fragment {
         // Assuming you have the current user's ID stored (e.g., as a field in the User object)
         FirebaseUser user = mAuth.getCurrentUser();
         if (!WrappedSummary.isPublicWrap()) {
+            Log.d("private", "AT PRIVATE WRAP");
             // Reference to the user's document in Firestore
             DocumentReference userRef = db.collection("Accounts").document(user.getUid());
             userRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -175,6 +176,7 @@ public class TopSong extends Fragment {
                 }
             }).addOnFailureListener(e -> Log.d("FIRESTORE", "Error getting document", e));
         } else {
+            Log.d("public", "AT PUBLIC WRAP");
             // Public wrap
             DocumentReference userRef = db.collection("Accounts").document("vGLXVzArF0OObsE5bJT4jNpdOy33");
             userRef.get().addOnSuccessListener(documentSnapshot -> {

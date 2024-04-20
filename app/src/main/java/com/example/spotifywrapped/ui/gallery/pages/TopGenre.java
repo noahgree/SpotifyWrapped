@@ -147,7 +147,6 @@ public class TopGenre extends Fragment {
                         Map<String, Object> wrapData = wrapList.get(WrappedSummary.getPrivateWrapIndex());
                         if (wrapData != null) {
                             Map<String, Object> wrap = wrapList.get(WrappedSummary.getPrivateWrapIndex());
-                            Log.d("testW", (wrap).toString());
                             String genre = ((ArrayList<String>) wrap.get("artistsgenre")).get(0);
                             String image = ((ArrayList<String>) wrap.get("artistsimage")).get(0);
                             String username = (String) wrapData.get("username");
