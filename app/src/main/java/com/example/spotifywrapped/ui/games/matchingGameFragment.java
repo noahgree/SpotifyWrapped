@@ -101,7 +101,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 if (firstTileIndex == -1) {
                     firstTileIndex = i;
                     flipTile(albumTiles[i], i);
-                } else if (secondTileIndex == -1) {
+                } else if (secondTileIndex == -1 && i != firstTileIndex) {
                     secondTileIndex = i;
                     flipTile(albumTiles[i], i);
                     checkTiles();
@@ -118,11 +118,19 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             if (firstImageUrl != null && firstImageUrl.equals(secondImageUrl)) {
                 Toast.makeText(requireContext(), "Match!", Toast.LENGTH_SHORT).show();
 
+                //animations
                 pulsateTile(albumTiles[firstTileIndex]);
                 pulsateTile(albumTiles[secondTileIndex]);
                 albumTiles[firstTileIndex].setBackgroundResource(R.drawable.highlighted_tile);
                 albumTiles[secondTileIndex].setBackgroundResource(R.drawable.highlighted_tile);
 
+                //prevent clicking on tiles after matched
+                albumTiles[firstTileIndex].setOnClickListener(null);
+                albumTiles[secondTileIndex].setOnClickListener(null);
+
+                //reset indices
+                firstTileIndex = -1;
+                secondTileIndex = -1;
             } else {
                 Toast.makeText(requireContext(), "No match!", Toast.LENGTH_SHORT).show();
 
