@@ -205,7 +205,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
 
-                tile.setImageResource(R.drawable.tile_back);
+                tile.setImageResource(R.drawable.matching_placeholder);
 
                 ObjectAnimator flipIn = ObjectAnimator.ofFloat(tile, "rotationY", -90f, 0f);
                 flipIn.setDuration(200);
