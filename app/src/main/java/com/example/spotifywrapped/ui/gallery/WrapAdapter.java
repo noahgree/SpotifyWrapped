@@ -63,7 +63,7 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
         holder.nameTextView.setText(wrap.getName());
         holder.artistTextView.setText(wrap.getArtistName());
         holder.songTextView.setText(wrap.getSongName());
-        holder.usernameTextView.setText("@" + wrap.getUsername());
+        holder.usernameTextView.setText("@" + wrap.getUsername().replace(" ", "_"));
         holder.timeFrameTextView.setText(wrap.getTimeFrame());
         holder.creationDateTextView.setText(wrap.getCreationDate());
         if ((wrap.getAlsoPublic()).equals("false")) {
