@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -134,8 +135,14 @@ public class matchingHomeFragment extends Fragment {
                         try {
                             if (jsonObject.getJSONArray("items").length() > 0) {
                                 List<String> url = new ArrayList<>();
+                                JSONArray images;
                                 for (int i = 0; i < 8; i++) {
-                                    url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("images").getJSONObject(0).getString("url"));
+                                    images = jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("images");
+                                    if (!images.isNull(0)) {
+                                        url.add(images.getJSONObject(0).getString("url"));
+                                    } else {
+                                        url.add("default");
+                                    }
                                 }
                                 wrap.put("artists", url);
 
