@@ -145,7 +145,7 @@ public class GamesHomeFragment extends Fragment {
                         ScoreEntry entry = topThreeEntries.get(i);
                         if (entry != null) {
                             String score = String.valueOf(entry.getScore());
-                            String player = "@" + scoresFromFirestore.get(entry.getKey());
+                            String player = ("@" + scoresFromFirestore.get(entry.getKey())).replace(" ", "_");
                             switch (i) {
                                 case 0:
                                     mg1.setText(score);
@@ -217,7 +217,7 @@ public class GamesHomeFragment extends Fragment {
                         ScoreEntry entry = topThreeEntries.get(i);
                         if (entry != null) {
                             String score = String.valueOf(entry.getScore());
-                            String player = "@" + scoresFromFirestore.get(entry.getKey());
+                            String player = ("@" + scoresFromFirestore.get(entry.getKey())).replace(" ", "_");
                             switch (i) {
                                 case 0:
                                     hm1.setText(score);
