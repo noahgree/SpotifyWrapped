@@ -12,6 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import com.example.spotifywrapped.R;
 
@@ -22,7 +26,7 @@ public class hangmanGameFragment extends Fragment {
     private EditText editTextGuess;
     private Button buttonSubmitGuess;
 
-    private String[] words = {"SWIFT", "DRAKE", "BEYONCE", "BTS", "SPOTIFY"};
+    private String[] words = new String[10];
     private String wordToGuess;
     private StringBuilder guessedWord;
     private StringBuilder wrongGuesses;
@@ -36,6 +40,9 @@ public class hangmanGameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_hangman_game, container, false);
         setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
         setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
+
+        List<String> artists = getArguments().getStringArrayList("artists");
+        setWords(artists);
 
         textViewWordToGuess = view.findViewById(R.id.textViewWordToGuess);
         textViewHangman = view.findViewById(R.id.textViewHangman);
@@ -126,4 +133,18 @@ public class hangmanGameFragment extends Fragment {
         // Here you can update the hangman image or representation based on wrongGuessCount
         // Since you don't have hangman images, you can customize this method as needed
     }
+
+    public void setWords(List<String> artists) {
+        Collections.shuffle(artists);
+
+        List<String> pairImageUrls = new ArrayList<>(artists);
+        pairImageUrls.addAll(artists);
+
+        Collections.shuffle(pairImageUrls);
+
+        for (int i = 0; i < words.length && i < pairImageUrls.size(); i++) {
+            words[i] = pairImageUrls.get(i);
+        }
+    }
+
 }

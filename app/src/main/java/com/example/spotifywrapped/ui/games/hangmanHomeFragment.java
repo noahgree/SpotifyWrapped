@@ -157,9 +157,8 @@ public class hangmanHomeFragment extends Fragment {
                 // This block will be called once data fetching is complete.
                 getActivity().runOnUiThread(() -> {
                     // switch to matching game view
-                    List<String> images = (List<String>) updatedImages.get("artists");
-                    NavController navController = Navigation.findNavController(v);
-                    navController.navigate(R.id.navHangmanGame);
+                    List<String> artists = (List<String>) updatedImages.get("artists");
+                    navigateToHangmanGameFragment(artists);
                 });
             };
 
@@ -170,6 +169,12 @@ public class hangmanHomeFragment extends Fragment {
         // Inflate the layout for this fragment
         return root;
 
+    }
+    public void navigateToHangmanGameFragment(List<String> artists) {
+        NavController navController = Navigation.findNavController(requireView());
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("artists", (ArrayList<String>) artists);
+        navController.navigate(R.id.navHangmanGame, bundle);
     }
 
 
