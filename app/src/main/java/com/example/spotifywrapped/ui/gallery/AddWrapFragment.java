@@ -294,13 +294,12 @@ public class AddWrapFragment extends Fragment {
             DataCompletionHandler handler = updatedWrap -> {
                 // This block will be called once data fetching is complete.
                 getActivity().runOnUiThread(() -> {
-                    Map<String, Object> dataToUpdate = new HashMap<>();
-
                     userRef.update("wraps", FieldValue.arrayUnion(updatedWrap))
                             .addOnSuccessListener(aVoid -> Log.d(TAG, "Public wrap added to array successfully"))
                             .addOnFailureListener(e -> Log.e(TAG, "Error adding public wrap to array", e));
 
                     Log.d("Firestore CHECK", user.getUid());
+
                     currentUser.addWrap(updatedWrap);
 
                     RadioButton pub = root.findViewById(R.id.radioButtonPub);
@@ -319,7 +318,6 @@ public class AddWrapFragment extends Fragment {
                     NavController navController = Navigation.findNavController(v);
                     navController.popBackStack(R.id.nav_gallery, true); // Clear back stack up to home
                     navController.navigate(R.id.nav_topSong);
-
 
                     // hide action bar up top
                     ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();

@@ -285,7 +285,6 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     }
 
     private void animatePointsAdded() {
-
         int originalColor = scoreTextView.getCurrentTextColor();
 
         if (scoreTextView != null) {
@@ -363,7 +362,6 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             public void onFinish() { // When the delay timer ends
                 NavController navController = Navigation.findNavController(requireView());
                 navController.popBackStack(R.id.matchingHomeFragment, false);
-                matchingHomeFragment.setUpResults();
             }
         }.start();
     }

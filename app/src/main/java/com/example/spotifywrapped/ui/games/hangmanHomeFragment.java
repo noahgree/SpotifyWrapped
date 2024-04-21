@@ -1,5 +1,6 @@
 package com.example.spotifywrapped.ui.games;
 
+import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
@@ -37,6 +38,9 @@ import com.example.spotifywrapped.databinding.FragmentMatchingHomeBinding;
 import com.example.spotifywrapped.ui.gallery.AddWrapFragment;
 import com.example.spotifywrapped.user.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
@@ -45,9 +49,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.UUID;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -62,6 +71,7 @@ public class hangmanHomeFragment extends Fragment {
 
     private static FragmentHangmanHomeBinding binding;
     public static Context context;
+    private static User currentUser;
     private static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
     private FirebaseAuth mAuth;
@@ -73,10 +83,19 @@ public class hangmanHomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = MainActivity.getInstance();
+        currentUser = loadUser();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
         setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
+    }
+
+    private User loadUser() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String userJson = sharedPreferences.getString("CurrentUser", null);
+        Log.d("SharedPreferences", "Loaded token: " + userJson);
+        return gson.fromJson(userJson, User.class);
     }
 
     private String getTimeFrame() {
@@ -214,9 +233,8 @@ public class hangmanHomeFragment extends Fragment {
         navController.navigate(R.id.navHangmanGame, bundle);
     }
 
-    public static void setUpResults() {
+    public void setUpResults() {
         TextView scoreText = binding.getRoot().findViewById(R.id.scoreValueHomeHM);
-        TextView resultsTitle = binding.getRoot().findViewById(R.id.resultsTextHM);
         TextView timeText = binding.getRoot().findViewById(R.id.timeResultHM);
         ImageView spaceFiller = binding.getRoot().findViewById(R.id.spaceFillerHM);
         LinearLayout resultsBox = binding.getRoot().findViewById(R.id.resultsBoxHM);
@@ -227,14 +245,53 @@ public class hangmanHomeFragment extends Fragment {
         explainBox.setVisibility(View.GONE);
         timeText.setVisibility(View.VISIBLE);
 
-        if (hangmanGameFragment.getScore() == 0) {
+        if (hangmanGameFragment.getJustLost()) {
             scoreText.setText(String.valueOf(0));
             timeText.setTextColor(ContextCompat.getColor(context, R.color.spotify_red));
-            timeText.setText("YOU LOST");
+            timeText.setText("YOU LOST!");
         } else {
             scoreText.setText(String.valueOf(hangmanGameFragment.getScore()));
-            timeText.setTextColor(ContextCompat.getColor(context, R.color.spotify_black));
-            timeText.setText("FINISHED IN: " + hangmanGameFragment.getTime());
+            timeText.setTextColor(ContextCompat.getColor(context, R.color.spotify_green));
+            timeText.setText("YOU WON\nFINISHED IN: " + hangmanGameFragment.getTime());
         }
+
+        publishResults();
+    }
+
+    private void publishResults() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        // Reference to the top score's document in Firestore
+        DocumentReference topScoresRef = db.collection("Accounts").document("DbwyyYBNxvx710s0aE26");
+
+        topScoresRef.get().addOnCompleteListener(getScoresTask -> {
+            if (getScoresTask.isSuccessful()) {
+                Map<String, Object> scoresFromFirestore = (Map<String, Object>) getScoresTask.getResult().get("tophm");
+                int newScore = hangmanGameFragment.getScore();
+
+                String uniqueScoreKey = newScore + "_" + UUID.randomUUID().toString();
+                scoresFromFirestore.put(uniqueScoreKey, currentUser.getName());
+
+                SortedSet<String> sortedKeys = new TreeSet<>((a, b) -> {
+                    int scoreA = Integer.parseInt(a.split("_")[0]);
+                    int scoreB = Integer.parseInt(b.split("_")[0]);
+                    return Integer.compare(scoreB, scoreA); // Descending order
+                });
+                sortedKeys.addAll(scoresFromFirestore.keySet());
+
+                Map<String, Object> scoresToSendBack = new HashMap<>();
+                for (String key : sortedKeys) {
+                    scoresToSendBack.put(key, scoresFromFirestore.get(key));
+                }
+
+                topScoresRef.update("tophm", scoresToSendBack)
+                        .addOnSuccessListener(aVoid -> Log.d(TAG, "Hangman score added to array successfully"))
+                        .addOnFailureListener(e -> Log.e(TAG, "Error adding hangman score to array", e));
+
+                Log.d("Firestore CHECK", user.getUid());
+            } else {
+                Log.d(TAG, "Error getting data from firebase before adding score: " + getScoresTask.getException().getMessage());
+            }
+        });
     }
 }
