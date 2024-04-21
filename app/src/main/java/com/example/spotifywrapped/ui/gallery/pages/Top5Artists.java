@@ -177,15 +177,15 @@ public class Top5Artists extends Fragment {
                             songName = root.findViewById(R.id.topartisttext5);
                             songName.setText(name5);
                             ImageView topsongimage = root.findViewById(R.id.topartistimage1);
-                            Glide.with(context).load(image1).into(topsongimage);
+                            Glide.with(context).load((image1.equals("default")) ? R.drawable.no_image : image1).into(topsongimage);
                             topsongimage = root.findViewById(R.id.topartistimage2);
-                            Glide.with(context).load(image2).into(topsongimage);
+                            Glide.with(context).load((image2.equals("default")) ? R.drawable.no_image : image2).into(topsongimage);
                             topsongimage = root.findViewById(R.id.topartistimage3);
-                            Glide.with(context).load(image3).into(topsongimage);
+                            Glide.with(context).load((image3.equals("default")) ? R.drawable.no_image : image3).into(topsongimage);
                             topsongimage = root.findViewById(R.id.topartistimage4);
-                            Glide.with(context).load(image4).into(topsongimage);
+                            Glide.with(context).load((image4.equals("default")) ? R.drawable.no_image : image4).into(topsongimage);
                             topsongimage = root.findViewById(R.id.topartistimage5);
-                            Glide.with(context).load(image5).into(topsongimage);
+                            Glide.with(context).load((image5.equals("default")) ? R.drawable.no_image : image5).into(topsongimage);
                         }
                     }
                 } else {
@@ -225,23 +225,23 @@ public class Top5Artists extends Fragment {
                             songName.setText(name5);
                             ImageView topsongimage = root.findViewById(R.id.topartistimage1);
                             Glide.with(context)
-                                    .load(image1)
+                                    .load((image1.equals("default")) ? R.drawable.no_image : image1)
                                     .into(topsongimage);
                             topsongimage = root.findViewById(R.id.topartistimage2);
                             Glide.with(context)
-                                    .load(image2)
+                                    .load((image2.equals("default")) ? R.drawable.no_image : image2)
                                     .into(topsongimage);
                             topsongimage = root.findViewById(R.id.topartistimage3);
                             Glide.with(context)
-                                    .load(image3)
+                                    .load((image3.equals("default")) ? R.drawable.no_image : image3)
                                     .into(topsongimage);
                             topsongimage = root.findViewById(R.id.topartistimage4);
                             Glide.with(context)
-                                    .load(image4)
+                                    .load((image4.equals("default")) ? R.drawable.no_image : image4)
                                     .into(topsongimage);
                             topsongimage = root.findViewById(R.id.topartistimage5);
                             Glide.with(context)
-                                    .load(image5)
+                                    .load((image5.equals("default")) ? R.drawable.no_image : image5)
                                     .into(topsongimage);
                         }
                     }

@@ -50,6 +50,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -182,10 +184,16 @@ public class AddWrapFragment extends Fragment {
                                     List<String> url = new ArrayList<>();
                                     List<String> genre = new ArrayList<>();
                                     List<String> uniqueness = new ArrayList<>();
+                                    JSONArray images;
                                     for (int i = 0; i < 5; i++) {
                                         if (thing.equals("artists")) {
                                             name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
-                                            url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("images").getJSONObject(0).getString("url"));
+                                            images = jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("images");
+                                            if (!images.isNull(0)) {
+                                                url.add(images.getJSONObject(0).getString("url"));
+                                            } else {
+                                                url.add("default");
+                                            }
                                             Log.d("test", jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").toString());
                                             if (jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").length() != 0) {
                                                 genre.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONArray("genres").getString(0));
@@ -193,7 +201,12 @@ public class AddWrapFragment extends Fragment {
                                             uniqueness.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("popularity"));
                                         } else {
                                             name.add(jsonObject.getJSONArray("items").getJSONObject(i).getString("name"));
-                                            url.add(jsonObject.getJSONArray("items").getJSONObject(i).getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url"));
+                                            images = jsonObject.getJSONArray("items").getJSONObject(i).getJSONObject("album").getJSONArray("images");
+                                            if (!images.isNull(0)) {
+                                                url.add(images.getJSONObject(0).getString("url"));
+                                            } else {
+                                                url.add("default");
+                                            }
                                         }
                                     }
                                     if (genre.size() == 0) {

@@ -137,13 +137,14 @@ public class hangmanGameFragment extends Fragment {
     public void setWords(List<String> artists) {
         Collections.shuffle(artists);
 
-        List<String> pairImageUrls = new ArrayList<>(artists);
-        pairImageUrls.addAll(artists);
+        List<String> pairArtists = new ArrayList<>(artists);
+        pairArtists.addAll(artists);
 
-        Collections.shuffle(pairImageUrls);
+        Collections.shuffle(pairArtists);
 
-        for (int i = 0; i < words.length && i < pairImageUrls.size(); i++) {
-            words[i] = pairImageUrls.get(i);
+        for (int i = 0; i < words.length && i < pairArtists.size(); i++) {
+            words[i] = pairArtists.get(i).toUpperCase().replaceAll(" ", "");
+
         }
     }
 

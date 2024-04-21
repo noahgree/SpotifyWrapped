@@ -169,7 +169,7 @@ public class TopSong extends Fragment {
                             TextView songName = root.findViewById(R.id.topsong);
                             songName.setText(name);
                             ImageView topartistimage = root.findViewById(R.id.topsongimage);
-                            Glide.with(context).load(image).into(topartistimage);
+                            Glide.with(context).load((image.equals("default")) ? R.drawable.no_image : image).into(topartistimage);
                             setNameonTitle(username);
                         }
                     }
@@ -195,7 +195,7 @@ public class TopSong extends Fragment {
                             TextView songName = root.findViewById(R.id.topsong);
                             songName.setText(name);
                             ImageView topartistimage = root.findViewById(R.id.topsongimage);
-                            Glide.with(context).load(image).into(topartistimage);
+                            Glide.with(context).load((image.equals("default")) ? R.drawable.no_image : image).into(topartistimage);
                             setNameonTitle(username);
                         }
                     }

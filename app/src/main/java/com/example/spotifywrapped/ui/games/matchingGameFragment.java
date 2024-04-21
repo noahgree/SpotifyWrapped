@@ -193,7 +193,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 String imageUrl = getImageUrl(tileIndex);
                 if (imageUrl != null) {
                     Glide.with(requireContext())
-                            .load(imageUrl)
+                            .load((imageUrl.equals("default")) ? R.drawable.no_image : imageUrl)
                             .into(imageView);
                 }
 

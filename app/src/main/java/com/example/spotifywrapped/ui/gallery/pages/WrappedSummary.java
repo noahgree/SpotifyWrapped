@@ -198,7 +198,7 @@ public class WrappedSummary extends Fragment {
                             songName.setText(name5);
                             ImageView topsongimage = (ImageView) root.findViewById(R.id.leftImage1);
                             Glide.with(context)
-                                    .load(image1)
+                                    .load((image1.equals("default")) ? R.drawable.no_image : image1)
                                     .into(topsongimage);
 
                             // top artist stuff
@@ -221,7 +221,7 @@ public class WrappedSummary extends Fragment {
                             songName.setText(Aname5);
                             ImageView topartistimage = (ImageView) root.findViewById(R.id.leftImage2);
                             Glide.with(context)
-                                    .load(Aimage1)
+                                    .load((Aimage1.equals("default")) ? R.drawable.no_image : Aimage1)
                                     .into(topartistimage);
                             String username = (String) wrapData.get("username");
                             setNameonTitle(username);
@@ -262,7 +262,7 @@ public class WrappedSummary extends Fragment {
                             songName.setText(name5);
                             ImageView topsongimage = (ImageView) root.findViewById(R.id.leftImage1);
                             Glide.with(context)
-                                    .load(image1)
+                                    .load((image1.equals("default")) ? R.drawable.no_image : image1)
                                     .into(topsongimage);
 
                             // top artist stuff
@@ -285,7 +285,7 @@ public class WrappedSummary extends Fragment {
                             songName.setText(Aname5);
                             ImageView topartistimage = (ImageView) root.findViewById(R.id.leftImage2);
                             Glide.with(context)
-                                    .load(Aimage1)
+                                    .load((Aimage1.equals("default")) ? R.drawable.no_image : Aimage1)
                                     .into(topartistimage);
                             String username = (String) wrapData.get("username");
                             setNameonTitle(username);

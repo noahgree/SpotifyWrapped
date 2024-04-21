@@ -96,8 +96,8 @@ public class WrapAdapter extends RecyclerView.Adapter<WrapAdapter.WrapViewHolder
             navController.navigate(R.id.nav_topSong);
         });
 
-        Glide.with(context).load(wrap.getArtistImage()).into(holder.artistImageView);
-        Glide.with(context).load(wrap.getSongImage()).into(holder.songImageView);
+        Glide.with(context).load((wrap.getArtistImage().equals("default")) ? R.drawable.no_image : wrap.getArtistImage()).into(holder.artistImageView);
+        Glide.with(context).load((wrap.getSongImage().equals("default")) ? R.drawable.no_image : wrap.getSongImage()).into(holder.songImageView);
     }
 
 

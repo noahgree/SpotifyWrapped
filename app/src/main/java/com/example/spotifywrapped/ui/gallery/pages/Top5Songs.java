@@ -185,23 +185,23 @@ public class Top5Songs extends Fragment {
                             songName.setText(name5);
                             ImageView topsongimage = (ImageView) root.findViewById(R.id.topsongimage1);
                             Glide.with(context)
-                                    .load(image1)
+                                    .load((image1.equals("default")) ? R.drawable.no_image : image1)
                                     .into(topsongimage);
                             topsongimage = (ImageView) root.findViewById(R.id.topsongimage2);
                             Glide.with(context)
-                                    .load(image2)
+                                    .load((image2.equals("default")) ? R.drawable.no_image : image2)
                                     .into(topsongimage);
                             topsongimage = (ImageView) root.findViewById(R.id.topsongimage3);
                             Glide.with(context)
-                                    .load(image3)
+                                    .load((image3.equals("default")) ? R.drawable.no_image : image3)
                                     .into(topsongimage);
                             topsongimage = (ImageView) root.findViewById(R.id.topsongimage4);
                             Glide.with(context)
-                                    .load(image4)
+                                    .load((image4.equals("default")) ? R.drawable.no_image : image4)
                                     .into(topsongimage);
                             topsongimage = (ImageView) root.findViewById(R.id.topsongimage5);
                             Glide.with(context)
-                                    .load(image5)
+                                    .load((image5.equals("default")) ? R.drawable.no_image : image5)
                                     .into(topsongimage);
                         }
                     }
@@ -242,23 +242,23 @@ public class Top5Songs extends Fragment {
                             songName.setText(name5);
                             ImageView topsongimage = (ImageView) root.findViewById(R.id.topsongimage1);
                             Glide.with(context)
-                                    .load(image1)
+                                    .load((image1.equals("default")) ? R.drawable.no_image : image1)
                                     .into(topsongimage);
                             topsongimage = (ImageView) root.findViewById(R.id.topsongimage2);
                             Glide.with(context)
-                                    .load(image2)
+                                    .load((image2.equals("default")) ? R.drawable.no_image : image2)
                                     .into(topsongimage);
                             topsongimage = (ImageView) root.findViewById(R.id.topsongimage3);
                             Glide.with(context)
-                                    .load(image3)
+                                    .load((image3.equals("default")) ? R.drawable.no_image : image3)
                                     .into(topsongimage);
                             topsongimage = (ImageView) root.findViewById(R.id.topsongimage4);
                             Glide.with(context)
-                                    .load(image4)
+                                    .load((image4.equals("default")) ? R.drawable.no_image : image4)
                                     .into(topsongimage);
                             topsongimage = (ImageView) root.findViewById(R.id.topsongimage5);
                             Glide.with(context)
-                                    .load(image5)
+                                    .load((image5.equals("default")) ? R.drawable.no_image : image5)
                                     .into(topsongimage);
                         }
                     }
