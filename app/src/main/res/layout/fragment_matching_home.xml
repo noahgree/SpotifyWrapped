@@ -2,89 +2,97 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainAW"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
-    <TextView
-        android:id="@+id/matchinghometext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/spotify_font"
-        android:text="@string/matching_game_home"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="@color/spotify_black"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+    android:layout_marginBottom="15dp"
+    tools:context=".ui.games.matchingHomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/titleMH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:fontFamily="@font/spotify_font"
+            android:text="Matching Game"
+            android:textAlignment="textStart"
+            android:textColor="@color/spotify_black"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_corners_drawable"
+            android:backgroundTint="@color/spotify_black"
+            android:backgroundTintMode="add"
+            android:elevation="5dp"
             android:orientation="vertical">
 
-
             <TextView
-                android:id="@+id/matchingTimeFrameText"
+                android:id="@+id/textViewTF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/spotify_font"
-                android:text="Select your tile timeframe:"
-                android:textAlignment="center"
-                android:textColor="@color/spotify_black"
-                android:textSize="25sp"
+                android:text="Time Frame"
+                android:textColor="@color/spotify_green"
+                android:textSize="24sp"
                 android:textStyle="bold" />
+
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <RadioButton
-                    android:id="@+id/matchingShortTermBtn"
+                    android:id="@+id/shortTermBtnMG"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/spotify_black"
+                    android:layout_marginStart="30dp"
+                    android:buttonTint="@color/spotify_white"
                     android:fontFamily="@font/spotify_font"
-                    android:text="Short Term"
-                    android:textColor="@color/spotify_black"
+                    android:text="4 Weeks"
+                    android:textColor="@color/spotify_white"
                     android:textColorLink="@color/spotify_green"
                     android:textSize="18sp" />
 
                 <RadioButton
-                    android:id="@+id/matchingMediumTermBtn"
+                    android:id="@+id/mediumTermBtnMG"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/spotify_black"
+                    android:layout_marginStart="30dp"
+                    android:buttonTint="@color/spotify_white"
                     android:fontFamily="@font/spotify_font"
-                    android:text="Medium Term"
-                    android:textColor="@color/spotify_black"
+                    android:text="6 Months"
+                    android:textColor="@color/spotify_white"
                     android:textColorLink="@color/spotify_green"
                     android:textSize="18sp" />
 
                 <RadioButton
-                    android:id="@+id/matchingLongTermBtn"
+                    android:id="@+id/longTermBtnMG"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:buttonTint="@color/spotify_black"
+                    android:layout_marginStart="30dp"
+                    android:buttonTint="@color/spotify_white"
                     android:fontFamily="@font/spotify_font"
-                    android:text="Long Term"
-                    android:textColor="@color/spotify_black"
+                    android:text="1 Year"
+                    android:textColor="@color/spotify_white"
                     android:textColorLink="@color/spotify_green"
                     android:textSize="18sp" />
 
             </RadioGroup>
 
             <Button
-                android:id="@+id/matchingstart"
+                android:id="@+id/matchingStartBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -93,11 +101,29 @@
                 android:layout_marginBottom="25dp"
                 android:background="@drawable/rounded_button"
                 android:fontFamily="@font/spotify_font"
-                android:text="BEGIN"
+                android:text="Begin"
                 android:textColor="@color/spotify_white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginBottom="25dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:padding="25dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/compare_match_icon"
+                    app:tint="@color/spotify_darker_grey" />
+            </FrameLayout>
 
         </LinearLayout>
     </LinearLayout>

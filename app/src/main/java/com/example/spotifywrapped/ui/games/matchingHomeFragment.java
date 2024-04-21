@@ -81,9 +81,9 @@ public class matchingHomeFragment extends Fragment {
     }
 
     private String getTimeFrame() {
-        RadioButton shortTerm = getActivity().findViewById(R.id.matchingShortTermBtn);
-        RadioButton mediumTerm = getActivity().findViewById(R.id.matchingMediumTermBtn);
-        RadioButton longTerm = getActivity().findViewById(R.id.matchingLongTermBtn);
+        RadioButton shortTerm = getActivity().findViewById(R.id.shortTermBtnMG);
+        RadioButton mediumTerm = getActivity().findViewById(R.id.mediumTermBtnMG);
+        RadioButton longTerm = getActivity().findViewById(R.id.longTermBtnMG);
         if (shortTerm.isChecked()) {
             term = "short";
         } else if (mediumTerm.isChecked()) {
@@ -158,7 +158,7 @@ public class matchingHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMatchingHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        Button playButton = root.findViewById(R.id.matchingstart);
+        Button playButton = root.findViewById(R.id.matchingStartBtn);
         Spinner spinner = null;
         playButton.setOnClickListener(v -> {
 
