@@ -21,7 +21,7 @@ public class hangmanGameFragment extends Fragment {
     private EditText editTextGuess;
     private Button buttonSubmitGuess;
 
-    private String[] words = {"ANDROID", "STUDIO", "GRADLE", "HANGMAN", "SPOTIFY"};
+    private String[] words = {"SWIFT", "DRAKE", "BEYONCE", "BTS", "SPOTIFY"};
     private String wordToGuess;
     private StringBuilder guessedWord;
     private StringBuilder wrongGuesses;
