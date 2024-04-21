@@ -146,7 +146,7 @@ public class SettingsFragment extends Fragment {
                                                                 if (nameUpdateInFireStoreTask.isSuccessful()) {
                                                                     Log.d(TAG, "Firestore name update successful");
                                                                     MainActivity.getCurrentUser().setName(newFullName);
-                                                                    MainActivity.onLoginSuccess(newFullName, MainActivity.getCurrentUser().getEmail());
+                                                                    MainActivity.onLoginSuccess(newFullName, MainActivity.getCurrentUser().getEmail(), MainActivity.getCurrentUser().getTotalPoints());
                                                                     MainActivity.getInstance().saveUser(MainActivity.getCurrentUser());
                                                                     updatedNameConfirmText.setText("NEW NAME SAVED");
                                                                     updatedNameConfirmText.setTextColor(context.getColor(R.color.spotify_blue));

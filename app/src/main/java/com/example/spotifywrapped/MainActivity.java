@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         // Deals with if user needs to log in or refresh the spotify token.
         if (mAuth.getCurrentUser() != null && currentUser != null) {
             // User is still logged in with Firebase, load the user profile
-            onLoginSuccess(currentUser.getName(), currentUser.getEmail());
+            onLoginSuccess(currentUser.getName(), currentUser.getEmail(), currentUser.getTotalPoints());
             updateUserProfilePhoto();
             if (currentUser.getmAccessToken() == null) {
                 Log.d(TAG, "NO ACCESS TOKEN");
@@ -156,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
                     if (!isValid) {
                         navigateToSpotifyLoginFragment();
                     } else {
-                        //TODO: Make it so if the token from the saved user is not valid, then it also checks the token stored in firebase
                         setupNavigationAndToolbar();
                     }
                 });
@@ -164,16 +163,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             navigateToLoginFragment();
         }
-        //TODO: NEED TO IMPLEMENT THE LOG OUT BUTTON
 
         // For swapping toolbar icon depending on current layout
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(item -> {
-                    int id = item.getItemId();
-            Log.d("navCHANGEPICKED", getResources().getResourceName(id));
-            return true;
-                });
         ImageView currentPageIcon = binding.getRoot().findViewById(R.id.currentPageIcon);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int destId = destination.getId();
@@ -342,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void updateForHoliday(ViewBinding binding) {
-        ImageView imageView = (ImageView) binding.getRoot().findViewById(R.id.topSongPattern);
+        ImageView imageView = binding.getRoot().findViewById(R.id.topSongPattern);
         if (theme.equals("Christmas")) {
             Glide.with(context)
                     .load(R.drawable.christmas_pattern)
@@ -599,16 +591,18 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //Updates new values with the current user.
-    public static void onLoginSuccess(String name, String email) {
+    // Updates new values with the current user.
+    public static void onLoginSuccess(String name, String email, String totalPoints) {
         NavigationView navigationView = binding.navView;
         View navView = navigationView.getHeaderView(0);
 
         // Side Navigation
         TextView navName = navView.findViewById(R.id.navName);
         TextView navEmail = navView.findViewById(R.id.navEmail);
+        TextView navTotalPoints = navView.findViewById(R.id.navTotalPoints);
         navName.setText(name);
         navEmail.setText(email);
+        navTotalPoints.setText(totalPoints);
     }
 
     public void logoutUser(boolean displayToast) {

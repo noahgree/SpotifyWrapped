@@ -47,6 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -261,6 +262,7 @@ public class matchingHomeFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // Reference to the user's document in Firestore
         DocumentReference topScoresRef = db.collection("Accounts").document("DbwyyYBNxvx710s0aE26");
+        DocumentReference userRef = db.collection("Accounts").document(user.getUid());
 
         topScoresRef.get().addOnCompleteListener(getScoresTask -> {
             if (getScoresTask.isSuccessful()) {
@@ -289,5 +291,44 @@ public class matchingHomeFragment extends Fragment {
                 Log.d(TAG, "Error getting data from firebase before adding score: " + getScoresTask.getException().getMessage());
             }
         });
+
+        userRef.get().addOnCompleteListener(getScoresTask -> {
+            if (getScoresTask.isSuccessful()) {
+                String firestoreScore = ((String) getScoresTask.getResult().get("totalpoints")).replace(",", "");
+                int newAdditionalScore = matchingGameFragment.getScore();
+
+                firestoreScore = String.valueOf(Integer.parseInt(firestoreScore) + newAdditionalScore);
+                String finalFirestoreScore = formatNumber(firestoreScore);
+
+                userRef.update("totalpoints", finalFirestoreScore)
+                        .addOnSuccessListener(aVoid ->  {
+                            Log.d(TAG, "User score updated successfully: " + finalFirestoreScore);
+                            MainActivity.getCurrentUser().setTotalPoints(finalFirestoreScore);
+                            MainActivity.getInstance().saveUser(MainActivity.getCurrentUser());
+                            MainActivity.onLoginSuccess(currentUser.getName(), currentUser.getEmail(), MainActivity.getCurrentUser().getTotalPoints());
+                        })
+                        .addOnFailureListener(e -> Log.e(TAG, "Error updating user score", e));
+
+                Log.d("Firestore CHECK", user.getUid());
+            } else {
+                Log.d(TAG, "Error getting data from firebase before adding score: " + getScoresTask.getException().getMessage());
+            }
+        });
+    }
+
+    public static String formatNumber(String numberStr) {
+        try {
+            // Convert the String to a long
+            long number = Long.parseLong(numberStr);
+
+            // Get the number format instance for the default locale
+            NumberFormat formatter = NumberFormat.getNumberInstance();
+
+            // Format the number
+            return formatter.format(number);
+        } catch (NumberFormatException e) {
+            Log.d(TAG, "Invalid number of points attempted to be formatted.");
+            return numberStr;
+        }
     }
 }

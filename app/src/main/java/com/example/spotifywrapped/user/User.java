@@ -11,14 +11,17 @@ public class User {
 
     private ArrayList<Map<String, Object>> wraps;
 
+    private String totalPoints;
+
     private String mAccessToken;
 
-    public User(String email, String password, String USER_ID, String name, ArrayList<Map<String, Object>> wraps) {
+    public User(String email, String password, String USER_ID, String name, ArrayList<Map<String, Object>> wraps, String totalPoints) {
         this.email = email;
         this.password = password;
         this.USER_ID = USER_ID;
         this.name = name;
         this.wraps = wraps;
+        this.totalPoints = totalPoints;
         //this.mAccessToken = token;
     }
 
@@ -28,6 +31,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTotalPoints() {
+        return totalPoints;
+    }
+
+    public void setTotalPoints(String totalPoints) {
+        this.totalPoints = totalPoints;
     }
 
     public String getEmail() {

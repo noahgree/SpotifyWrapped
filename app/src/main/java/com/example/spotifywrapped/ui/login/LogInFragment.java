@@ -183,12 +183,13 @@ public class LogInFragment extends Fragment {
                             ArrayList<Map<String, Object>> wraps = (ArrayList<Map<String, Object>>) document.get("wraps");
                             String passwordf = document.getString("password");
                             String token = document.getString("token");
+                            String totalPoints = document.getString("totalpoints");
                             Log.d("TAG", "DocumentSnapshot data: " + document.getData());
-                            // You can use the retrieved data here (name, email, password)
-                            currentUser[0] = new User(email, passwordf, userId, name, wraps);
+                            // You can use the retrieved data here (name, email, points)
+                            currentUser[0] = new User(email, passwordf, userId, name, wraps, totalPoints);
                             MainActivity.setCurrentUser(currentUser[0]);
-                            //Use this method in MainActivity to update any values with the name and email
-                            MainActivity.onLoginSuccess(name, email);
+                            // Use this method in MainActivity to update any values with the name and email and points
+                            MainActivity.onLoginSuccess(name, email, totalPoints);
                         } else {
                             // The document does not exist, do nothing
                             Log.d("TAG", "No such document");
@@ -200,7 +201,7 @@ public class LogInFragment extends Fragment {
         MainActivity.setCurrentUser(currentUser[0]);
     }
 
-    // When the user logs in the keyboard will auto close.
+    // When the user logs in the keyboard will auto close
     private void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);

@@ -115,7 +115,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         scoreTextView = root.findViewById(R.id.scoreValue);
 
         FrameLayout matchTextBG = binding.getRoot().findViewById(R.id.matchTextBG);
-        matchTextBG.setVisibility(View.GONE);
+        matchTextBG.setVisibility(View.INVISIBLE);
 
         for (int i = 0; i < albumTiles.length; i++) {
             String imageViewId = "albumtile" + (i + 1);

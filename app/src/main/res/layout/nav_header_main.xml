@@ -53,7 +53,48 @@
                 android:text="@string/nav_header_subtitle"
                 android:textColor="@color/spotify_light_grey"
                 android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:translationX="-1dp">
+
+                <FrameLayout
+                    android:layout_width="20dp"
+                    android:layout_height="20dp">
+
+                    <ImageView
+                        android:id="@+id/imageView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:padding="2dp"
+                        android:translationX="-2dp"
+                        app:srcCompat="@drawable/copper_coin_fill"
+                        app:tint="@color/spotify_gold" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/navTotalPoints"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/spotify_font"
+                    android:maxLines="1"
+                    android:text="0000"
+                    android:textColor="@color/spotify_light_grey"
+                    android:textSize="12sp"
+                    android:translationX="-2dp" />
+
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
     <View

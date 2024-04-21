@@ -115,6 +115,7 @@ public class SignUpFragment extends Fragment {
                                 userAccount.put("name", firstNameInput.getText().toString() + " " + lastNameInput.getText().toString());
                                 userAccount.put("email", emailInput.getText().toString());
                                 userAccount.put("wraps", new ArrayList<Map<String, Object>>());
+                                userAccount.put("totalpoints", "0");
                                 // Avoid storing plain passwords
                                 db.collection("Accounts").document(user.getUid())
                                         .set(userAccount)
@@ -150,12 +151,13 @@ public class SignUpFragment extends Fragment {
                             ArrayList<Map<String, Object>> wraps = (ArrayList<Map<String, Object>>) document.get("wraps");
                             String passwordf = document.getString("password");
                             String token = document.getString("token");
+                            String totalPoints = document.getString("totalpoints");
                             Log.d("TAG", "DocumentSnapshot data: " + document.getData());
                             // You can use the retrieved data here (name, email, password)
-                            currentUser[0] = new User(email, passwordf, userId, name, wraps);
+                            currentUser[0] = new User(email, passwordf, userId, name, wraps, totalPoints);
                             MainActivity.setCurrentUser(currentUser[0]);
                             //Use this method in MainActivity to update any values with the name and email
-                            MainActivity.onLoginSuccess(name, email);
+                            MainActivity.onLoginSuccess(name, email, totalPoints);
                         } else {
                             // The document does not exist, do nothing
                             Log.d("TAG", "No such document");
