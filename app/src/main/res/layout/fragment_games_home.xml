@@ -160,20 +160,15 @@ test
                                 android:layout_gravity="center"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/spotify_font"
-                                android:text="score"
+                                android:text="000"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/spotify_white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
 
-                            <Space
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" />
-
                             <TextView
                                 android:id="@+id/mgPlayer1"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="5dp"
@@ -181,8 +176,8 @@ test
                                 android:ellipsize="end"
                                 android:fontFamily="@font/spotify_font"
                                 android:maxLines="1"
-                                android:text="Player Name"
-                                android:textAlignment="textStart"
+                                android:text="\@Player Name"
+                                android:textAlignment="textEnd"
                                 android:textColor="@color/spotify_white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
@@ -212,20 +207,15 @@ test
                                 android:layout_gravity="center"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/spotify_font"
-                                android:text="score"
+                                android:text="000"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/spotify_white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
 
-                            <Space
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" />
-
                             <TextView
                                 android:id="@+id/mgPlayer2"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="5dp"
@@ -233,8 +223,8 @@ test
                                 android:ellipsize="end"
                                 android:fontFamily="@font/spotify_font"
                                 android:maxLines="1"
-                                android:text="Player Name"
-                                android:textAlignment="textStart"
+                                android:text="\@Player Name"
+                                android:textAlignment="textEnd"
                                 android:textColor="@color/spotify_white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
@@ -264,20 +254,15 @@ test
                                 android:layout_gravity="center"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/spotify_font"
-                                android:text="score"
+                                android:text="000"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/spotify_white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
 
-                            <Space
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" />
-
                             <TextView
                                 android:id="@+id/mgPlayer3"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="5dp"
@@ -285,8 +270,8 @@ test
                                 android:ellipsize="end"
                                 android:fontFamily="@font/spotify_font"
                                 android:maxLines="1"
-                                android:text="Player Name"
-                                android:textAlignment="textStart"
+                                android:text="\@Player Name"
+                                android:textAlignment="textEnd"
                                 android:textColor="@color/spotify_white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
@@ -397,20 +382,15 @@ test
                                 android:layout_gravity="center"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/spotify_font"
-                                android:text="score"
+                                android:text="000"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/spotify_white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
 
-                            <Space
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" />
-
                             <TextView
                                 android:id="@+id/hmPlayer1"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="5dp"
@@ -418,8 +398,8 @@ test
                                 android:ellipsize="end"
                                 android:fontFamily="@font/spotify_font"
                                 android:maxLines="1"
-                                android:text="Player Name"
-                                android:textAlignment="textStart"
+                                android:text="\@Player Name"
+                                android:textAlignment="textEnd"
                                 android:textColor="@color/spotify_white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
@@ -449,20 +429,15 @@ test
                                 android:layout_gravity="center"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/spotify_font"
-                                android:text="score"
+                                android:text="000"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/spotify_white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
 
-                            <Space
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" />
-
                             <TextView
                                 android:id="@+id/hmPlayer2"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="5dp"
@@ -470,8 +445,8 @@ test
                                 android:ellipsize="end"
                                 android:fontFamily="@font/spotify_font"
                                 android:maxLines="1"
-                                android:text="Player Name"
-                                android:textAlignment="textStart"
+                                android:text="\@Player Name"
+                                android:textAlignment="textEnd"
                                 android:textColor="@color/spotify_white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
@@ -501,20 +476,15 @@ test
                                 android:layout_gravity="center"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/spotify_font"
-                                android:text="score"
+                                android:text="000"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/spotify_white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
 
-                            <Space
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" />
-
                             <TextView
                                 android:id="@+id/hmPlayer3"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="5dp"
@@ -522,8 +492,8 @@ test
                                 android:ellipsize="end"
                                 android:fontFamily="@font/spotify_font"
                                 android:maxLines="1"
-                                android:text="Player Name"
-                                android:textAlignment="textStart"
+                                android:text="\@Player Name"
+                                android:textAlignment="textEnd"
                                 android:textColor="@color/spotify_white"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
