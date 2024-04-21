@@ -236,6 +236,7 @@ public class hangmanHomeFragment extends Fragment {
     public void setUpResults() {
         TextView scoreText = binding.getRoot().findViewById(R.id.scoreValueHomeHM);
         TextView timeText = binding.getRoot().findViewById(R.id.timeResultHM);
+        TextView plusText = binding.getRoot().findViewById(R.id.hmHomePlus);
         ImageView spaceFiller = binding.getRoot().findViewById(R.id.spaceFillerHM);
         LinearLayout resultsBox = binding.getRoot().findViewById(R.id.resultsBoxHM);
         LinearLayout explainBox = binding.getRoot().findViewById(R.id.explainHM);
@@ -246,10 +247,12 @@ public class hangmanHomeFragment extends Fragment {
         timeText.setVisibility(View.VISIBLE);
 
         if (hangmanGameFragment.getJustLost()) {
+            plusText.setVisibility(View.GONE);
             scoreText.setText(String.valueOf(0));
             timeText.setTextColor(ContextCompat.getColor(context, R.color.spotify_red));
             timeText.setText("YOU LOST!");
         } else {
+            plusText.setVisibility(View.VISIBLE);
             scoreText.setText(String.valueOf(hangmanGameFragment.getScore()));
             timeText.setTextColor(ContextCompat.getColor(context, R.color.spotify_dark_green));
             timeText.setText("YOU WON\nFINISHED IN: " + hangmanGameFragment.getTime());

@@ -44,8 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/spotify_font"
                 android:text="Match Your Music Artwork Tiles!"
                 android:textAlignment="center"
@@ -185,6 +185,22 @@
                     android:layout_marginHorizontal="15dp"
                     android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/mgHomePlus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/spotify_font"
+                        android:padding="5dp"
+                        android:text="+"
+                        android:textAlignment="center"
+                        android:textColor="@color/spotify_black"
+                        android:textSize="45sp"
+                        android:textStyle="bold" />
+
                     <FrameLayout
                         android:layout_width="70dp"
                         android:layout_height="70dp"
@@ -204,13 +220,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginRight="15dp"
                         android:fontFamily="@font/spotify_font"
                         android:padding="5dp"
                         android:text="0"
                         android:textAlignment="center"
                         android:textColor="@color/spotify_black"
-                        android:textSize="80dp"
+                        android:textSize="75dp"
                         android:textStyle="bold" />
                 </LinearLayout>
 

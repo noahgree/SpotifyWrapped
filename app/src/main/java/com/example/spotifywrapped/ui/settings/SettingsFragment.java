@@ -3,6 +3,8 @@ package com.example.spotifywrapped.ui.settings;
 import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -153,11 +155,13 @@ public class SettingsFragment extends Fragment {
                                                                     updatedNameConfirmText.setVisibility(View.VISIBLE);
                                                                 } else {
                                                                     Log.e("AUTH", "Failed to update name in Firestore.", nameUpdateInFireStoreTask.getException());
+                                                                    animateFeedbackError(updatedNameConfirmText);
                                                                     updatedNameConfirmText.setVisibility(View.VISIBLE);
                                                                 }
                                                             });
                                                 } else {
                                                     Log.e("AUTH", "Failed to fetch document.", collectionGetterTask.getException());
+                                                    animateFeedbackError(updatedNameConfirmText);
                                                     updatedNameConfirmText.setVisibility(View.VISIBLE);
                                                 }
                                             });
@@ -165,6 +169,7 @@ public class SettingsFragment extends Fragment {
                                 // Check valid password (formatting)
                                 if (!(newPassword.length() >= 6) && !(newPassword.isEmpty())) {
                                     updatedPWConfirmText.setText("NEW PASSWORD MUST BE AT LEAST 6 CHARACTERS");
+                                    animateFeedbackError(updatedPWConfirmText);
                                     updatedPWConfirmText.setVisibility(View.VISIBLE);
                                     return;
                                 } else if (newPassword.isEmpty()) {
@@ -179,6 +184,7 @@ public class SettingsFragment extends Fragment {
                                                 updatedPWConfirmText.setVisibility(View.VISIBLE);
                                             } else { // password update failed
                                                 Log.e("AUTH", "Failed to update password.", passwordUpdateTask.getException());
+                                                animateFeedbackError(updatedPWConfirmText);
                                                 updatedPWConfirmText.setVisibility(View.VISIBLE);
                                             }
                                         });
@@ -197,18 +203,21 @@ public class SettingsFragment extends Fragment {
                                             break;
                                         case "ERROR_WRONG_PASSWORD":
                                             Log.d("AUTH", "Wrong password given for credential check.");
+                                            animateFeedbackError(oldPWCheckerText);
                                             oldPWCheckerText.setText("INCORRECT OLD PASSWORD. CHANGES NOT SAVED.");
                                             oldPWCheckerText.setVisibility(View.VISIBLE);
                                             oldPWField.setText("");
                                             break;
                                         default:
                                             Log.d("AUTH", "Some other error on credential check: " + e.getMessage());
+                                            animateFeedbackError(oldPWCheckerText);
                                             oldPWCheckerText.setText("UNKNOWN ERROR. CHANGES NOT SAVED.");
                                             Toast.makeText(getActivity(), "Authentication failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                             break;
                                     }
                                 } else {
                                     // Handle other exceptions that are not related to Firebase Auth
+                                    animateFeedbackError(oldPWCheckerText);
                                     oldPWCheckerText.setText("DATABASE ERROR. CHANGES NOT SAVED. TRY AGAIN LATER.");
                                     Log.e("AUTH", "Re-authentication failed", reAuthTask.getException());
                                 }
@@ -280,6 +289,18 @@ public class SettingsFragment extends Fragment {
         if (getActivity() != null) {
             NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main);
             navController.navigate(R.id.nav_login);
+        }
+    }
+
+    private void animateFeedbackError(TextView view) {
+        if (view != null) {
+            ObjectAnimator shakeX = ObjectAnimator.ofFloat(view, "translationX", -10, 10);
+            shakeX.setRepeatCount(5);
+            shakeX.setDuration(100);
+
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.play(shakeX);
+            animatorSet.start();
         }
     }
 }

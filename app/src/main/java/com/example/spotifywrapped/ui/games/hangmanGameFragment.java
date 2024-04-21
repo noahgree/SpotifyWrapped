@@ -3,15 +3,19 @@ package com.example.spotifywrapped.ui.games;
 import static com.google.common.primitives.Ints.max;
 import static com.google.common.primitives.Ints.min;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +27,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -51,6 +57,8 @@ public class hangmanGameFragment extends Fragment {
     private TextView textViewHangman;
     private EditText editTextGuess;
     private Button buttonSubmitGuess;
+
+    private TextView wrongFormatNotice;
 
     private String[] words = new String[10];
     private String wordToGuess;
@@ -123,6 +131,11 @@ public class hangmanGameFragment extends Fragment {
         editTextGuess = root.findViewById(R.id.guessFieldHM);
         buttonSubmitGuess = root.findViewById(R.id.hangmanSubmitBtn);
 
+        wrongFormatNotice = root.findViewById(R.id.wrongGuessFormatNotice);
+
+        LinearLayout hmSubmitBox = binding.getRoot().findViewById(R.id.hmSubmitBox);
+        hmSubmitBox.setVisibility(View.VISIBLE);
+
         editTextGuess.setOnEditorActionListener((v, actionId, event) -> {
             // Check if the action is from a hardware key event and the key is the Enter key
             if (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
@@ -173,14 +186,25 @@ public class hangmanGameFragment extends Fragment {
         String guess = editTextGuess.getText().toString().toUpperCase();
         TextView scoreText = binding.getRoot().findViewById(R.id.scoreValueHM);
 
-        if (guess.length() != 1 || (!Character.isAlphabetic(guess.charAt(0)) && !Character.isDigit(guess.charAt(0)))) {
-            Toast.makeText(getActivity(), "Please enter a single letter.", Toast.LENGTH_SHORT).show();
+        if (!Character.isAlphabetic(guess.charAt(0)) && !Character.isDigit(guess.charAt(0))) {
+            editTextGuess.setText("");
+            animateFeedbackError(wrongFormatNotice);
+            wrongFormatNotice.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.spotify_red)));
+            wrongFormatNotice.setTextColor(ContextCompat.getColor(context, R.color.spotify_light_red));
+            wrongFormatNotice.setText("GUESS MUST BE A VALID CHARACTER");
+            wrongFormatNotice.setTextSize(14);
+            wrongFormatNotice.setVisibility(View.VISIBLE);
             return;
         }
 
         if (guessedWord.indexOf(guess) >= 0 || wrongGuesses.indexOf(guess) >= 0) {
             editTextGuess.setText("");
-            Toast.makeText(getActivity(), "You've already guessed this letter.", Toast.LENGTH_SHORT).show();
+            animateFeedbackError(wrongFormatNotice);
+            wrongFormatNotice.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.spotify_blue)));
+            wrongFormatNotice.setTextColor(ContextCompat.getColor(context, R.color.spotify_light_blue));
+            wrongFormatNotice.setText("YOU'VE ALREADY GUESSED THIS CHARACTER");
+            wrongFormatNotice.setTextSize(14);
+            wrongFormatNotice.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -203,7 +227,15 @@ public class hangmanGameFragment extends Fragment {
             if (wrongGuessCount == maxWrongGuesses) {
                 justLost = true;
                 wrongGuesses.append(guess);
-                Toast.makeText(getActivity(), "Game Over! The word was: " + wordToGuess, Toast.LENGTH_SHORT).show();
+
+                LinearLayout hmSubmitBox = binding.getRoot().findViewById(R.id.hmSubmitBox);
+                hmSubmitBox.setVisibility(View.GONE);
+                wrongFormatNotice.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.spotify_red)));
+                wrongFormatNotice.setTextColor(ContextCompat.getColor(context, R.color.spotify_light_red));
+                wrongFormatNotice.setText("GAME OVER\nTHE ARTIST'S NAME WAS\n\n\"" + wordToGuess + "\"");
+                wrongFormatNotice.setTextSize(24);
+                wrongFormatNotice.setVisibility(View.VISIBLE);
+
                 completeGame();
                 return;
             } else if (wrongGuessCount == 1) {
@@ -212,15 +244,40 @@ public class hangmanGameFragment extends Fragment {
                 wrongGuesses.append(", " + guess);
             }
         }
+
+        textViewWordToGuess.setText(guessedWord.toString());
+
         // check for a win
         if (guessedWord.toString().equals(wordToGuess)) {
             justLost = false;
             hangmanHomeFragment.publishResults();
+
+            LinearLayout hmSubmitBox = binding.getRoot().findViewById(R.id.hmSubmitBox);
+            hmSubmitBox.setVisibility(View.GONE);
+            wrongFormatNotice.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.spotify_green)));
+            wrongFormatNotice.setTextColor(ContextCompat.getColor(context, R.color.spotify_light_green));
+            wrongFormatNotice.setText("CONGRATS!\nYOU CORRECTLY GUESSED\n\n\"" + wordToGuess + "\"");
+            wrongFormatNotice.setTextSize(24);
+            wrongFormatNotice.setVisibility(View.VISIBLE);
+
             completeGame();
+            return;
         }
 
         editTextGuess.getText().clear();
         updateGameUI();
+
+        if (wrongGuessCount == maxWrongGuesses - 1 || wrongGuessCount == maxWrongGuesses - 2) {
+            wrongFormatNotice.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.spotify_red)));
+            wrongFormatNotice.setTextColor(ContextCompat.getColor(context, R.color.spotify_light_red));
+            if (maxWrongGuesses - wrongGuessCount == 1) {
+                wrongFormatNotice.setText("1 GUESS REMAINING");
+            } else {
+                wrongFormatNotice.setText("2 GUESSES REMAINING");
+            }
+            wrongFormatNotice.setTextSize(14);
+            wrongFormatNotice.setVisibility(View.VISIBLE);
+        }
     }
 
     private void completeGame() {
@@ -233,7 +290,7 @@ public class hangmanGameFragment extends Fragment {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
-        new CountDownTimer(1500, 1000) {
+        new CountDownTimer(3500, 1000) {
             public void onTick(long millisUntilFinished) {
                 //required
             }
@@ -263,6 +320,7 @@ public class hangmanGameFragment extends Fragment {
     }
 
     private void updateGameUI() {
+        wrongFormatNotice.setVisibility(View.GONE);
         updateHangmanImage();
         textViewWordToGuess.setText(guessedWord.toString());
         textViewHangman.setText("WRONG\nGUESSES:\n\n" + wrongGuesses);
@@ -316,6 +374,18 @@ public class hangmanGameFragment extends Fragment {
 
         for (int i = 0; i < words.length && i < pairArtists.size(); i++) {
             words[i] = pairArtists.get(i).toUpperCase();
+        }
+    }
+
+    private void animateFeedbackError(TextView view) {
+        if (view != null) {
+            ObjectAnimator shakeX = ObjectAnimator.ofFloat(view, "translationX", -10, 10);
+            shakeX.setRepeatCount(5);
+            shakeX.setDuration(100);
+
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.play(shakeX);
+            animatorSet.start();
         }
     }
 
