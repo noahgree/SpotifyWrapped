@@ -1,73 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainHangmanLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/spotify_purple">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="15dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="match_parent"
+            android:id="@+id/titleTextHangman"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:gravity="center"
-            android:text="Hangman Game"
+            android:layout_gravity="center|center_horizontal|top"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/spotify_font"
+            android:text="Guess the Artist to Win"
+            android:textAlignment="center"
             android:textColor="@color/spotify_black"
-            android:textSize="32sp"
+            android:textSize="50sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textViewWordToGuess"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:text="Word to Guess"
-            android:textColor="@color/spotify_black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textViewHangman"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:text="Wrong guesses: "
-            android:textColor="@color/spotify_black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/gameContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextGuess"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:hint="Enter your guess"
-            android:padding="12dp"
-            android:textColor="@color/spotify_black"
-            android:textSize="24sp" />
+                <TextView
+                    android:id="@+id/timerHM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal|top"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="00:00"
+                    android:textAlignment="center"
+                    android:textColor="@color/spotify_black"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
-        <Button
-            android:id="@+id/buttonSubmitGuess"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <FrameLayout
+                        android:id="@+id/hangmanImage"
+                        android:layout_width="175dp"
+                        android:layout_height="175dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/rounded_corners_drawable"
+                        android:backgroundTint="@color/spotify_black"
+                        android:backgroundTintMode="add">
+
+                        <ImageView
+                            android:id="@+id/hangmanStatusImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="15dp"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/hangman"
+                            app:tint="@color/spotify_green" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/matchTextHM"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/hollow_rectangle_rounded_flatleft"
+                        android:backgroundTint="@color/spotify_red"
+                        android:backgroundTintMode="multiply">
+
+                        <TextView
+                            android:id="@+id/guessCounterHM"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginVertical="15dp"
+                            android:fontFamily="@font/spotify_font"
+                            android:maxLines="4"
+                            android:text="Wrong\nGuesses:\n\n0/6"
+                            android:textAlignment="center"
+                            android:textAllCaps="true"
+                            android:textColor="@color/spotify_light_red"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/wordToGuessField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal|top"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="60dp"
+                    android:background="@drawable/hollow_rectangle_rounded_15"
+                    android:fontFamily="@font/spotify_font"
+                    android:maxEms="25"
+                    android:maxLines="1"
+                    android:paddingHorizontal="15dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="8dp"
+                    android:text="_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
+                    android:textAlignment="center"
+                    android:textColor="@color/spotify_black"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/guessFieldHM"
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/less_rounded_edit_text"
+                    android:ems="1"
+                    android:fontFamily="@font/spotify_font"
+                    android:hint="    \?"
+                    android:inputType="text"
+                    android:maxEms="1"
+                    android:textColor="@color/spotify_black"
+                    android:textColorHint="@color/spotify_light_grey"
+                    android:textSize="18sp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginBottom="15dp">
+
+                    <Button
+                        android:id="@+id/hangmanSubmitBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/rounded_button"
+                        android:fontFamily="@font/spotify_font"
+                        android:text="ATTEMPT GUESS"
+                        android:textColor="@color/spotify_white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </FrameLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/scoreContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:paddingStart="24dp"
-            android:paddingTop="12dp"
-            android:paddingEnd="24dp"
-            android:paddingBottom="12dp"
-            android:text="Submit"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/copper_coin_fill"
+                    app:tint="@color/spotify_gold" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/scoreValueHM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="5dp"
+                android:fontFamily="@font/spotify_font"
+                android:padding="5dp"
+                android:text="0"
+                android:textColor="@color/spotify_black"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

@@ -17,18 +17,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_horizontal|top"
-            android:layout_marginHorizontal="25dp"
+            android:layout_marginHorizontal="15dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/spotify_font"
             android:text="Match All Pairs to Win"
             android:textAlignment="center"
             android:textColor="@color/spotify_black"
-            android:textSize="55sp"
+            android:textSize="50sp"
             android:textStyle="bold" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginVertical="10dp"
             android:layout_weight="1">
 
             <LinearLayout

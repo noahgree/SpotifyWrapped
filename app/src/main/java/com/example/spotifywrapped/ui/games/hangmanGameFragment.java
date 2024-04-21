@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -57,20 +59,20 @@ public class hangmanGameFragment extends Fragment {
     public static String time = "00:00";
     private boolean running = true; // Set this to false if you want the timer to be stopped initially
 
-//    private Handler handler = new Handler(Looper.getMainLooper());
-//    private Runnable runnable = new Runnable() {
-//        @Override
-//        public void run() {
-//            int minutes = (seconds % 3600) / 60;
-//            int secs = seconds % 60;
-//            time = String.format("%02d:%02d", minutes, secs);
-//            timerTextView.setText(time);
-//            if (running) {
-//                seconds++;
-//            }
-//            handler.postDelayed(this, 1000);
-//        }
-//    };
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            int minutes = (seconds % 3600) / 60;
+            int secs = seconds % 60;
+            time = String.format("%02d:%02d", minutes, secs);
+            timerTextView.setText(time);
+            if (running) {
+                seconds++;
+            }
+            handler.postDelayed(this, 1000);
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,12 +105,16 @@ public class hangmanGameFragment extends Fragment {
         List<String> artists = getArguments().getStringArrayList("artists");
         setWords(artists);
 
-        textViewWordToGuess = root.findViewById(R.id.textViewWordToGuess);
-        textViewHangman = root.findViewById(R.id.textViewHangman);
-        editTextGuess = root.findViewById(R.id.editTextGuess);
-        buttonSubmitGuess = root.findViewById(R.id.buttonSubmitGuess);
+        wrongGuessCount = 0;
+
+        textViewWordToGuess = root.findViewById(R.id.wordToGuessField);
+        textViewHangman = root.findViewById(R.id.guessCounterHM);
+        editTextGuess = root.findViewById(R.id.guessFieldHM);
+        buttonSubmitGuess = root.findViewById(R.id.hangmanSubmitBtn);
 
         buttonSubmitGuess.setOnClickListener(v -> submitGuess());
+
+        editTextGuess.getText().clear();
 
         if (savedInstanceState != null) {
             wordToGuess = savedInstanceState.getString("wordToGuess");
@@ -120,9 +126,9 @@ public class hangmanGameFragment extends Fragment {
             initializeGame();
         }
 
-//        timerTextView = root.findViewById(R.id.timerHM);
-//        handler.post(runnable);
-//        running = true;
+        timerTextView = root.findViewById(R.id.timerHM);
+        handler.post(runnable);
+        running = true;
 
         return root;
     }
@@ -160,16 +166,16 @@ public class hangmanGameFragment extends Fragment {
                 return;
             }
         } else {
-            wrongGuesses.append(guess);
             wrongGuessCount++;
             updateHangmanImage();
             if (wrongGuessCount == maxWrongGuesses) {
-                wrongGuessCount = 0;
+                wrongGuesses.append(guess);
                 Toast.makeText(getActivity(), "Game Over! The word was: " + wordToGuess, Toast.LENGTH_SHORT).show();
                 initializeGame();
-                editTextGuess.getText().clear();
                 endGameInLoss();
                 return;
+            } else {
+                wrongGuesses.append(", " + guess);
             }
         }
 
@@ -227,13 +233,28 @@ public class hangmanGameFragment extends Fragment {
     }
 
     private void updateGameUI() {
+        updateHangmanImage();
         textViewWordToGuess.setText(guessedWord.toString());
-        textViewHangman.setText("Wrong guesses: " + wrongGuesses.toString());
+        textViewHangman.setText("WRONG\nGUESSES:\n\n" + wrongGuesses);
     }
 
     private void updateHangmanImage() {
-        // Here you can update the hangman image or representation based on wrongGuessCount
-        // Since you don't have hangman images, you can customize this method as needed
+        ImageView statusImage = binding.getRoot().findViewById(R.id.hangmanStatusImage);
+        if (wrongGuessCount == 0) {
+            statusImage.setImageResource(R.color.spotify_black);
+        } else if (wrongGuessCount == 1) {
+            statusImage.setImageResource(R.drawable.person_phase_1);
+        } else if (wrongGuessCount == 2) {
+            statusImage.setImageResource(R.drawable.person_phase_2);
+        } else if (wrongGuessCount == 3) {
+            statusImage.setImageResource(R.drawable.person_phase_3);
+        } else if (wrongGuessCount == 4) {
+            statusImage.setImageResource(R.drawable.person_phase_4);
+        } else if (wrongGuessCount == 5) {
+            statusImage.setImageResource(R.drawable.person_phase_5);
+        } else if (wrongGuessCount == 6) {
+            statusImage.setImageResource(R.drawable.person_phase_6);
+        }
     }
 
     public void setWords(List<String> artists) {

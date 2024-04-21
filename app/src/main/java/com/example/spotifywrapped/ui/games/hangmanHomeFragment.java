@@ -103,7 +103,7 @@ public class hangmanHomeFragment extends Fragment {
 
     public static void onMatchStarted(Context context, View view, OkHttpClient okHttpClient, String term, Map<String, Object> wrap, AddWrapFragment.DataCompletionHandler handler) {
         if (getSpotifyToken() == null) {
-            Toast.makeText(context, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Token expired. Try logging in again.", Toast.LENGTH_SHORT).show();
             return;
         }
 
