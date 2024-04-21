@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,8 +48,6 @@ import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link hangmanHomeFragment#} factory method to
- * create an instance of this fragment.
  */
 public class hangmanHomeFragment extends Fragment {
 
@@ -143,29 +142,29 @@ public class hangmanHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentHangmanHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        Button playButton = (Button) root.findViewById(R.id.hangmanstart);
-        Spinner spinner = null;//(Spinner) root.findViewById(R.id.timeFrameSpinner);
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
 
-                String term = "long";//spinner.getSelectedItem().toString().split(" ")[0].toLowerCase();
-                Map<String, Object> wrap = new HashMap<>();
+        Button playButton = root.findViewById(R.id.hangmanstart);
+        Spinner spinner = null;
+        playButton.setOnClickListener(v -> {
 
-
-                AddWrapFragment.DataCompletionHandler handler = updatedImages -> {
-                    // This block will be called once data fetching is complete.
-                    getActivity().runOnUiThread(() -> {
-                        // switch to matching game view
-                        List<String> images = (List<String>) updatedImages.get("artists");
-                        NavController navController = Navigation.findNavController(v);
-                        navController.navigate(R.id.navHangmanGame);
-                    });
-                };
+            String term = "long";
+            Map<String, Object> wrap = new HashMap<>();
 
 
-                onMatchStarted(context, root, mOkHttpClient, term, wrap, handler);
-            }
+            AddWrapFragment.DataCompletionHandler handler = updatedImages -> {
+                // This block will be called once data fetching is complete.
+                getActivity().runOnUiThread(() -> {
+                    // switch to matching game view
+                    List<String> images = (List<String>) updatedImages.get("artists");
+                    NavController navController = Navigation.findNavController(v);
+                    navController.navigate(R.id.navHangmanGame);
+                });
+            };
+
+
+            onMatchStarted(context, root, mOkHttpClient, term, wrap, handler);
         });
 
         // Inflate the layout for this fragment

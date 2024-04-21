@@ -236,6 +236,26 @@ public class MainActivity extends AppCompatActivity {
                     bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
 
                     currentPageIcon.setImageResource(R.drawable.rectangle_stack_person_crop_fill);
+                } else if (destId == R.id.matchingHomeFragment) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_blue));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
+                    currentPageIcon.setImageResource(R.drawable.gameboy_solid);
+                } else if (destId == R.id.matchingGameFragment) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_blue));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
+                    currentPageIcon.setImageResource(R.drawable.grid);
+                } else if (destId == R.id.navHangmanHome) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_purple));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
+                    currentPageIcon.setImageResource(R.drawable.gameboy_solid);
+                } else if (destId == R.id.navHangmanGame) {
+                    bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_purple));
+                    bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
+
+                    currentPageIcon.setImageResource(R.drawable.guess);
                 }
                 else {
                     currentPageIcon.setImageResource(R.drawable.rectangle_stack_fill); // Fallback icon

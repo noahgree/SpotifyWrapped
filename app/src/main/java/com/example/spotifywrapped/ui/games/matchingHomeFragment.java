@@ -48,23 +48,10 @@ import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link matchingHomeFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class matchingHomeFragment extends Fragment {
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     private FragmentMatchingHomeBinding binding;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public static Context context;
     private static User currentUser;
     static final OkHttpClient mOkHttpClient = new OkHttpClient();
@@ -74,38 +61,15 @@ public class matchingHomeFragment extends Fragment {
 
     private String term = "short";
 
-
-    public matchingHomeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment matchingHomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static matchingHomeFragment newInstance(String param1, String param2) {
-        matchingHomeFragment fragment = new matchingHomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
-        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
         context = MainActivity.getInstance();
         currentUser = loadUser();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
     }
 
     private User loadUser() {
@@ -117,7 +81,6 @@ public class matchingHomeFragment extends Fragment {
     }
 
     private String getTimeFrame() {
-        // determine time frame of wrap
         RadioButton shortTerm = getActivity().findViewById(R.id.matchingShortTermBtn);
         RadioButton mediumTerm = getActivity().findViewById(R.id.matchingMediumTermBtn);
         RadioButton longTerm = getActivity().findViewById(R.id.matchingLongTermBtn);
@@ -132,14 +95,12 @@ public class matchingHomeFragment extends Fragment {
         return term;
     }
 
-
     public static String getSpotifyToken() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
         String string = sharedPreferences.getString("SpotifyToken", null);
         Log.d("SharedPreferences", "Loaded token: " + string);
         return sharedPreferences.getString("SpotifyToken", null);
     }
-
 
     public static void onMatchStarted(Context context, View view, OkHttpClient okHttpClient, String term, Map<String, Object> wrap, AddWrapFragment.DataCompletionHandler handler) {
         if (getSpotifyToken() == null) {
@@ -192,37 +153,32 @@ public class matchingHomeFragment extends Fragment {
         });
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMatchingHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        Button playButton = (Button) root.findViewById(R.id.matchingstart);
-        Spinner spinner = null;//(Spinner) root.findViewById(R.id.timeFrameSpinner);
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Button playButton = root.findViewById(R.id.matchingstart);
+        Spinner spinner = null;
+        playButton.setOnClickListener(v -> {
 
-                term = getTimeFrame();
-                Map<String, Object> wrap = new HashMap<>();
+            term = getTimeFrame();
+            Map<String, Object> wrap = new HashMap<>();
 
 
-                AddWrapFragment.DataCompletionHandler handler = updatedImages -> {
-                    // This block will be called once data fetching is complete.
-                    getActivity().runOnUiThread(() -> {
-                        // switch to matching game view
-                        List<String> images = (List<String>) updatedImages.get("artists");
-                        navigateToMatchingGameFragment(images);
-                    });
-                };
+            AddWrapFragment.DataCompletionHandler handler = updatedImages -> {
+                // This block will be called once data fetching is complete.
+                getActivity().runOnUiThread(() -> {
+                    // switch to matching game view
+                    List<String> images = (List<String>) updatedImages.get("artists");
+                    navigateToMatchingGameFragment(images);
+                });
+            };
 
 
-                onMatchStarted(context, root, mOkHttpClient, term, wrap, handler);
-            }
+            onMatchStarted(context, root, mOkHttpClient, term, wrap, handler);
         });
 
-        // Inflate the layout for this fragment
         return root;
 
     }
@@ -231,7 +187,7 @@ public class matchingHomeFragment extends Fragment {
         NavController navController = Navigation.findNavController(requireView());
         Bundle bundle = new Bundle();
         bundle.putStringArrayList("imageUrls", (ArrayList<String>) imageUrls);
-        navController.navigate(R.id.matchingGameFragment3, bundle);
+        navController.navigate(R.id.matchingGameFragment, bundle);
     }
 
 }

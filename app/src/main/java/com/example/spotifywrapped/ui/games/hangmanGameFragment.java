@@ -1,6 +1,7 @@
 package com.example.spotifywrapped.ui.games;
 
 import android.os.Bundle;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,18 +34,15 @@ public class hangmanGameFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hangman_game, container, false);
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
 
         textViewWordToGuess = view.findViewById(R.id.textViewWordToGuess);
         textViewHangman = view.findViewById(R.id.textViewHangman);
         editTextGuess = view.findViewById(R.id.editTextGuess);
         buttonSubmitGuess = view.findViewById(R.id.buttonSubmitGuess);
 
-        buttonSubmitGuess.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submitGuess();
-            }
-        });
+        buttonSubmitGuess.setOnClickListener(v -> submitGuess());
 
         if (savedInstanceState != null) {
             wordToGuess = savedInstanceState.getString("wordToGuess");

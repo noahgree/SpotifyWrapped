@@ -25,7 +25,6 @@ public class GamesHomeFragment extends Fragment {
 
     private FragmentGamesHomeBinding binding;
     private RecyclerView recyclerView;
-    private GamesAdapter adapter;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +57,7 @@ public class GamesHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.matchingHomeFragment3);
+                navController.navigate(R.id.matchingHomeFragment);
             }
         });
 

@@ -42,19 +42,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class matchingGameFragment extends Fragment implements View.OnClickListener {
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     private FragmentMatchingGameBinding binding;
-
-    private String mParam1;
-    private String mParam2;
-
     private Context context;
 
     private ImageView[] albumTiles = new ImageView[16];
-
     private String[] albumTileIds = new String[16];
 
     private TextView scoreTextView;
@@ -65,29 +56,12 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     private int matchedPairs = 0;
     private int score = 0;
 
-    public matchingGameFragment() {
-        // Required empty public constructor
-    }
-
-    public static matchingGameFragment newInstance(String param1, String param2) {
-        matchingGameFragment fragment = new matchingGameFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
-        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
         context = MainActivity.getInstance();
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
     }
 
     @Override
@@ -109,7 +83,6 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         setTileIds(imageUrls);
         scoreTextView.setText(String.valueOf(score));
 
-        // Inflate the layout for this fragment
         return root;
     }
 
@@ -136,18 +109,18 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             if (firstImageUrl != null && firstImageUrl.equals(secondImageUrl)) {
                 showShortToast(requireContext(), "Match! +150", 250);
 
-                //animations
+                // animations
                 pulsateTile(albumTiles[firstTileIndex]);
                 pulsateTile(albumTiles[secondTileIndex]);
                 albumTiles[firstTileIndex].setBackgroundResource(R.drawable.highlighted_tile);
                 albumTiles[secondTileIndex].setBackgroundResource(R.drawable.highlighted_tile);
 
-                //score update
+                // score update
                 score += 150;
                 scoreTextView.setText(String.valueOf(score));
                 animatePointsAdded();
 
-                //prevent clicking on tiles after matched
+                // prevent clicking on tiles after matched
                 albumTiles[firstTileIndex].setOnClickListener(null);
                 albumTiles[secondTileIndex].setOnClickListener(null);
 
@@ -157,7 +130,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                     gameCompletion();
                 }
 
-                //reset indices
+                // reset indices
                 firstTileIndex = -1;
                 secondTileIndex = -1;
             } else {
@@ -342,7 +315,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
 
             public void onFinish() {
                 NavController navController = Navigation.findNavController(requireView());
-                navController.popBackStack(R.id.matchingHomeFragment3, false);
+                navController.popBackStack(R.id.matchingHomeFragment, false);
                 Toast.makeText(requireContext(), "Finished with a score of: " + score, Toast.LENGTH_LONG).show();
             }
         }.start();
