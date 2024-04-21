@@ -301,7 +301,9 @@ public class AddWrapFragment extends Fragment {
 
                     // switch to slideshow view
                     NavController navController = Navigation.findNavController(v);
+                    navController.popBackStack(R.id.nav_gallery, true); // Clear back stack up to home
                     navController.navigate(R.id.nav_topSong);
+
 
                     // hide action bar up top
                     ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
