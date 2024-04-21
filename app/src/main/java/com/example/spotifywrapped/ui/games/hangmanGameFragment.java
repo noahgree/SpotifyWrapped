@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -225,6 +226,12 @@ public class hangmanGameFragment extends Fragment {
     private void completeGame() {
         hasPlayed = true;
         running = false;
+
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = getActivity().getWindow().getDecorView().getRootView();
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
 
         new CountDownTimer(1500, 1000) {
             public void onTick(long millisUntilFinished) {
