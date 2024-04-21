@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
                     bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_blue));
                     bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
 
-                    currentPageIcon.setImageResource(R.drawable.gameboy_solid);
+                    currentPageIcon.setImageResource(R.drawable.grid);
                 } else if (destId == R.id.matchingGameFragment) {
                     bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_blue));
                     bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
                     bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_purple));
                     bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
 
-                    currentPageIcon.setImageResource(R.drawable.gameboy_solid);
+                    currentPageIcon.setImageResource(R.drawable.guess);
                 } else if (destId == R.id.navHangmanGame) {
                     bgFrame.setBackgroundColor(ContextCompat.getColor(context, R.color.spotify_purple));
                     bgFrame.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0AFFFFFF")));
@@ -702,7 +702,6 @@ public class MainActivity extends AppCompatActivity {
         View navView = navigationView.getHeaderView(0);
 
         if (user.getmAccessToken() == null) {
-            Toast.makeText(context, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
             return;
         }
 

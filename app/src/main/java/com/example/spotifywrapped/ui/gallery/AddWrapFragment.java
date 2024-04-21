@@ -135,6 +135,9 @@ public class AddWrapFragment extends Fragment {
             privateBtn.setChecked(false);
             publicBtn.setChecked(true);
         }
+
+        RadioButton shortTerm = getActivity().findViewById(R.id.shortTermBtn);
+        shortTerm.setChecked(true);
     }
 
     public interface DataCompletionHandler {

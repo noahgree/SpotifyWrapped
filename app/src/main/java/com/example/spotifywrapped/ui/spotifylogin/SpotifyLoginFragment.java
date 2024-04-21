@@ -79,10 +79,6 @@ public class SpotifyLoginFragment extends Fragment {
     private AppCompatButton loginButton;
     private FragmentSpotifyLoginBinding binding;
 
-    public SpotifyLoginFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +115,7 @@ public class SpotifyLoginFragment extends Fragment {
                                         .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
                             }
                             NavController navController = Navigation.findNavController(mainActivity, R.id.nav_host_fragment_content_main);
+                            MainActivity.getInstance().saveUser(MainActivity.getCurrentUser());
                             navController.navigate(R.id.nav_gallery);
                         }
                     }
@@ -126,7 +123,6 @@ public class SpotifyLoginFragment extends Fragment {
 
         if (MainActivity.isSpotifyLoggedIn()) {
             // User is already logged in with Spotify, navigate away or load data
-
         }
 
         binding.spotifySignIn.setOnClickListener(v -> getToken());
@@ -144,18 +140,19 @@ public class SpotifyLoginFragment extends Fragment {
         // Inflate the layout for this fragment
         return root;
     }
+
     /**
      * Get token from Spotify
      * This method will open the Spotify login activity and get the token
      * What is token?
      * https://developer.spotify.com/documentation/general/guides/authorization-guide/
      */
-
     public void getToken() {
         final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.TOKEN);
         Intent intent = AuthorizationClient.createLoginActivityIntent(getActivity(), request);
         spotifyAuthLauncher.launch(intent);
     }
+
     /**
      * Get code from Spotify
      * This method will open the Spotify login activity and get the code
@@ -165,79 +162,6 @@ public class SpotifyLoginFragment extends Fragment {
     public void getCode() {
         final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.CODE);
         AuthorizationClient.openLoginActivity(getActivity(), AUTH_CODE_REQUEST_CODE, request);
-    }
-
-
-//    /**
-//     * When the app leaves this activity to momentarily get a token/code, this function
-//     * fetches the result of that external activity to get the response from Spotify
-//     */
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        final AuthorizationResponse response = AuthorizationClient.getResponse(resultCode, data);
-//
-//        // Check which request code is present (if any)
-//        if (AUTH_TOKEN_REQUEST_CODE == requestCode) {
-//            mAccessToken = response.getAccessToken();
-//            setTextAsync(mAccessToken, tokenTextView);
-//
-//        } else if (AUTH_CODE_REQUEST_CODE == requestCode) {
-//            mAccessCode = response.getCode();
-//            setTextAsync(mAccessCode, codeTextView);
-//        }
-//    }
-
-    /**
-     * Get user profile
-     * This method will get the user profile using the token
-     */
-    public void onGetUserProfileClicked() {
-        if (mAccessToken == null) {
-            Toast.makeText(getActivity(), "You need to get an access token first!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Create a request to get the user profile
-        final Request request = new Request.Builder()
-                .url("https://api.spotify.com/v1/me")
-                .addHeader("Authorization", "Bearer " + mAccessToken)
-                .build();
-
-        cancelCall();
-        mCall = mOkHttpClient.newCall(request);
-
-        mCall.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d("HTTP", "Failed to fetch data: " + e);
-                Toast.makeText(getContext(), "Failed to fetch data, watch Logcat for more details",
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    final JSONObject jsonObject = new JSONObject(response.body().string());
-                    //setTextAsync(jsonObject.toString(3), profileTextView);
-                } catch (JSONException e) {
-                    Log.d("JSON", "Failed to parse data: " + e);
-                    Toast.makeText(getContext(), "Failed to parse data, watch Logcat for more details",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    /**
-     * Creates a UI thread to update a TextView in the background
-     * Reduces UI latency and makes the system perform more consistently
-     *
-     * @param text the text to set
-     * @param textView TextView object to update
-     */
-    private void setTextAsync(final String text, TextView textView) {
-        //runOnUiThread(() -> textView.setText(text));
     }
 
     /**
@@ -254,11 +178,7 @@ public class SpotifyLoginFragment extends Fragment {
                 .build();
     }
 
-    /**
-     * Gets the redirect Uri for Spotify
-     *
-     * @return redirect Uri object
-     */
+    // Gets the redirect Uri for Spotify
     private Uri getRedirectUri() {
         return Uri.parse(REDIRECT_URI);
     }
