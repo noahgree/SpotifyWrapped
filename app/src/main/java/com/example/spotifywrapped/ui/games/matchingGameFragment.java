@@ -56,7 +56,8 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     private int secondTileIndex = -1;
 
     private int matchedPairs = 0;
-    private int score = 0;
+    public static int score = 0;
+    public static boolean hasPlayed = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -309,19 +310,26 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     }
 
     private void gameCompletion() {
-        Toast.makeText(requireContext(), "Congratulations! You've matched all the tiles!", Toast.LENGTH_LONG).show();
+        hasPlayed = true;
 
-        new CountDownTimer(5500, 1000) {
+        new CountDownTimer(3500, 1000) {
             public void onTick(long millisUntilFinished) {
                 //required
             }
 
-            public void onFinish() {
+            public void onFinish() { // When the delay timer ends
                 NavController navController = Navigation.findNavController(requireView());
                 navController.popBackStack(R.id.matchingHomeFragment, false);
-                Toast.makeText(requireContext(), "Finished with a score of: " + score, Toast.LENGTH_LONG).show();
+                matchingHomeFragment.setUpResults();
             }
         }.start();
     }
 
+    public static int getScore() {
+        return score;
+    }
+
+    public static boolean getHasPlayed() {
+        return hasPlayed;
+    }
 }

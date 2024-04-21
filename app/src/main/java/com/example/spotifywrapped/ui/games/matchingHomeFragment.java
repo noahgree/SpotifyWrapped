@@ -18,8 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.spotifywrapped.MainActivity;
@@ -51,7 +54,7 @@ import okhttp3.Response;
  */
 public class matchingHomeFragment extends Fragment {
 
-    private FragmentMatchingHomeBinding binding;
+    private static FragmentMatchingHomeBinding binding;
     public static Context context;
     private static User currentUser;
     static final OkHttpClient mOkHttpClient = new OkHttpClient();
@@ -158,7 +161,22 @@ public class matchingHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMatchingHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
         Button playButton = root.findViewById(R.id.matchingStartBtn);
+        playButton.setText("BEGIN");
+
+        ImageView spaceFiller = binding.getRoot().findViewById(R.id.spaceFillerMG);
+        LinearLayout resultsBox = binding.getRoot().findViewById(R.id.resultsBoxMG);
+        spaceFiller.setVisibility(View.VISIBLE);
+        resultsBox.setVisibility(View.GONE);
+        if (matchingGameFragment.getHasPlayed()) {
+            playButton.setText("PLAY AGAIN");
+            setUpResults();
+        }
+
+        RadioButton shortTerm = binding.getRoot().findViewById(R.id.shortTermBtnMG);
+        shortTerm.setChecked(true);
+
         playButton.setOnClickListener(v -> {
 
             term = getTimeFrame();
@@ -179,7 +197,6 @@ public class matchingHomeFragment extends Fragment {
         });
 
         return root;
-
     }
 
     public void navigateToMatchingGameFragment(List<String> imageUrls) {
@@ -187,6 +204,16 @@ public class matchingHomeFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putStringArrayList("imageUrls", (ArrayList<String>) imageUrls);
         navController.navigate(R.id.matchingGameFragment, bundle);
+    }
+
+    public static void setUpResults() {
+        TextView scoreText = binding.getRoot().findViewById(R.id.scoreValueHome);
+        scoreText.setText(String.valueOf(matchingGameFragment.getScore()));
+
+        ImageView spaceFiller = binding.getRoot().findViewById(R.id.spaceFillerMG);
+        spaceFiller.setVisibility(View.GONE);
+        LinearLayout resultsBox = binding.getRoot().findViewById(R.id.resultsBoxMG);
+        resultsBox.setVisibility(View.VISIBLE);
     }
 
 }

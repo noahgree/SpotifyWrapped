@@ -42,10 +42,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="@font/spotify_font"
                 android:text="Time Frame"
                 android:textColor="@color/spotify_green"
-                android:textSize="24sp"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
 
@@ -115,13 +116,14 @@
             android:layout_weight="1">
 
             <LinearLayout
+                android:id="@+id/resultsBoxMG"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginVertical="25dp"
-                android:background="@drawable/rounded_corners_drawable"
-                android:backgroundTint="@color/spotify_green"
-                android:backgroundTintMode="add"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/hollow_rectangle_rounded"
+                android:backgroundTintMode="multiply"
                 android:orientation="vertical">
 
                 <TextView
@@ -132,9 +134,57 @@
                     android:layout_marginTop="25dp"
                     android:fontFamily="@font/spotify_font"
                     android:text="Game Results"
-                    android:textColor="@color/spotify_green"
-                    android:textSize="24sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/spotify_black"
+                    android:textSize="40sp"
                     android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:id="@+id/scoreContainerHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageView7"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/copper_coin_fill"
+                            app:tint="@color/spotify_gold" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/scoreValueHome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:fontFamily="@font/spotify_font"
+                        android:padding="5dp"
+                        android:text="0"
+                        android:textColor="@color/spotify_black"
+                        android:textSize="90dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <ImageView
