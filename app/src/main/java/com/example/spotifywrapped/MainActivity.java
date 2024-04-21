@@ -176,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
             imageView.setImageResource(R.drawable.stripes_image);
 
             Animation slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
-            Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
 
             Handler handler = new Handler(Looper.getMainLooper());
             handler.postDelayed(() -> {
@@ -253,69 +252,94 @@ public class MainActivity extends AppCompatActivity {
                     if (destId == R.id.nav_topSong) {
                         bgFrame.setBackgroundTintList(null);
 
-                        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.topSongLayout);
-                        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
-                        frameLayout.setBackground(new ColorDrawable(Color.TRANSPARENT));
-                        bgFrame.setBackground(animDrawable);
-                        AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
-                        animDrawable2.setEnterFadeDuration(2500);
-                        animDrawable2.setExitFadeDuration(5000);
-                        animDrawable2.start();
+                        FrameLayout frameLayoutTS = binding.getRoot().findViewById(R.id.topSongLayout);
+                        if (frameLayoutTS != null) {
+                            frameLayoutTS.setBackground(ContextCompat.getDrawable(context, R.drawable.gradient_animation_ts));
+
+                            AnimationDrawable animDrawable = (AnimationDrawable) frameLayoutTS.getBackground();
+                            frameLayoutTS.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                            bgFrame.setBackground(animDrawable);
+                            AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
+                            animDrawable2.setEnterFadeDuration(2500);
+                            animDrawable2.setExitFadeDuration(5000);
+                            animDrawable2.start();
+                        }
+
                     } else if (destId == R.id.nav_top5Songs) {
                         bgFrame.setBackgroundTintList(null);
 
-                        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.top5SongsLayout);
-                        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
-                        frameLayout.setBackground(new ColorDrawable(Color.TRANSPARENT));
-                        bgFrame.setBackground(animDrawable);
-                        AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
-                        animDrawable2.setEnterFadeDuration(2500);
-                        animDrawable2.setExitFadeDuration(5000);
-                        animDrawable2.start();
+                        FrameLayout frameLayoutT5S = binding.getRoot().findViewById(R.id.top5SongsLayout);
+                        if (frameLayoutT5S != null) {
+                            frameLayoutT5S.setBackground(ContextCompat.getDrawable(context, R.drawable.gradient_animation_t5s));
+
+                            AnimationDrawable animDrawable = (AnimationDrawable) frameLayoutT5S.getBackground();
+                            frameLayoutT5S.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                            bgFrame.setBackground(animDrawable);
+                            AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
+                            animDrawable2.setEnterFadeDuration(2500);
+                            animDrawable2.setExitFadeDuration(5000);
+                            animDrawable2.start();
+                        }
                     } else if (destId == R.id.nav_topArtist) {
                         bgFrame.setBackgroundTintList(null);
 
-                        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.topArtistLayout);
-                        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
-                        frameLayout.setBackground(new ColorDrawable(Color.TRANSPARENT));
-                        bgFrame.setBackground(animDrawable);
-                        AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
-                        animDrawable2.setEnterFadeDuration(2500);
-                        animDrawable2.setExitFadeDuration(5000);
-                        animDrawable2.start();
+                        FrameLayout frameLayoutTA = binding.getRoot().findViewById(R.id.topArtistLayout);
+                        if (frameLayoutTA != null) {
+                            frameLayoutTA.setBackground(ContextCompat.getDrawable(context, R.drawable.gradient_animation_ta));
+
+                            AnimationDrawable animDrawable = (AnimationDrawable) frameLayoutTA.getBackground();
+                            frameLayoutTA.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                            bgFrame.setBackground(animDrawable);
+                            AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
+                            animDrawable2.setEnterFadeDuration(2500);
+                            animDrawable2.setExitFadeDuration(5000);
+                            animDrawable2.start();
+                        }
                     } else if (destId == R.id.nav_top5Artists) {
                         bgFrame.setBackgroundTintList(null);
 
-                        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.top5ArtistsLayout);
-                        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
-                        frameLayout.setBackground(new ColorDrawable(Color.TRANSPARENT));
-                        bgFrame.setBackground(animDrawable);
-                        AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
-                        animDrawable2.setEnterFadeDuration(2500);
-                        animDrawable2.setExitFadeDuration(5000);
-                        animDrawable2.start();
+                        FrameLayout frameLayoutT5A = binding.getRoot().findViewById(R.id.top5ArtistsLayout);
+                        if (frameLayoutT5A != null) {
+                            frameLayoutT5A.setBackground(ContextCompat.getDrawable(context, R.drawable.gradient_animation_t5a));
+
+                            AnimationDrawable animDrawable = (AnimationDrawable) frameLayoutT5A.getBackground();
+                            frameLayoutT5A.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                            bgFrame.setBackground(animDrawable);
+                            AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
+                            animDrawable2.setEnterFadeDuration(2500);
+                            animDrawable2.setExitFadeDuration(5000);
+                            animDrawable2.start();
+                        }
                     } else if (destId == R.id.nav_topGenre) {
                         bgFrame.setBackgroundTintList(null);
 
-                        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.topGenreLayout);
-                        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
-                        frameLayout.setBackground(new ColorDrawable(Color.TRANSPARENT));
-                        bgFrame.setBackground(animDrawable);
-                        AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
-                        animDrawable2.setEnterFadeDuration(2500);
-                        animDrawable2.setExitFadeDuration(5000);
-                        animDrawable2.start();
+                        FrameLayout frameLayoutTG = binding.getRoot().findViewById(R.id.topGenreLayout);
+                        if (frameLayoutTG != null) {
+                            frameLayoutTG.setBackground(ContextCompat.getDrawable(context, R.drawable.gradient_animation_tg));
+
+                            AnimationDrawable animDrawable = (AnimationDrawable) frameLayoutTG.getBackground();
+                            frameLayoutTG.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                            bgFrame.setBackground(animDrawable);
+                            AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
+                            animDrawable2.setEnterFadeDuration(2500);
+                            animDrawable2.setExitFadeDuration(5000);
+                            animDrawable2.start();
+                        }
                     } else if (destId == R.id.nav_wrappedSummary) {
                         bgFrame.setBackgroundTintList(null);
 
-                        FrameLayout frameLayout = binding.getRoot().findViewById(R.id.wrapSummaryLayout);
-                        AnimationDrawable animDrawable = (AnimationDrawable) frameLayout.getBackground();
-                        frameLayout.setBackground(new ColorDrawable(Color.TRANSPARENT));
-                        bgFrame.setBackground(animDrawable);
-                        AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
-                        animDrawable2.setEnterFadeDuration(2500);
-                        animDrawable2.setExitFadeDuration(5000);
-                        animDrawable2.start();
+                        FrameLayout frameLayoutWS = binding.getRoot().findViewById(R.id.wrapSummaryLayout);
+                        if (frameLayoutWS != null) {
+                            frameLayoutWS.setBackground(ContextCompat.getDrawable(context, R.drawable.gradient_animation_ws));
+
+                            AnimationDrawable animDrawable = (AnimationDrawable) frameLayoutWS.getBackground();
+                            frameLayoutWS.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                            bgFrame.setBackground(animDrawable);
+                            AnimationDrawable animDrawable2 = (AnimationDrawable) bgFrame.getBackground();
+                            animDrawable2.setEnterFadeDuration(2500);
+                            animDrawable2.setExitFadeDuration(5000);
+                            animDrawable2.start();
+                        }
 
                         imageView.setImageResource(R.drawable.stars_image);
                     }
