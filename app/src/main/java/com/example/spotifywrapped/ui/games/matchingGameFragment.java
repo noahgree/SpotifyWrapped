@@ -75,6 +75,9 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         List<String> imageUrls = getArguments().getStringArrayList("imageUrls");
         scoreTextView = root.findViewById(R.id.scoreValue);
 
+        FrameLayout matchTextBG = binding.getRoot().findViewById(R.id.matchTextBG);
+        matchTextBG.setVisibility(View.GONE);
+
         for (int i = 0; i < albumTiles.length; i++) {
             String imageViewId = "albumtile" + (i + 1);
             int resId = getResources().getIdentifier(imageViewId, "id", requireActivity().getPackageName());
@@ -104,6 +107,9 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     }
 
     private void checkTiles() {
+        FrameLayout matchTextBG = binding.getRoot().findViewById(R.id.matchTextBG);
+        matchTextBG.setVisibility(View.VISIBLE);
+
         if (firstTileIndex != -1 && secondTileIndex != -1) {
             String firstImageUrl = getImageUrl(firstTileIndex);
             String secondImageUrl = getImageUrl(secondTileIndex);
@@ -118,7 +124,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 scoreTextView.setText(String.valueOf(score));
                 TextView matchText = binding.getRoot().findViewById(R.id.matchgametext);
                 matchText.setText("Match");
-                FrameLayout matchTextBG = binding.getRoot().findViewById(R.id.matchTextBG);
+                matchText.setTextColor(ContextCompat.getColor(context, R.color.spotify_lighter_green));
                 matchTextBG.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.spotify_light_green)));
                 animatePointsAdded();
 
@@ -137,8 +143,9 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 secondTileIndex = -1;
             } else {
                 TextView matchText = binding.getRoot().findViewById(R.id.matchgametext);
-                FrameLayout matchTextBG = binding.getRoot().findViewById(R.id.matchTextBG);
+                matchTextBG = binding.getRoot().findViewById(R.id.matchTextBG);
                 matchText.setText("No Match");
+                matchText.setTextColor(ContextCompat.getColor(context, R.color.spotify_light_red));
                 matchTextBG.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.spotify_red)));
                 animatePointsDeducted();
 

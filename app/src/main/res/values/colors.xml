@@ -29,6 +29,8 @@
     <color name="spotify_darker_grey">#212121</color>
     <!-- Spotify Custom Red -->
     <color name="spotify_red">#FF3333</color>
+    <!-- Spotify Custom Light Red -->
+    <color name="spotify_light_red">#ff9b9b</color>
     <!-- Spotify Custom Blue -->
     <color name="spotify_blue">#1d9bff</color>
     <!-- Spotify Custom Purple -->
