@@ -157,7 +157,7 @@ public class TopArtist extends Fragment {
                             artistName.setText(name);
                             ImageView topartistimage = root.findViewById(R.id.artistimage);
                             Glide.with(context)
-                                    .load(image)
+                                    .load((image.equals("default")) ? R.drawable.no_image : image)
                                     .into(topartistimage);
                             setNameonTitle(username);
                         }
@@ -183,7 +183,7 @@ public class TopArtist extends Fragment {
                             artistName.setText(name);
                             ImageView topartistimage = (ImageView) root.findViewById(R.id.artistimage);
                             Glide.with(context)
-                                    .load(image)
+                                    .load((image.equals("default")) ? R.drawable.no_image : image)
                                     .into(topartistimage);
                             setNameonTitle(username);
                         }

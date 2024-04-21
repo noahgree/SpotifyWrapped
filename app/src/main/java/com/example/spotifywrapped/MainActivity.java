@@ -733,7 +733,7 @@ public class MainActivity extends AppCompatActivity {
                                 ImageView profilePhoto = (ImageView) navView.findViewById(R.id.profilePhoto);
                                 if (profilePhoto != null) {
                                     Log.d("ImageURL", imageUrl);
-                                    Glide.with(context).load(imageUrl).into(profilePhoto);
+                                    Glide.with(context).load((imageUrl.equals("default")) ? R.drawable.no_image : imageUrl).into(profilePhoto);
                                 }
                             }
                         } catch (JSONException e) {
