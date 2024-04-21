@@ -12,10 +12,12 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.transition.TransitionInflater;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -119,6 +121,20 @@ public class hangmanGameFragment extends Fragment {
         textViewHangman = root.findViewById(R.id.guessCounterHM);
         editTextGuess = root.findViewById(R.id.guessFieldHM);
         buttonSubmitGuess = root.findViewById(R.id.hangmanSubmitBtn);
+
+        editTextGuess.setOnEditorActionListener((v, actionId, event) -> {
+            // Check if the action is from a hardware key event and the key is the Enter key
+            if (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                submitGuess();
+                return true;
+            }
+            // Check if the action is from the soft keyboard and corresponds to the "Done" action
+            else if (actionId == EditorInfo.IME_ACTION_DONE) {
+                submitGuess();
+                return true;
+            }
+            return false;
+        });
 
         buttonSubmitGuess.setOnClickListener(v -> submitGuess());
 
