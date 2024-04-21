@@ -95,6 +95,7 @@ public class hangmanGameFragment extends Fragment {
             if (guessedWord.toString().equals(wordToGuess)) {
                 Toast.makeText(getActivity(), "Congratulations! You've won!", Toast.LENGTH_SHORT).show();
                 initializeGame();
+                editTextGuess.getText().clear();
                 return;
             }
         } else {
@@ -102,8 +103,10 @@ public class hangmanGameFragment extends Fragment {
             wrongGuessCount++;
             updateHangmanImage();
             if (wrongGuessCount == maxWrongGuesses) {
+                wrongGuessCount = 0;
                 Toast.makeText(getActivity(), "Game Over! The word was: " + wordToGuess, Toast.LENGTH_SHORT).show();
                 initializeGame();
+                editTextGuess.getText().clear();
                 return;
             }
         }
