@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
+import com.example.spotifywrapped.ScoreEntry;
 import com.example.spotifywrapped.databinding.FragmentGamesHomeBinding;
 import com.example.spotifywrapped.ui.games.hangmanGameFragment;
 import com.example.spotifywrapped.user.User;
@@ -86,9 +87,6 @@ public class GamesHomeFragment extends Fragment {
                 v.setLayoutParams(mlp);
             }
 
-            setUpHMScoreboard();
-            setUpMGScoreboard();
-
             return WindowInsetsCompat.CONSUMED;
         });
 
@@ -101,6 +99,9 @@ public class GamesHomeFragment extends Fragment {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.navHangmanHome);
         });
+
+        setUpHMScoreboard();
+        setUpMGScoreboard();
 
         return root;
     }
@@ -131,37 +132,42 @@ public class GamesHomeFragment extends Fragment {
             topScoresRef.get().addOnCompleteListener(getScoresTask -> {
                 if (getScoresTask.isSuccessful()) {
                     Map<String, Object> scoresFromFirestore = (Map<String, Object>) getScoresTask.getResult().get("topmg");
+                    SortedSet<ScoreEntry> sortedEntries = new TreeSet<>();
 
-                    SortedSet<String> sortedKeys = new TreeSet<>((a, b) -> {
-                        int scoreA = Integer.parseInt(a.split("_")[0]);
-                        int scoreB = Integer.parseInt(b.split("_")[0]);
-                        return Integer.compare(scoreB, scoreA); // Descending order
-                    });
-                    sortedKeys.addAll(scoresFromFirestore.keySet());
+                    for (String key : scoresFromFirestore.keySet()) {
+                        sortedEntries.add(new ScoreEntry(key));
+                    }
 
-                    List<String> topThreeKeys = sortedKeys.stream().limit(3).collect(Collectors.toList());
-                    Log.d("KEYCHECK", topThreeKeys.toString());
-                    for (int i = 0; i < topThreeKeys.size(); i++) {
-                        if (topThreeKeys.get(i) != null) {
-                            if (i == 0) {
-                                mg1.setText(topThreeKeys.get(i).split("_")[0]);
-                                mgPlayer1.setText("@" + scoresFromFirestore.get(topThreeKeys.get(i)));
-                                mgScore1 = topThreeKeys.get(i).split("_")[0];
-                                mgPlayer1Var = "@" + scoresFromFirestore.get(topThreeKeys.get(i));
-                            } else if (i == 1) {
-                                mg2.setText(topThreeKeys.get(i).split("_")[0]);
-                                mgPlayer2.setText("@" + scoresFromFirestore.get(topThreeKeys.get(i)));
-                                mgScore2 = topThreeKeys.get(i).split("_")[0];
-                                mgPlayer2Var = "@" + scoresFromFirestore.get(topThreeKeys.get(i));
-                            } else if (i == 2) {
-                                mg3.setText(topThreeKeys.get(i).split("_")[0]);
-                                mgPlayer3.setText("@" + scoresFromFirestore.get(topThreeKeys.get(i)));
-                                mgScore3 = topThreeKeys.get(i).split("_")[0];
-                                mgPlayer3Var = "@" + scoresFromFirestore.get(topThreeKeys.get(i));
+                    List<ScoreEntry> topThreeEntries = sortedEntries.stream().limit(3).collect(Collectors.toList());
+                    Log.d("KEYCHECK", topThreeEntries.toString());
+
+                    for (int i = 0; i < topThreeEntries.size(); i++) {
+                        ScoreEntry entry = topThreeEntries.get(i);
+                        if (entry != null) {
+                            String score = String.valueOf(entry.getScore());
+                            String player = "@" + scoresFromFirestore.get(entry.getKey());
+                            switch (i) {
+                                case 0:
+                                    mg1.setText(score);
+                                    mgPlayer1.setText(player);
+                                    mgScore1 = score;
+                                    mgPlayer1Var = player;
+                                    break;
+                                case 1:
+                                    mg2.setText(score);
+                                    mgPlayer2.setText(player);
+                                    mgScore2 = score;
+                                    mgPlayer2Var = player;
+                                    break;
+                                case 2:
+                                    mg3.setText(score);
+                                    mgPlayer3.setText(player);
+                                    mgScore3 = score;
+                                    mgPlayer3Var = player;
+                                    break;
                             }
                         }
                     }
-
                     Log.d("Firestore CHECK", user.getUid());
                 } else {
                     Log.d(TAG, "Error getting data from firebase before setting up MG scores: " + getScoresTask.getException().getMessage());
@@ -198,37 +204,42 @@ public class GamesHomeFragment extends Fragment {
             topScoresRef.get().addOnCompleteListener(getScoresTask -> {
                 if (getScoresTask.isSuccessful()) {
                     Map<String, Object> scoresFromFirestore = (Map<String, Object>) getScoresTask.getResult().get("tophm");
+                    SortedSet<ScoreEntry> sortedEntries = new TreeSet<>();
 
-                    SortedSet<String> sortedKeys = new TreeSet<>((a, b) -> {
-                        int scoreA = Integer.parseInt(a.split("_")[0]);
-                        int scoreB = Integer.parseInt(b.split("_")[0]);
-                        return Integer.compare(scoreB, scoreA); // Descending order
-                    });
-                    sortedKeys.addAll(scoresFromFirestore.keySet());
+                    for (String key : scoresFromFirestore.keySet()) {
+                        sortedEntries.add(new ScoreEntry(key));
+                    }
 
-                    List<String> topThreeKeys = sortedKeys.stream().limit(3).collect(Collectors.toList());
-                    Log.d("KEYCHECK", topThreeKeys.toString());
-                    for (int i = 0; i < topThreeKeys.size(); i++) {
-                        if (topThreeKeys.get(i) != null) {
-                            if (i == 0) {
-                                hm1.setText(topThreeKeys.get(i).split("_")[0]);
-                                hmPlayer1.setText("@" + scoresFromFirestore.get(topThreeKeys.get(i)));
-                                hmScore1 = topThreeKeys.get(i).split("_")[0];
-                                hmPlayer1Var = "@" + scoresFromFirestore.get(topThreeKeys.get(i));
-                            } else if (i == 1) {
-                                hm2.setText(topThreeKeys.get(i).split("_")[0]);
-                                hmPlayer2.setText("@" + scoresFromFirestore.get(topThreeKeys.get(i)));
-                                hmScore2 = topThreeKeys.get(i).split("_")[0];
-                                hmPlayer2Var = "@" + scoresFromFirestore.get(topThreeKeys.get(i));
-                            } else if (i == 2) {
-                                hm3.setText(topThreeKeys.get(i).split("_")[0]);
-                                hmPlayer3.setText("@" + scoresFromFirestore.get(topThreeKeys.get(i)));
-                                hmScore3 = topThreeKeys.get(i).split("_")[0];
-                                hmPlayer3Var = "@" + scoresFromFirestore.get(topThreeKeys.get(i));
+                    List<ScoreEntry> topThreeEntries = sortedEntries.stream().limit(3).collect(Collectors.toList());
+                    Log.d("KEYCHECK", topThreeEntries.toString());
+
+                    for (int i = 0; i < topThreeEntries.size(); i++) {
+                        ScoreEntry entry = topThreeEntries.get(i);
+                        if (entry != null) {
+                            String score = String.valueOf(entry.getScore());
+                            String player = "@" + scoresFromFirestore.get(entry.getKey());
+                            switch (i) {
+                                case 0:
+                                    hm1.setText(score);
+                                    hmPlayer1.setText(player);
+                                    hmScore1 = score;
+                                    hmPlayer1Var = player;
+                                    break;
+                                case 1:
+                                    hm2.setText(score);
+                                    hmPlayer2.setText(player);
+                                    hmScore2 = score;
+                                    hmPlayer2Var = player;
+                                    break;
+                                case 2:
+                                    hm3.setText(score);
+                                    hmPlayer3.setText(player);
+                                    hmScore3 = score;
+                                    hmPlayer3Var = player;
+                                    break;
                             }
                         }
                     }
-
                     Log.d("Firestore CHECK", user.getUid());
                 } else {
                     Log.d(TAG, "Error getting data from firebase before setting up HM scores: " + getScoresTask.getException().getMessage());

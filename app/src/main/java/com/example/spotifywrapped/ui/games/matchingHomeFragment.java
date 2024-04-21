@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.example.spotifywrapped.MainActivity;
 import com.example.spotifywrapped.R;
+import com.example.spotifywrapped.ScoreEntry;
 import com.example.spotifywrapped.databinding.FragmentMatchingHomeBinding;
 import com.example.spotifywrapped.ui.gallery.AddWrapFragment;
 import com.example.spotifywrapped.user.User;
@@ -269,20 +270,18 @@ public class matchingHomeFragment extends Fragment {
                 String uniqueScoreKey = newScore + "_" + UUID.randomUUID().toString();
                 scoresFromFirestore.put(uniqueScoreKey, currentUser.getName());
 
-                SortedSet<String> sortedKeys = new TreeSet<>((a, b) -> {
-                    int scoreA = Integer.parseInt(a.split("_")[0]);
-                    int scoreB = Integer.parseInt(b.split("_")[0]);
-                    return Integer.compare(scoreB, scoreA); // Descending order
-                });
-                sortedKeys.addAll(scoresFromFirestore.keySet());
+                SortedSet<ScoreEntry> sortedEntries = new TreeSet<>();
+                for (String key : scoresFromFirestore.keySet()) {
+                    sortedEntries.add(new ScoreEntry(key));
+                }
 
                 Map<String, Object> scoresToSendBack = new HashMap<>();
-                for (String key : sortedKeys) {
-                    scoresToSendBack.put(key, scoresFromFirestore.get(key));
+                for (ScoreEntry entry : sortedEntries) {
+                    scoresToSendBack.put(entry.getKey(), scoresFromFirestore.get(entry.getKey()));
                 }
 
                 topScoresRef.update("topmg", scoresToSendBack)
-                        .addOnSuccessListener(aVoid -> Log.d(TAG, "Matching game score added to array successfully"))
+                        .addOnSuccessListener(aVoid -> Log.d(TAG, "Matching game score added to array successfully: " + scoresToSendBack))
                         .addOnFailureListener(e -> Log.e(TAG, "Error adding matching game score to array", e));
 
                 Log.d("Firestore CHECK", user.getUid());

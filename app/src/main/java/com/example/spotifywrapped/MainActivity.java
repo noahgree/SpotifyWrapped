@@ -152,15 +152,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "NO ACCESS TOKEN");
                 navigateToSpotifyLoginFragment();
             } else {
-                isSpotifyTokenValid(new CallbackTwo() {
-                    @Override
-                    public void onComplete(boolean isValid) {
-                        if (!isValid) {
-                            navigateToSpotifyLoginFragment();
-                        } else {
-                            //TODO: Make it so if the token from the saved user is not valid, then it also checks the token stored in firebase
-                            setupNavigationAndToolbar();
-                        }
+                isSpotifyTokenValid(isValid -> {
+                    if (!isValid) {
+                        navigateToSpotifyLoginFragment();
+                    } else {
+                        //TODO: Make it so if the token from the saved user is not valid, then it also checks the token stored in firebase
+                        setupNavigationAndToolbar();
                     }
                 });
             }
