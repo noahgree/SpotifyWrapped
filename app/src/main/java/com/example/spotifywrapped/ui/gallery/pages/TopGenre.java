@@ -93,14 +93,6 @@ public class TopGenre extends Fragment {
         setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
     }
 
-    private User loadUser() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String userJson = sharedPreferences.getString("CurrentUser", null);
-        Log.d("SharedPreferences", "Loaded token: " + userJson);
-        return gson.fromJson(userJson, User.class);
-    }
-
     public static void setNameonTitle(String username) {
         TextView titlesWithName = binding.getRoot().findViewById(R.id.topSongIntro);
         if (!username.isEmpty()) {

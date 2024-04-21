@@ -13,9 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -51,33 +60,39 @@ import okhttp3.Response;
  */
 public class hangmanHomeFragment extends Fragment {
 
-    private FragmentHangmanHomeBinding binding;
-
-
+    private static FragmentHangmanHomeBinding binding;
     public static Context context;
-    private static User currentUser;
     private static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
+    private String term = "long";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = MainActivity.getInstance();
-        currentUser = loadUser();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
     }
 
-    private User loadUser() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String userJson = sharedPreferences.getString("CurrentUser", null);
-        Log.d("SharedPreferences", "Loaded token: " + userJson);
-        return gson.fromJson(userJson, User.class);
-    }
+    private String getTimeFrame() {
+        RadioButton shortTerm = getActivity().findViewById(R.id.shortTermBtnHM);
+        RadioButton mediumTerm = getActivity().findViewById(R.id.mediumTermBtnHM);
+        RadioButton longTerm = getActivity().findViewById(R.id.longTermBtnHM);
+        if (shortTerm.isChecked()) {
+            term = "short";
+        } else if (mediumTerm.isChecked()) {
+            term = "medium";
+        } else if (longTerm.isChecked()) {
+            term = "long";
+        }
 
+        return term;
+    }
 
     public static String getSpotifyToken() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
@@ -142,17 +157,41 @@ public class hangmanHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentHangmanHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
-        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
+
+        // set insets
+        FrameLayout mainLayout = root.findViewById(R.id.hangmanHomeLayout);
+        ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+
+            if (insets.bottom > 0) {
+                mlp.bottomMargin = insets.bottom;
+                v.setLayoutParams(mlp);
+            }
+
+            return WindowInsetsCompat.CONSUMED;
+        });
 
         Button playButton = root.findViewById(R.id.hangmanstart);
-        Spinner spinner = null;
+        playButton.setText("BEGIN");
+
+        ImageView spaceFiller = binding.getRoot().findViewById(R.id.spaceFillerHM);
+        LinearLayout resultsBox = binding.getRoot().findViewById(R.id.resultsBoxHM);
+        LinearLayout explainBox = binding.getRoot().findViewById(R.id.explainHM);
+        spaceFiller.setVisibility(View.VISIBLE);
+        resultsBox.setVisibility(View.GONE);
+        explainBox.setVisibility(View.VISIBLE);
+        if (hangmanGameFragment.getHasPlayed()) {
+            playButton.setText("PLAY AGAIN");
+            explainBox.setVisibility(View.GONE);
+            setUpResults();
+        }
+
+        RadioButton shortTerm = binding.getRoot().findViewById(R.id.shortTermBtnHM);
+        shortTerm.setChecked(true);
+
         playButton.setOnClickListener(v -> {
-
-            String term = "long";
             Map<String, Object> wrap = new HashMap<>();
-
-
             AddWrapFragment.DataCompletionHandler handler = updatedImages -> {
                 // This block will be called once data fetching is complete.
                 getActivity().runOnUiThread(() -> {
@@ -162,14 +201,12 @@ public class hangmanHomeFragment extends Fragment {
                 });
             };
 
-
-            onMatchStarted(context, root, mOkHttpClient, term, wrap, handler);
+            onMatchStarted(context, root, mOkHttpClient, getTimeFrame(), wrap, handler);
         });
 
-        // Inflate the layout for this fragment
         return root;
-
     }
+
     public void navigateToHangmanGameFragment(List<String> artists) {
         NavController navController = Navigation.findNavController(requireView());
         Bundle bundle = new Bundle();
@@ -177,5 +214,27 @@ public class hangmanHomeFragment extends Fragment {
         navController.navigate(R.id.navHangmanGame, bundle);
     }
 
+    public static void setUpResults() {
+        TextView scoreText = binding.getRoot().findViewById(R.id.scoreValueHomeHM);
+        TextView resultsTitle = binding.getRoot().findViewById(R.id.resultsTextHM);
+        TextView timeText = binding.getRoot().findViewById(R.id.timeResultHM);
+        ImageView spaceFiller = binding.getRoot().findViewById(R.id.spaceFillerHM);
+        LinearLayout resultsBox = binding.getRoot().findViewById(R.id.resultsBoxHM);
+        LinearLayout explainBox = binding.getRoot().findViewById(R.id.explainHM);
 
+        spaceFiller.setVisibility(View.GONE);
+        resultsBox.setVisibility(View.VISIBLE);
+        explainBox.setVisibility(View.GONE);
+        timeText.setVisibility(View.VISIBLE);
+
+        if (hangmanGameFragment.getScore() == 0) {
+            scoreText.setText(String.valueOf(0));
+            timeText.setTextColor(ContextCompat.getColor(context, R.color.spotify_red));
+            timeText.setText("YOU LOST");
+        } else {
+            scoreText.setText(String.valueOf(hangmanGameFragment.getScore()));
+            timeText.setTextColor(ContextCompat.getColor(context, R.color.spotify_black));
+            timeText.setText("FINISHED IN: " + hangmanGameFragment.getTime());
+        }
+    }
 }

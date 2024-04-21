@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -18,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -169,15 +173,32 @@ public class matchingHomeFragment extends Fragment {
         binding = FragmentMatchingHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // set insets
+        FrameLayout mainLayout = root.findViewById(R.id.mainMGHome);
+        ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+
+            if (insets.bottom > 0) {
+                mlp.bottomMargin = insets.bottom;
+                v.setLayoutParams(mlp);
+            }
+
+            return WindowInsetsCompat.CONSUMED;
+        });
+
         Button playButton = root.findViewById(R.id.matchingStartBtn);
         playButton.setText("BEGIN");
 
         ImageView spaceFiller = binding.getRoot().findViewById(R.id.spaceFillerMG);
         LinearLayout resultsBox = binding.getRoot().findViewById(R.id.resultsBoxMG);
+        LinearLayout explainBox = binding.getRoot().findViewById(R.id.explainMG);
         spaceFiller.setVisibility(View.VISIBLE);
         resultsBox.setVisibility(View.GONE);
+        explainBox.setVisibility(View.VISIBLE);
         if (matchingGameFragment.getHasPlayed()) {
             playButton.setText("PLAY AGAIN");
+            explainBox.setVisibility(View.GONE);
             setUpResults();
         }
 
@@ -217,10 +238,16 @@ public class matchingHomeFragment extends Fragment {
         TextView scoreText = binding.getRoot().findViewById(R.id.scoreValueHome);
         scoreText.setText(String.valueOf(matchingGameFragment.getScore()));
 
+        TextView timeText = binding.getRoot().findViewById(R.id.timeResultMG);
+        timeText.setText("FINISHED IN: " + matchingGameFragment.getTime());
+
         ImageView spaceFiller = binding.getRoot().findViewById(R.id.spaceFillerMG);
         spaceFiller.setVisibility(View.GONE);
         LinearLayout resultsBox = binding.getRoot().findViewById(R.id.resultsBoxMG);
         resultsBox.setVisibility(View.VISIBLE);
+
+        LinearLayout explainBox = binding.getRoot().findViewById(R.id.explainMG);
+        explainBox.setVisibility(View.GONE);
     }
 
 }

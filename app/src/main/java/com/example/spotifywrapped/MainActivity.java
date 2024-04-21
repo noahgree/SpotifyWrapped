@@ -41,6 +41,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
@@ -486,82 +487,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    public static void playSong(String trackUri) {
-//        if (!isSpotifyLoggedIn()) {
-//            Toast.makeText(context, "You need to log in to Spotify first!", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        String accessToken = currentUser.getmAccessToken();
-//        OkHttpClient client = new OkHttpClient();
-//        String playUrl = "https://api.spotify.com/v1/me/player/play";
-//
-//        JSONObject json = new JSONObject();
-//        try {
-//            JSONArray uris = new JSONArray();
-//            uris.put(trackUri);
-//            json.put("uris", uris);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json.toString());
-//        Request request = new Request.Builder()
-//                .url(playUrl)
-//                .addHeader("Authorization", "Bearer " + accessToken)
-//                .post(body)
-//                .build();
-//
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                Log.e(TAG, "Failed to play song: " + e.getMessage());
-//                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to play song", Toast.LENGTH_SHORT).show());
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                if (!response.isSuccessful()) {
-//                    Log.e(TAG, "Failed to play song: " + response.message());
-//                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Failed to play song", Toast.LENGTH_SHORT).show());
-//                } else {
-//                    Log.d(TAG, "Song played successfully.");
-//                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, "Song played successfully!", Toast.LENGTH_SHORT).show());
-//                }
-//            }
-//        });
-//    }
-
     public static MainActivity getInstance() {
         return instance;
     }
 
     private void isSpotifyTokenValid(final CallbackTwo callback) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Request request = new Request.Builder()
-                        .url("https://api.spotify.com/v1/me")
-                        .addHeader("Authorization", "Bearer " + currentUser.getmAccessToken())
-                        .build();
+        new Thread(() -> {
+            final Request request = new Request.Builder()
+                    .url("https://api.spotify.com/v1/me")
+                    .addHeader("Authorization", "Bearer " + currentUser.getmAccessToken())
+                    .build();
 
-                try {
-                    Response response = mOkHttpClient.newCall(request).execute();
-                    // If the response is successful, the token is valid
-                    boolean isValid = response.isSuccessful();
-                    new Handler(Looper.getMainLooper()).post(() -> {
-                        callback.onComplete(isValid);
-                    });
-                } catch (IOException e) {
-                    Log.d("SpotifyTokenCheck", "Failed to validate token: " + e);
-                    new Handler(Looper.getMainLooper()).post(() -> {
-                        callback.onComplete(false);
-                    });
-                }
+            try {
+                Response response = mOkHttpClient.newCall(request).execute();
+                // If the response is successful, the token is valid
+                boolean isValid = response.isSuccessful();
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    callback.onComplete(isValid);
+                });
+            } catch (IOException e) {
+                Log.d("SpotifyTokenCheck", "Failed to validate token: " + e);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    callback.onComplete(false);
+                });
             }
         }).start();
     }
-
 
     public static void saveSpotifyToken(String token) {
         SharedPreferences sharedPreferences = getInstance().getSharedPreferences("AppPrefs", MODE_PRIVATE);
@@ -597,25 +548,12 @@ public class MainActivity extends AppCompatActivity {
         navController.navigate(R.id.nav_login); // Adjust this ID based on your navigation graph
     }
 
-    private void navigateToNewWrapFragment() {
-        // Ensure the AppBar (Toolbar) is not shown for the Login Fragment
-        binding.mainAppBar.toolbar.setVisibility(View.GONE);
-        // Navigate to the Login Fragment immediately
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        navController.navigate(R.id.nav_addWrap); // Adjust this ID based on your navigation graph
-    }
-
     private void updateToolbarForLoggedOutUser() {
         setSupportActionBar(binding.mainAppBar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false); // Remove the back/up button
     }
 
     private void navigateToSpotifyLoginFragment() {
-        // Ensure the AppBar (Toolbar) is not shown for the Login Fragment
-//        binding.appBarMain.toolbar.setVisibility(View.GONE);
-//        // Navigate to the Login Fragment immediately
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-//        navController.navigate(R.id.spotifyLoginFragment); // Adjust this ID based on your navigation graph
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         navController.popBackStack(R.id.nav_home, true); // Clear back stack up to home
         navController.navigate(R.id.nav_login);
@@ -654,6 +592,7 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_logout) {
@@ -665,8 +604,9 @@ public class MainActivity extends AppCompatActivity {
 
     //Updates new values with the current user.
     public static void onLoginSuccess(String name, String email) {
-        NavigationView navigationView = (NavigationView) binding.navView;
+        NavigationView navigationView = binding.navView;
         View navView = navigationView.getHeaderView(0);
+
         // Side Navigation
         TextView navName = navView.findViewById(R.id.navName);
         TextView navEmail = navView.findViewById(R.id.navEmail);
@@ -678,13 +618,12 @@ public class MainActivity extends AppCompatActivity {
         // Sign out from Firebase
         FirebaseAuth.getInstance().signOut();
 
-        // Optional: Clear any stored data (e.g., SharedPreferences)
+        // Clear any stored data (e.g., SharedPreferences)
         SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
 
-        // Optional: Navigate the user to the login screen
         navigateToLoginFragment();
         updateToolbarForLoggedOutUser();
 

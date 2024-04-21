@@ -2,68 +2,250 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hangmanHomeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
-    <TextView
-        android:id="@+id/hangmanhometext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
-        android:fontFamily="@font/spotify_font"
-        android:text="@string/hangman_game_home"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="@color/spotify_black"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+    android:layout_marginBottom="0dp"
+    tools:context=".ui.games.hangmanHomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/titleMG"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginHorizontal="15dp"
+            android:fontFamily="@font/spotify_font"
+            android:text="Hangman"
+            android:textAlignment="textStart"
+            android:textColor="@color/spotify_black"
+            android:textSize="48sp"
+            android:textStyle="bold" />
 
-            <Space
-                android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/explainHM"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_corners_drawable"
+            android:backgroundTint="@color/spotify_black"
+            android:backgroundTintMode="add"
+            android:elevation="5dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/descriptionHM"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/spotify_font"
+                android:text="Play Hangman With Your Favorite Artists!"
+                android:textAlignment="center"
+                android:textColor="@color/spotify_green"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="450dp"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_corners_drawable"
+            android:backgroundTint="@color/spotify_black"
+            android:backgroundTintMode="add"
+            android:elevation="5dp"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textViewTF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/spotify_font"
+                android:text="Time Frame"
+                android:textColor="@color/spotify_green"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/hangmanhomeimage"
-                android:layout_width="279dp"
-                android:layout_height="274dp"
-                app:srcCompat="@drawable/hangman" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/shortTermBtnHM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:buttonTint="@color/spotify_white"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="4 Weeks"
+                    android:textColor="@color/spotify_white"
+                    android:textColorLink="@color/spotify_green"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/mediumTermBtnHM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:buttonTint="@color/spotify_white"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="6 Months"
+                    android:textColor="@color/spotify_white"
+                    android:textColorLink="@color/spotify_green"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/longTermBtnHM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:buttonTint="@color/spotify_white"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="1 Year"
+                    android:textColor="@color/spotify_white"
+                    android:textColorLink="@color/spotify_green"
+                    android:textSize="18sp" />
+
+            </RadioGroup>
 
             <Button
                 android:id="@+id/hangmanstart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
+                android:layout_gravity="right"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/rounded_button"
-                android:text=" START! "
-                android:textSize="25sp" />
-
+                android:fontFamily="@font/spotify_font"
+                android:text="Begin"
+                android:textColor="@color/spotify_white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/resultsBoxHM"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/hollow_rectangle_rounded"
+                android:backgroundTintMode="multiply"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/resultsTextHM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="Game Results"
+                    android:textAlignment="center"
+                    android:textColor="@color/spotify_black"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:id="@+id/scoreContainerHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="15dp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageView7"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/copper_coin_fill"
+                            app:tint="@color/spotify_gold" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/scoreValueHomeHM"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="15dp"
+                        android:fontFamily="@font/spotify_font"
+                        android:padding="5dp"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textColor="@color/spotify_black"
+                        android:textSize="80dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/timeResultHM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/spotify_font"
+                    android:text="FINISHED IN: 00:00"
+                    android:textAlignment="center"
+                    android:textColor="@color/spotify_dark_green"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/spaceFillerHM"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginVertical="25dp"
+                android:alpha="0.4"
+                android:scaleType="fitCenter"
+                android:src="@drawable/compare_match_icon"
+                android:visibility="gone" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

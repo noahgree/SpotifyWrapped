@@ -14,6 +14,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +25,7 @@ import androidx.navigation.Navigation;
 
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.Looper;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,11 +63,31 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     public static int score = 0;
     public static boolean hasPlayed = false;
 
+    private TextView timerTextView;
+    private int seconds = 0;
+    public static String time = "00:00";
+    private boolean running = true; // Set this to false if you want the timer to be stopped initially
+
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            int minutes = (seconds % 3600) / 60;
+            int secs = seconds % 60;
+            time = String.format("%02d:%02d", minutes, secs);
+            timerTextView.setText(time);
+            if (running) {
+                seconds++;
+            }
+            handler.postDelayed(this, 1000);
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = MainActivity.getInstance();
-        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_fade));
         setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
     }
 
@@ -72,6 +96,20 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         binding = FragmentMatchingGameBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        // set insets
+        FrameLayout mainLayout = root.findViewById(R.id.mgMainLayout);
+        ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+
+            if (insets.bottom > 0) {
+                mlp.bottomMargin = insets.bottom;
+                v.setLayoutParams(mlp);
+            }
+
+            return WindowInsetsCompat.CONSUMED;
+        });
 
         List<String> imageUrls = getArguments().getStringArrayList("imageUrls");
         scoreTextView = root.findViewById(R.id.scoreValue);
@@ -88,6 +126,10 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
 
         setTileIds(imageUrls);
         scoreTextView.setText(String.valueOf(score));
+
+        timerTextView = root.findViewById(R.id.timerMG);
+        handler.post(runnable);
+        running = true;
 
         return root;
     }
@@ -290,7 +332,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    scoreTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+                    scoreTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.spotify_black));
                 }
             });
         }
@@ -311,8 +353,9 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
 
     private void gameCompletion() {
         hasPlayed = true;
+        running = false;
 
-        new CountDownTimer(3500, 1000) {
+        new CountDownTimer(2500, 1000) {
             public void onTick(long millisUntilFinished) {
                 //required
             }
@@ -331,5 +374,9 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
 
     public static boolean getHasPlayed() {
         return hasPlayed;
+    }
+
+    public static String getTime() {
+        return time;
     }
 }
