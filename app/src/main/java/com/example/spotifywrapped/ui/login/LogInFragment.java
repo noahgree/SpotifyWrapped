@@ -143,23 +143,24 @@ public class LogInFragment extends Fragment {
         signupButton.setOnClickListener(v -> {
             String email = String.valueOf(((EditText) root.findViewById(R.id.emailInput)).getText());
             String password = String.valueOf(((EditText) root.findViewById(R.id.passwordInput)).getText());
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener((Activity) root.getContext(), task -> {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            solidifyNewUser(user, password);
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            NavController navController = Navigation.findNavController(v);
-                            navController.navigate(R.id.nav_signup);
-                            SignUpFragment.setPassedEmail(email);
-                            SignUpFragment.setPassedPW(password);
-                        }
-                    });
-
+            if (email.isEmpty() || password.isEmpty()) {
+                // If sign in fails, display a message to the user.
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.nav_signup);
+                SignUpFragment.setPassedEmail(email);
+                SignUpFragment.setPassedPW(password);
+            } else {
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener((Activity) root.getContext(), task -> {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                solidifyNewUser(user, password);
+                                updateUI(user);
+                            }
+                        });
+            }
         });
 
         return root;
