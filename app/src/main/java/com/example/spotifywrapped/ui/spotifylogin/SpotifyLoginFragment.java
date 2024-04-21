@@ -82,7 +82,7 @@ public class SpotifyLoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
+        setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
         setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
     }
 

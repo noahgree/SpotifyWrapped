@@ -123,6 +123,8 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             albumTiles[i] = root.findViewById(resId);
             albumTiles[i].setOnClickListener(this);
         }
+        time = "00:00";
+        score = 0;
 
         setTileIds(imageUrls);
         scoreTextView.setText(String.valueOf(score));
@@ -360,6 +362,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             }
 
             public void onFinish() { // When the delay timer ends
+                matchingHomeFragment.publishResults();
                 NavController navController = Navigation.findNavController(requireView());
                 navController.popBackStack(R.id.matchingHomeFragment, false);
             }

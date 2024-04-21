@@ -112,6 +112,8 @@ public class hangmanGameFragment extends Fragment {
         setWords(artists);
 
         wrongGuessCount = 0;
+        score = 0;
+        time = "00:00";
 
         textViewWordToGuess = root.findViewById(R.id.wordToGuessField);
         textViewHangman = root.findViewById(R.id.guessCounterHM);
@@ -196,6 +198,7 @@ public class hangmanGameFragment extends Fragment {
         // check for a win
         if (guessedWord.toString().equals(wordToGuess)) {
             justLost = false;
+            hangmanHomeFragment.publishResults();
             completeGame();
         }
 

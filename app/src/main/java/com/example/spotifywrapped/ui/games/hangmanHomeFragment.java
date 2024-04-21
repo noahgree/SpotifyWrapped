@@ -74,7 +74,6 @@ public class hangmanHomeFragment extends Fragment {
     private static User currentUser;
     private static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
-    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
     private String term = "long";
@@ -84,7 +83,6 @@ public class hangmanHomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         context = MainActivity.getInstance();
         currentUser = loadUser();
-        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
         setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
@@ -254,13 +252,11 @@ public class hangmanHomeFragment extends Fragment {
             timeText.setTextColor(ContextCompat.getColor(context, R.color.spotify_green));
             timeText.setText("YOU WON\nFINISHED IN: " + hangmanGameFragment.getTime());
         }
-
-        publishResults();
     }
 
-    private void publishResults() {
+    public static void publishResults() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // Reference to the top score's document in Firestore
         DocumentReference topScoresRef = db.collection("Accounts").document("DbwyyYBNxvx710s0aE26");
 

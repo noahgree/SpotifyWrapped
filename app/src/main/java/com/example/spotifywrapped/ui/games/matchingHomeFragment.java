@@ -70,7 +70,6 @@ public class matchingHomeFragment extends Fragment {
     private static User currentUser;
     static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
-    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
     private String term = "short";
@@ -80,7 +79,6 @@ public class matchingHomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         context = MainActivity.getInstance();
         currentUser = loadUser();
-        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_right));
         setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fragment_slide_left));
@@ -255,12 +253,11 @@ public class matchingHomeFragment extends Fragment {
         LinearLayout explainBox = binding.getRoot().findViewById(R.id.explainMG);
         explainBox.setVisibility(View.GONE);
 
-        publishResults();
     }
 
-    private void publishResults() {
+    public static void publishResults() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // Reference to the user's document in Firestore
         DocumentReference topScoresRef = db.collection("Accounts").document("DbwyyYBNxvx710s0aE26");
 
