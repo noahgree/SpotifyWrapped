@@ -158,6 +158,11 @@ public class LogInFragment extends Fragment {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 solidifyNewUser(user, password);
                                 updateUI(user);
+                            } else {
+                                NavController navController = Navigation.findNavController(v);
+                                navController.navigate(R.id.nav_signup);
+                                SignUpFragment.setPassedEmail(email);
+                                SignUpFragment.setPassedPW(password);
                             }
                         });
             }
