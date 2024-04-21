@@ -104,7 +104,7 @@ public class matchingHomeFragment extends Fragment {
 
     public static void onMatchStarted(Context context, View view, OkHttpClient okHttpClient, String term, Map<String, Object> wrap, AddWrapFragment.DataCompletionHandler handler) {
         if (getSpotifyToken() == null) {
-            Toast.makeText(context, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "You need to get a Spotify access token first! Log out then log back in.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -159,7 +159,6 @@ public class matchingHomeFragment extends Fragment {
         binding = FragmentMatchingHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         Button playButton = root.findViewById(R.id.matchingStartBtn);
-        Spinner spinner = null;
         playButton.setOnClickListener(v -> {
 
             term = getTimeFrame();
