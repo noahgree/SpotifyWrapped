@@ -33,6 +33,8 @@
     <color name="spotify_blue">#1d9bff</color>
     <!-- Spotify Custom Purple -->
     <color name="spotify_purple">#9735ff</color>
+    <!-- Spotify Custom Gold -->
+    <color name="spotify_gold">#ffc500</color>
 
     <!-- CUSTOM WRAP SLIDE COLORS -->
     <!-- Top Song Color -->

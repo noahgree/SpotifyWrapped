@@ -9,6 +9,7 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -27,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -107,17 +109,17 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             String secondImageUrl = getImageUrl(secondTileIndex);
 
             if (firstImageUrl != null && firstImageUrl.equals(secondImageUrl)) {
-                showShortToast(requireContext(), "Match! +150", 250);
-
                 // animations
                 pulsateTile(albumTiles[firstTileIndex]);
                 pulsateTile(albumTiles[secondTileIndex]);
-                albumTiles[firstTileIndex].setBackgroundResource(R.drawable.highlighted_tile);
-                albumTiles[secondTileIndex].setBackgroundResource(R.drawable.highlighted_tile);
 
                 // score update
                 score += 150;
                 scoreTextView.setText(String.valueOf(score));
+                TextView matchText = binding.getRoot().findViewById(R.id.matchgametext);
+                matchText.setText("Match");
+                FrameLayout matchTextBG = binding.getRoot().findViewById(R.id.matchTextBG);
+                matchTextBG.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.spotify_light_green)));
                 animatePointsAdded();
 
                 // prevent clicking on tiles after matched
@@ -134,19 +136,20 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 firstTileIndex = -1;
                 secondTileIndex = -1;
             } else {
+                TextView matchText = binding.getRoot().findViewById(R.id.matchgametext);
+                FrameLayout matchTextBG = binding.getRoot().findViewById(R.id.matchTextBG);
+                matchText.setText("No Match");
+                matchTextBG.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.spotify_red)));
+                animatePointsDeducted();
+
                 if (score > 0) {
-                    showShortToast(requireContext(), "No Match! -50", 250);
                     score -= 50;
                     scoreTextView.setText(String.valueOf(score));
-                    animatePointsDeducted();
-                } else {
-                    showShortToast(requireContext(), "No Match!", 250);
                 }
-
 
                 new CountDownTimer(750, 750) {
                     public void onTick(long millisUntilFinished) {
-                        //Not used but required
+                        // Not used but required
                     }
 
                     public void onFinish() {
@@ -160,8 +163,6 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             }
         }
     }
-
-
 
     private String getImageUrl(int tileIndex) {
         if (tileIndex >= 0 && tileIndex < albumTiles.length) {
@@ -238,7 +239,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
         int originalColor = scoreTextView.getCurrentTextColor();
 
         if (scoreTextView != null) {
-            scoreTextView.setTextColor(Color.parseColor("#1DB954"));
+            scoreTextView.setTextColor(ContextCompat.getColor(context, R.color.spotify_black));
 
             ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(scoreTextView, "scaleX", 1.2f);
             ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(scoreTextView, "scaleY", 1.2f);
@@ -267,7 +268,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
 
     private void animatePointsDeducted() {
         if (scoreTextView != null) {
-            scoreTextView.setTextColor(Color.parseColor("#D70040"));
+            scoreTextView.setTextColor(ContextCompat.getColor(context, R.color.spotify_red));
 
             ObjectAnimator shakeX = ObjectAnimator.ofFloat(scoreTextView, "translationX", -10, 10);
             shakeX.setRepeatCount(5);
@@ -285,11 +286,6 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 }
             });
         }
-    }
-
-    private void showShortToast(Context context, String message, int duration) {
-        Toast toast = Toast.makeText(context, message, duration);
-        toast.show();
     }
 
     public void setTileIds(List<String> imageUrls) {

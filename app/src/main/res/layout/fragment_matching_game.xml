@@ -5,246 +5,300 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/matchgametext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:fontFamily="@font/spotify_font"
-        android:text="Match!"
-        android:textColor="@color/spotify_black"
-        android:textSize="60sp"
-        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:orientation="vertical">
 
-    <GridLayout
-        android:id="@+id/gridLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="15dp"
-        android:background="@drawable/hollow_rectangle_rounded"
-        android:columnCount="4"
-        android:columnOrderPreserved="false"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:rowCount="4"
-        android:useDefaultMargins="false">
+        <TextView
+            android:id="@+id/titleTextMatching"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/spotify_font"
+            android:text="Match All Pairs to Win"
+            android:textAlignment="center"
+            android:textColor="@color/spotify_black"
+            android:textSize="55sp"
+            android:textStyle="bold" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile1"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
+        <GridLayout
+            android:id="@+id/gridLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="135dp" />
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/hollow_rectangle_rounded"
+            android:columnCount="4"
+            android:columnOrderPreserved="false"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:rowCount="4"
+            android:useDefaultMargins="false">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile2"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="111dp"
-            tools:layout_editor_absoluteY="243dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile1"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="135dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile3"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="206dp"
-            tools:layout_editor_absoluteY="462dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile2"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="111dp"
+                tools:layout_editor_absoluteY="243dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile4"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="206dp"
-            tools:layout_editor_absoluteY="352dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile3"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="206dp"
+                tools:layout_editor_absoluteY="462dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile5"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="111dp"
-            tools:layout_editor_absoluteY="462dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile4"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="206dp"
+                tools:layout_editor_absoluteY="352dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile6"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="111dp"
-            tools:layout_editor_absoluteY="352dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile5"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="111dp"
+                tools:layout_editor_absoluteY="462dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile7"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="243dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile6"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="111dp"
+                tools:layout_editor_absoluteY="352dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile8"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="111dp"
-            tools:layout_editor_absoluteY="135dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile7"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="243dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile9"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="301dp"
-            tools:layout_editor_absoluteY="352dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile8"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="111dp"
+                tools:layout_editor_absoluteY="135dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile10"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="206dp"
-            tools:layout_editor_absoluteY="135dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile9"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="301dp"
+                tools:layout_editor_absoluteY="352dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile11"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="206dp"
-            tools:layout_editor_absoluteY="243dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile10"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="206dp"
+                tools:layout_editor_absoluteY="135dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile12"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="301dp"
-            tools:layout_editor_absoluteY="243dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile11"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="206dp"
+                tools:layout_editor_absoluteY="243dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile13"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="301dp"
-            tools:layout_editor_absoluteY="462dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile12"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="301dp"
+                tools:layout_editor_absoluteY="243dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile14"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="462dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile13"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="301dp"
+                tools:layout_editor_absoluteY="462dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile15"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="352dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile14"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="462dp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/albumtile16"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
-            app:srcCompat="@drawable/matching_placeholder"
-            tools:layout_editor_absoluteX="301dp"
-            tools:layout_editor_absoluteY="135dp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile15"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="352dp" />
 
-    </GridLayout>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/albumtile16"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageView.CornerMoreRound"
+                app:srcCompat="@drawable/matching_placeholder"
+                tools:layout_editor_absoluteX="301dp"
+                tools:layout_editor_absoluteY="135dp" />
 
-    <TextView
-        android:id="@+id/scoreLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginBottom="112dp"
-        android:fontFamily="@font/spotify_font"
-        android:text="Score:"
-        android:textColor="@color/spotify_black"
-        android:textSize="45sp"
-        android:textStyle="bold" />
+        </GridLayout>
 
-    <TextView
-        android:id="@+id/scoreValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="116dp"
-        android:text="0"
-        android:textColor="@color/spotify_black"
-        android:textSize="45sp"
-        android:textStyle="bold" />
+        <FrameLayout
+            android:id="@+id/matchTextBG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/hollow_rectangle_rounded"
+            android:backgroundTint="@color/spotify_light_green"
+            android:backgroundTintMode="multiply">
+
+            <TextView
+                android:id="@+id/matchgametext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="5dp"
+                android:fontFamily="@font/spotify_font"
+                android:text="BEGIN!"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/spotify_black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_margin="15dp"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/copper_coin_fill"
+                    app:tint="@color/spotify_gold" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/scoreValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:fontFamily="@font/spotify_font"
+                android:padding="5dp"
+                android:text="0"
+                android:textColor="@color/spotify_black"
+                android:textSize="45sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>
