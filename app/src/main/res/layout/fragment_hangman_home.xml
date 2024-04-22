@@ -258,7 +258,7 @@
                 android:layout_marginVertical="25dp"
                 android:alpha="0.4"
                 android:scaleType="fitCenter"
-                android:src="@drawable/compare_match_icon"
+                android:src="@drawable/hangman"
                 android:visibility="gone" />
         </LinearLayout>
 

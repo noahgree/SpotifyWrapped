@@ -47,7 +47,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/spotify_font"
-                android:text="Match Your Music Artwork Tiles!"
+                android:text="Match Your Music's Artwork Tiles!"
                 android:textAlignment="center"
                 android:textColor="@color/spotify_green"
                 android:textSize="30sp"
