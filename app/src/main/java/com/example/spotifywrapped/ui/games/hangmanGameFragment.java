@@ -40,6 +40,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -373,9 +374,16 @@ public class hangmanGameFragment extends Fragment {
         Collections.shuffle(pairArtists);
 
         for (int i = 0; i < words.length && i < pairArtists.size(); i++) {
-            words[i] = pairArtists.get(i).toUpperCase();
+            words[i] = unaccent(pairArtists.get(i)).toUpperCase();
         }
     }
+
+    public static String unaccent(String src) {
+        return Normalizer
+                .normalize(src, Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "");
+    }
+
 
     private void animateFeedbackError(TextView view) {
         if (view != null) {
