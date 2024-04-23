@@ -284,6 +284,7 @@ public class hangmanGameFragment extends Fragment {
     private void completeGame() {
         hasPlayed = true;
         running = false;
+        handler.removeCallbacks(runnable);
 
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         View view = getActivity().getWindow().getDecorView().getRootView();
@@ -291,7 +292,7 @@ public class hangmanGameFragment extends Fragment {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
-        new CountDownTimer(3500, 1000) {
+        new CountDownTimer(3000, 1000) {
             public void onTick(long millisUntilFinished) {
                 //required
             }
@@ -305,6 +306,9 @@ public class hangmanGameFragment extends Fragment {
     }
 
     private void initializeGame() {
+        time = "00:00";
+        seconds = 0;
+
         Random random = new Random();
         int randomIndex = random.nextInt(words.length);
         wordToGuess = words[randomIndex];

@@ -355,6 +355,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     private void gameCompletion() {
         hasPlayed = true;
         running = false;
+        handler.removeCallbacks(runnable);
 
         new CountDownTimer(2500, 1000) {
             public void onTick(long millisUntilFinished) {
