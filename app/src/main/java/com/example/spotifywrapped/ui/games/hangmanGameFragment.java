@@ -187,6 +187,16 @@ public class hangmanGameFragment extends Fragment {
         String guess = editTextGuess.getText().toString().toUpperCase();
         TextView scoreText = binding.getRoot().findViewById(R.id.scoreValueHM);
 
+        if (guess.isEmpty()) {
+            animateFeedbackError(wrongFormatNotice);
+            wrongFormatNotice.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.spotify_red)));
+            wrongFormatNotice.setTextColor(ContextCompat.getColor(context, R.color.spotify_light_red));
+            wrongFormatNotice.setText("ENTER A GUESS BEFORE SUBMITTING");
+            wrongFormatNotice.setTextSize(14);
+            wrongFormatNotice.setVisibility(View.VISIBLE);
+            return;
+        }
+
         if (!Character.isAlphabetic(guess.charAt(0)) && !Character.isDigit(guess.charAt(0))) {
             editTextGuess.setText("");
             animateFeedbackError(wrongFormatNotice);
