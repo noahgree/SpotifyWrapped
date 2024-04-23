@@ -287,19 +287,18 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     }
 
     private void animatePointsAdded() {
-        int originalColor = scoreTextView.getCurrentTextColor();
+        FrameLayout matchTextBG = binding.getRoot().findViewById(R.id.matchTextBG);
 
-        if (scoreTextView != null) {
-            scoreTextView.setTextColor(ContextCompat.getColor(context, R.color.spotify_black));
+        if (matchTextBG != null) {
 
-            ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(scoreTextView, "scaleX", 1.2f);
-            ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(scoreTextView, "scaleY", 1.2f);
+            ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(matchTextBG, "scaleX", 1.2f);
+            ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(matchTextBG, "scaleY", 1.2f);
             AnimatorSet scaleUp = new AnimatorSet();
             scaleUp.playTogether(scaleUpX, scaleUpY);
             scaleUp.setDuration(300);
 
-            ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(scoreTextView, "scaleX", 1.0f);
-            ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(scoreTextView, "scaleY", 1.0f);
+            ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(matchTextBG, "scaleX", 1.0f);
+            ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(matchTextBG, "scaleY", 1.0f);
             AnimatorSet scaleDown = new AnimatorSet();
             scaleDown.playTogether(scaleDownX, scaleDownY);
             scaleDown.setDuration(300);
@@ -310,7 +309,7 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    scoreTextView.setTextColor(originalColor);
+                    //
                 }
             });
             animatorSet.start();
@@ -318,10 +317,10 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
     }
 
     private void animatePointsDeducted() {
-        if (scoreTextView != null) {
-            scoreTextView.setTextColor(ContextCompat.getColor(context, R.color.spotify_red));
+        FrameLayout matchTextBG = binding.getRoot().findViewById(R.id.matchTextBG);
 
-            ObjectAnimator shakeX = ObjectAnimator.ofFloat(scoreTextView, "translationX", -10, 10);
+        if (matchTextBG != null) {
+            ObjectAnimator shakeX = ObjectAnimator.ofFloat(matchTextBG, "translationX", -10, 10);
             shakeX.setRepeatCount(5);
             shakeX.setDuration(100);
 
@@ -333,7 +332,6 @@ public class matchingGameFragment extends Fragment implements View.OnClickListen
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    scoreTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.spotify_black));
                 }
             });
         }
